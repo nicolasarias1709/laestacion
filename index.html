@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>La Estación | POS Completo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #0a0a0a; font-family: 'Inter', sans-serif; color: #f0f0f0; padding: 14px 16px; }
+        .dashboard { max-width: 1600px; margin: 0 auto; }
+
+        /* HEADER */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #2a2a2a; padding-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+        .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: transform 0.2s; }
+        .logo-area:hover { transform: scale(1.02); }
+        .logo-icon { background: #c9a03d; width: 46px; height: 46px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #0a0a0a; box-shadow: 0 8px 20px rgba(0,0,0,0.5); flex-shrink: 0; }
+        .logo-area h1 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 26px; letter-spacing: 1px; background: linear-gradient(135deg, #ffffff, #c9a03d); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1.2; }
+        .logo-subtitle { font-size: 11px; color: #777; margin-top: 1px; }
+        .date-badge { background: #1e1e1e; padding: 7px 14px; border-radius: 40px; font-size: 12px; font-weight: 500; border: 1px solid #2c2c2c; white-space: nowrap; }
+
+        /* LAYOUT */
+        .main-layout { display: flex; gap: 20px; flex-wrap: wrap; }
+        .mesas-section { flex: 1.2; min-width: 280px; }
+        .section-title { font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 500; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; border-left: 4px solid #c9a03d; padding-left: 12px; }
+
+        /* MESAS */
+        .mesas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; max-height: 500px; overflow-y: auto; padding-right: 6px; }
+        .mesa-card { background: #141414; border-radius: 16px; padding: 12px 8px; transition: all 0.2s ease; cursor: pointer; border: 1px solid #252525; text-align: center; }
+        .mesa-card:hover { transform: translateY(-2px); background: #1c1c1c; border-color: #c9a03d80; }
+        .mesa-card:active { transform: scale(0.97); }
+        .mesa-numero { font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 700; color: #e0e0e0; }
+        .mesa-estado { margin-top: 6px; font-size: 10px; font-weight: 600; text-transform: uppercase; border-radius: 40px; display: inline-block; padding: 2px 9px; }
+        .estado-libre { color: #6fcf97; background: #1e2a22; }
+        .estado-ocupada { color: #f2c94c; background: #2a241a; }
+        .estado-pendiente { color: #eb5757; background: #2a1e1e; }
+        .mesa-total { margin-top: 6px; font-size: 13px; font-weight: 700; color: #c9a03d; }
+        .mesa-hora { font-size: 9px; color: #6e6e6e; margin-top: 4px; }
+        .action-buttons { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .btn-outline { background: transparent; border: 1px solid #333; padding: 8px 14px; border-radius: 40px; font-weight: 500; color: #ddd; font-size: 12px; cursor: pointer; transition: 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
+        .btn-outline:hover { background: #252525; border-color: #c9a03d; color: white; }
+        .btn-outline:active { transform: scale(0.97); }
+        .btn-primary { background: #c9a03d; border: none; padding: 10px 18px; border-radius: 40px; font-weight: 600; color: #0a0a0a; cursor: pointer; transition: 0.2s; font-size: 13px; }
+        .btn-primary:hover { background: #dbb452; }
+
+        /* PRODUCTOS */
+        .productos-section { flex: 2.5; min-width: 320px; }
+        .categorias-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; max-height: 76px; overflow-y: auto; padding: 2px 0; }
+        .cat-btn { background: #181818; border: none; padding: 6px 14px; border-radius: 40px; font-family: 'Oswald', sans-serif; font-weight: 500; color: #ccc; cursor: pointer; transition: 0.2s; font-size: 12px; white-space: nowrap; }
+        .cat-btn.active, .cat-btn:hover { background: #c9a03d; color: #0a0a0a; }
+        .productos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; max-height: 360px; overflow-y: auto; padding-right: 6px; margin-bottom: 14px; }
+        .producto-card { background: #121212; border-radius: 14px; padding: 11px 8px; text-align: center; transition: 0.2s; cursor: pointer; border: 1px solid #2a2a2a; }
+        .producto-card:hover { background: #1e1e1e; border-color: #c9a03d; transform: scale(0.98); }
+        .producto-card:active { transform: scale(0.95); }
+        .producto-nombre { font-weight: 600; font-size: 13px; font-family: 'Oswald', sans-serif; }
+        .producto-precio { color: #c9a03d; font-weight: 700; margin-top: 5px; font-size: 14px; }
+        .producto-categoria-badge { font-size: 9px; background: #262626; display: inline-block; padding: 2px 8px; border-radius: 20px; margin-top: 5px; }
+        .agregar-producto-btn { background: #1a1a1a; border: 2px dashed #c9a03d; padding: 10px; border-radius: 14px; text-align: center; cursor: pointer; transition: 0.2s; margin-top: 6px; font-size: 13px; }
+        .agregar-producto-btn:hover { background: #252525; }
+
+        /* CUENTA PANEL */
+        .cuenta-panel { margin-top: 20px; background: #0e0e0e; border-radius: 20px; padding: 16px; border: 1px solid #252525; }
+        .cuenta-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 8px; gap: 6px; }
+        .cuenta-header-title { font-size: 14px; font-weight: 600; }
+        .detalle-pedido { max-height: 160px; overflow-y: auto; margin: 10px 0; }
+        .item-pedido { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232323; font-size: 13px; gap: 6px; align-items: center; }
+        .item-pedido-info { flex: 1; min-width: 0; }
+        .item-pedido-actions { display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; }
+
+        /* PROPINA */
+        .propina-section { background: #131313; border-radius: 12px; padding: 12px 14px; margin: 10px 0; border: 1px solid #2a2a2a; }
+        .propina-label { font-size: 12px; color: #888; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .propina-opciones { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
+        .propina-btn { background: #1e1e1e; border: 1px solid #333; padding: 5px 12px; border-radius: 30px; font-size: 12px; font-weight: 600; color: #ccc; cursor: pointer; transition: 0.2s; font-family: 'Inter', sans-serif; }
+        .propina-btn.active { background: #c9a03d20; border-color: #c9a03d; color: #c9a03d; }
+        .propina-btn:hover { border-color: #c9a03d80; }
+        .propina-monto { font-size: 11px; color: #c9a03d; margin-top: 6px; font-weight: 600; }
+
+        /* TOTALES */
+        .totales-wrap { border-top: 1px solid #222; padding-top: 10px; margin-top: 6px; }
+        .subtotal-row { display: flex; justify-content: space-between; font-size: 12px; color: #777; margin-bottom: 4px; }
+        .total-cuenta { font-size: 22px; font-weight: 700; color: #c9a03d; text-align: right; margin-top: 6px; }
+        .btn-pagar { background: #c9a03d; border: none; width: 100%; padding: 13px; border-radius: 50px; font-weight: bold; font-size: 16px; color: #0a0a0a; margin-top: 12px; font-family: 'Oswald', sans-serif; cursor: pointer; transition: 0.2s; letter-spacing: 0.5px; }
+        .btn-pagar:hover:not(:disabled) { background: #dbb452; }
+        .btn-pagar:active:not(:disabled) { transform: scale(0.98); }
+        .btn-pagar:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* MODALS */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
+        .modal-content { background: #141414; border-radius: 24px; padding: 22px; width: 100%; max-width: 420px; border: 1px solid #c9a03d; }
+        .modal-content input, .modal-content select { width: 100%; padding: 10px 12px; margin: 7px 0; background: #1e1e1e; border: 1px solid #333; border-radius: 10px; color: white; font-size: 14px; font-family: 'Inter', sans-serif; }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 16px; }
+        .text-muted { color: #7a7a7a; font-size: 12px; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #1e1e1e; }
+        ::-webkit-scrollbar-thumb { background: #c9a03d; border-radius: 10px; }
+        .mesa-seleccionada { border: 2px solid #c9a03d !important; background: #1c1c1c !important; }
+        .tipo-badge { font-size: 9px; background: #2a2a2a; display: inline-block; padding: 2px 8px; border-radius: 20px; margin-top: 3px; }
+
+        /* FACTURA MODAL */
+        .factura-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: flex-start; z-index: 2000; padding: 20px 16px; overflow-y: auto; }
+        .factura-modal-wrapper { display: flex; gap: 24px; align-items: flex-start; justify-content: center; width: 100%; max-width: 860px; margin: 0 auto; flex-wrap: wrap; }
+        .factura-acciones { background: #141414; border-radius: 20px; padding: 22px; min-width: 240px; border: 1px solid #2a2a2a; flex: 1; }
+        .factura-acciones h3 { font-family: 'Oswald', sans-serif; font-size: 19px; color: #c9a03d; margin-bottom: 16px; }
+        .factura-accion-btn { display: flex; align-items: center; gap: 12px; width: 100%; padding: 13px 16px; border-radius: 13px; border: 1px solid #333; background: #1a1a1a; color: #eee; font-size: 14px; font-weight: 500; cursor: pointer; margin-bottom: 10px; transition: 0.2s; font-family: 'Inter', sans-serif; }
+        .factura-accion-btn:hover { background: #252525; border-color: #c9a03d; }
+        .factura-accion-btn .btn-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+        .btn-icon-print { background: #1e3a5f; color: #5ba3f5; }
+        .btn-icon-email { background: #1e3d2a; color: #5bcc8f; }
+        .btn-icon-close { background: #2a1a1a; color: #eb7070; }
+        .factura-accion-btn .btn-text { text-align: left; }
+        .factura-accion-btn .btn-text span { display: block; font-size: 11px; color: #777; margin-top: 2px; }
+        .factura-preview-area { flex: 1; min-width: 260px; display: flex; flex-direction: column; align-items: center; }
+        .factura-preview-label { font-size: 11px; color: #666; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* TICKET */
+        .ticket { background: white; color: #111; font-family: 'Courier New', Courier, monospace; width: 310px; padding: 22px 18px 24px; font-size: 14px; line-height: 1.6; box-shadow: 0 20px 60px rgba(0,0,0,0.6); border-radius: 2px; }
+        .ticket::before { content: ''; display: block; height: 12px; background: repeating-linear-gradient(90deg, #fff 0px, #fff 8px, #e0e0e0 8px, #e0e0e0 10px); margin: -22px -18px 16px; border-radius: 2px 2px 0 0; }
+        .ticket::after { content: ''; display: block; height: 12px; background: repeating-linear-gradient(90deg, #fff 0px, #fff 8px, #e0e0e0 8px, #e0e0e0 10px); margin: 16px -18px -24px; border-radius: 0 0 2px 2px; }
+        .ticket-header { text-align: center; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px dashed #bbb; }
+        .ticket-logo { font-size: 23px; font-weight: 900; letter-spacing: 2px; margin-bottom: 2px; font-family: 'Arial Black', sans-serif; }
+        .ticket-sub { font-size: 11px; color: #666; letter-spacing: 1px; margin-bottom: 5px; }
+        .ticket-nit { font-size: 11px; color: #555; }
+        .ticket-titulo { font-size: 13px; font-weight: bold; letter-spacing: 1px; margin: 8px 0 4px; text-transform: uppercase; }
+        .ticket-info { font-size: 12px; color: #444; margin-bottom: 3px; }
+        .ticket-divider { border: none; border-top: 1px dashed #bbb; margin: 10px 0; }
+        .ticket-col-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold; color: #888; text-transform: uppercase; margin-bottom: 7px; padding-bottom: 5px; border-bottom: 1px solid #ddd; }
+        .ticket-item { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; font-size: 13px; gap: 8px; }
+        .ticket-item-nombre { flex: 1; }
+        .ticket-item-nombre-desc { font-size: 11px; color: #888; }
+        .ticket-item-precio { white-space: nowrap; font-weight: bold; }
+        .ticket-subtotales { margin-top: 10px; padding-top: 9px; border-top: 1px dashed #bbb; }
+        .ticket-row { display: flex; justify-content: space-between; font-size: 12px; color: #555; margin-bottom: 4px; }
+        .ticket-row-propina { display: flex; justify-content: space-between; font-size: 12px; color: #777; margin-bottom: 4px; font-style: italic; }
+        .ticket-total { display: flex; justify-content: space-between; font-size: 17px; font-weight: 900; margin-top: 9px; padding-top: 9px; border-top: 2px solid #111; }
+        .ticket-footer { text-align: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #bbb; }
+        .ticket-footer p { font-size: 12px; color: #555; margin-bottom: 3px; }
+        .ticket-footer .gracias { font-size: 15px; font-weight: bold; color: #111; margin-bottom: 5px; }
+
+        /* EMAIL MODAL */
+        .email-modal-content { background: #141414; border-radius: 22px; padding: 28px; width: 100%; max-width: 380px; border: 1px solid #c9a03d; }
+        .email-modal-content h3 { font-family: 'Oswald', sans-serif; color: #c9a03d; font-size: 19px; margin-bottom: 16px; }
+        .email-input { width: 100%; padding: 12px 14px; background: #1e1e1e; border: 1px solid #333; border-radius: 11px; color: white; font-size: 15px; margin-bottom: 14px; font-family: 'Inter', sans-serif; }
+        .email-input:focus { outline: none; border-color: #c9a03d; }
+
+        /* CONTABILIDAD */
+        .contabilidad-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); z-index: 3000; overflow-y: auto; padding: 24px 16px; }
+        .contabilidad-content { max-width: 1300px; margin: 0 auto; }
+        .cont-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+        .cont-header h2 { font-family: 'Oswald', sans-serif; font-size: 26px; background: linear-gradient(135deg, #ffffff, #c9a03d); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .cont-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 24px; }
+        .cont-stat-card { background: #141414; border-radius: 16px; padding: 18px; border: 1px solid #252525; }
+        .cont-stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 7px; }
+        .cont-stat-value { font-size: 26px; font-weight: 700; color: #c9a03d; font-family: 'Oswald', sans-serif; }
+        .cont-stat-sub { font-size: 12px; color: #555; margin-top: 4px; }
+        .cont-meses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; margin-bottom: 24px; }
+        .cont-mes-card { background: #0e0e0e; border-radius: 16px; padding: 18px; border: 1px solid #1e1e1e; }
+        .cont-mes-card.tiene-ventas { border-color: #2a2a2a; }
+        .cont-mes-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .cont-mes-nombre { font-family: 'Oswald', sans-serif; font-size: 17px; color: #ddd; }
+        .cont-mes-badge { font-size: 10px; background: #1e2a22; color: #6fcf97; padding: 3px 10px; border-radius: 20px; }
+        .cont-mes-badge.sin-ventas { background: #2a2a2a; color: #555; }
+        .cont-mes-total { font-size: 21px; font-weight: 700; color: #c9a03d; font-family: 'Oswald', sans-serif; margin-bottom: 3px; }
+        .cont-mes-count { font-size: 11px; color: #555; margin-bottom: 12px; }
+        .cont-bar { background: #1a1a1a; border-radius: 6px; height: 6px; margin-bottom: 12px; overflow: hidden; }
+        .cont-bar-fill { height: 100%; background: linear-gradient(90deg, #c9a03d, #dbb452); border-radius: 6px; }
+        .cont-transacciones { max-height: 150px; overflow-y: auto; }
+        .cont-trans-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #1a1a1a; font-size: 11px; gap: 6px; }
+        .cont-trans-sitio { color: #c9a03d; font-weight: 600; white-space: nowrap; }
+        .cont-trans-fecha { color: #555; white-space: nowrap; }
+        .cont-trans-total { color: #eee; font-weight: 600; white-space: nowrap; }
+        .cont-top-productos { background: #0e0e0e; border-radius: 16px; padding: 18px; border: 1px solid #1e1e1e; margin-bottom: 18px; }
+        .cont-top-productos h3 { font-family: 'Oswald', sans-serif; color: #ddd; font-size: 16px; margin-bottom: 14px; }
+        .top-prod-item { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; }
+        .top-prod-rank { font-family: 'Oswald', sans-serif; font-size: 18px; color: #333; font-weight: 700; width: 26px; text-align: center; }
+        .top-prod-info { flex: 1; }
+        .top-prod-nombre { font-size: 13px; font-weight: 600; }
+        .top-prod-bar-wrap { background: #1a1a1a; height: 4px; border-radius: 4px; margin-top: 4px; }
+        .top-prod-bar { height: 100%; background: #c9a03d; border-radius: 4px; }
+        .top-prod-total { font-size: 13px; font-weight: 700; color: #c9a03d; white-space: nowrap; }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 600px) {
+            body { padding: 10px 10px; }
+            .header { margin-bottom: 14px; }
+            .logo-area h1 { font-size: 20px; }
+            .logo-icon { width: 40px; height: 40px; font-size: 20px; }
+            .date-badge { font-size: 10px; padding: 5px 10px; }
+            .main-layout { flex-direction: column; gap: 16px; }
+            .mesas-section, .productos-section { min-width: unset; width: 100%; flex: none; }
+            .mesas-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); max-height: 260px; gap: 8px; }
+            .mesa-card { padding: 10px 6px; }
+            .mesa-numero { font-size: 16px; }
+            .productos-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); max-height: 300px; }
+            .action-buttons { gap: 6px; }
+            .btn-outline { font-size: 11px; padding: 7px 10px; }
+            .factura-modal-wrapper { flex-direction: column; }
+            .ticket { width: 290px; font-size: 13px; }
+            .cont-stats { grid-template-columns: repeat(2, 1fr); }
+            .cont-meses-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 18px; }
+            .cuenta-panel { padding: 13px; }
+            .total-cuenta { font-size: 20px; }
+            .propina-opciones { gap: 5px; }
+            .propina-btn { padding: 5px 10px; font-size: 11px; }
+        }
+
+        @media (max-width: 380px) {
+            body { padding: 8px 8px; }
+            .mesas-grid { grid-template-columns: repeat(3, 1fr); max-height: 220px; }
+            .productos-grid { grid-template-columns: repeat(2, 1fr); }
+            .mesa-numero { font-size: 14px; }
+            .logo-area h1 { font-size: 17px; }
+            .date-badge { display: none; }
+            .btn-outline { font-size: 10px; padding: 6px 8px; }
+            .action-buttons { gap: 4px; }
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            #ticketPrintArea, #ticketPrintArea * { visibility: visible; }
+            #ticketPrintArea { position: fixed; left: 50%; top: 0; transform: translateX(-50%); background: white; }
+            .ticket::before, .ticket::after { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <div class="header">
+        <div class="logo-area" id="logoBtn">
+            <div class="logo-icon"><i class="fas fa-train"></i></div>
+            <div>
+                <h1>LA ESTACIÓN <span style="font-size:13px;">Café Bar</span></h1>
+                <div class="logo-subtitle">POS · Sistema Completo</div>
+            </div>
+        </div>
+        <div class="date-badge">
+            <i class="far fa-calendar-alt"></i> <span id="fechaActual"></span> &nbsp;|&nbsp;
+            <i class="far fa-clock"></i> <span id="horaActual"></span>
+        </div>
+    </div>
+
+    <div class="main-layout">
+        <div class="mesas-section">
+            <div class="section-title"><i class="fas fa-chair"></i> Mesas y Zonas</div>
+            <div class="mesas-grid" id="mesasContainer"></div>
+            <div class="action-buttons">
+                <button class="btn-outline" id="resetDemoBtn"><i class="fas fa-sync-alt"></i> Reiniciar</button>
+                <button class="btn-outline" id="limpiarMesaActivaBtn"><i class="fas fa-times"></i> Limpiar</button>
+                <button class="btn-outline" id="agregarSitioBtn"><i class="fas fa-plus-circle"></i> Agregar</button>
+            </div>
+        </div>
+
+        <div class="productos-section">
+            <div class="section-title"><i class="fas fa-mug-hot"></i> Catálogo</div>
+            <div class="categorias-row" id="categoriasContainer"></div>
+            <div class="productos-grid" id="productosContainer"></div>
+            <div class="agregar-producto-btn" id="abrirModalBtn">
+                <i class="fas fa-plus-circle" style="color:#c9a03d;"></i> Agregar producto personalizado
+            </div>
+            <div class="cuenta-panel">
+                <div class="cuenta-header">
+                    <div class="cuenta-header-title"><i class="fas fa-receipt"></i> <span id="mesaSeleccionadaNombre">Ningún sitio</span></div>
+                    <div class="text-muted" id="estadoMesaInfo"></div>
+                </div>
+                <div id="detallePedidoLista" class="detalle-pedido">
+                    <div class="text-muted" style="text-align:center;">Selecciona un sitio y agrega productos</div>
+                </div>
+
+                <!-- PROPINA -->
+                <div class="propina-section" id="propinaSection" style="display:none;">
+                    <div class="propina-label"><i class="fas fa-hand-holding-heart" style="color:#c9a03d;"></i> Propina voluntaria del cliente</div>
+                    <div class="propina-opciones">
+                        <button class="propina-btn active" data-pct="0">Sin propina</button>
+                        <button class="propina-btn" data-pct="5">5%</button>
+                        <button class="propina-btn" data-pct="8">8%</button>
+                        <button class="propina-btn" data-pct="10">10%</button>
+                    </div>
+                    <div class="propina-monto" id="propinaMontoDisplay"></div>
+                </div>
+
+                <div class="totales-wrap">
+                    <div class="subtotal-row" id="subtotalRow" style="display:none;"><span>Subtotal</span><span id="subtotalDisplay">$0</span></div>
+                    <div class="subtotal-row" id="propinaRow" style="display:none;"><span id="propinaRowLabel">Propina (0%)</span><span id="propinaRowMonto">$0</span></div>
+                    <div id="totalParcial" class="total-cuenta">$0</div>
+                </div>
+                <button class="btn-pagar" id="btnFacturarPagar" disabled><i class="fas fa-file-invoice"></i> Cerrar cuenta / Facturar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal agregar producto -->
+<div id="modalProducto" class="modal">
+    <div class="modal-content">
+        <h3 style="margin-bottom:16px;font-family:'Oswald',sans-serif;"><i class="fas fa-plus-circle"></i> Nuevo Producto</h3>
+        <input type="text" id="nuevoProductoNombre" placeholder="Nombre del producto" autocomplete="off">
+        <input type="number" id="nuevoProductoPrecio" placeholder="Precio (COP)" autocomplete="off">
+        <input type="text" id="nuevoProductoCategoria" placeholder="Categoría" autocomplete="off">
+        <div class="modal-buttons">
+            <button class="btn-primary" id="guardarProductoBtn" style="flex:1;">Agregar</button>
+            <button class="btn-outline" id="cerrarModalBtn" style="flex:1;">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal agregar sitio -->
+<div id="modalSitio" class="modal">
+    <div class="modal-content">
+        <h3 style="margin-bottom:16px;font-family:'Oswald',sans-serif;"><i class="fas fa-plus-circle"></i> Agregar Nuevo Sitio</h3>
+        <select id="nuevoSitioTipo">
+            <option value="Mesa">Mesa</option>
+            <option value="Tarima">Tarima</option>
+            <option value="Afuera">Afuera</option>
+            <option value="Otro">Otro</option>
+        </select>
+        <input type="text" id="nuevoSitioNombre" placeholder="Número o nombre del sitio" autocomplete="off">
+        <div class="modal-buttons">
+            <button class="btn-primary" id="guardarSitioBtn" style="flex:1;">Agregar</button>
+            <button class="btn-outline" id="cerrarSitioModalBtn" style="flex:1;">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- FACTURA MODAL -->
+<div id="facturaModalOverlay" class="factura-modal-overlay">
+    <div class="factura-modal-wrapper">
+        <div class="factura-acciones">
+            <h3><i class="fas fa-file-invoice" style="margin-right:8px;"></i>Factura generada</h3>
+            <p style="font-size:12px;color:#666;margin-bottom:18px;">Selecciona qué deseas hacer con esta factura:</p>
+            <button class="factura-accion-btn" id="btnImprimirFactura">
+                <div class="btn-icon btn-icon-print"><i class="fas fa-print"></i></div>
+                <div class="btn-text">Imprimir factura<span>Abre ventana de impresión</span></div>
+            </button>
+            <button class="factura-accion-btn" id="btnEmailFactura">
+                <div class="btn-icon btn-icon-email"><i class="fas fa-envelope"></i></div>
+                <div class="btn-text">Enviar por correo<span>Ingresa el email del cliente</span></div>
+            </button>
+            <button class="factura-accion-btn" id="btnCerrarFacturaModal" style="margin-top:18px;">
+                <div class="btn-icon btn-icon-close"><i class="fas fa-times"></i></div>
+                <div class="btn-text">Cerrar sin guardar<span>La cuenta ya fue registrada</span></div>
+            </button>
+        </div>
+        <div class="factura-preview-area">
+            <div class="factura-preview-label">Vista previa de impresión</div>
+            <div id="ticketPrintArea"></div>
+        </div>
+    </div>
+</div>
+
+<!-- EMAIL MODAL -->
+<div id="emailModalOverlay" class="modal">
+    <div class="email-modal-content">
+        <h3><i class="fas fa-envelope" style="margin-right:8px;"></i>Enviar por correo</h3>
+        <p style="font-size:13px;color:#666;margin-bottom:16px;">Ingresa el correo del cliente. Se abrirá tu app de correo con la factura lista para enviar desde <strong style="color:#c9a03d;">laestacioncafebarbarichara@gmail.com</strong></p>
+        <input type="email" id="emailCliente" class="email-input" placeholder="correo@ejemplo.com" autocomplete="off">
+        <div class="modal-buttons">
+            <button class="btn-primary" id="btnEnviarEmail" style="flex:1;"><i class="fas fa-paper-plane"></i> Abrir correo</button>
+            <button class="btn-outline" id="btnCancelarEmail" style="flex:1;">Cancelar</button>
+        </div>
+        <p style="font-size:11px;color:#555;margin-top:14px;text-align:center;"><i class="fas fa-info-circle"></i> Se abrirá Gmail u otra app de correo configurada en este dispositivo</p>
+    </div>
+</div>
+
+<!-- CONTABILIDAD -->
+<div id="contabilidadOverlay" class="contabilidad-overlay">
+    <div class="contabilidad-content">
+        <div class="cont-header">
+            <div>
+                <h2><i class="fas fa-chart-line" style="margin-right:10px;"></i>Contabilidad · Ventas</h2>
+                <div style="font-size:13px;color:#555;margin-top:4px;">Registro de ventas mensuales <span id="anioCont"></span></div>
+            </div>
+            <button class="btn-outline" id="btnCerrarContabilidad"><i class="fas fa-times"></i> Cerrar</button>
+        </div>
+        <div class="cont-stats" id="contStats"></div>
+        <div class="cont-top-productos" id="contTopProductos"></div>
+        <div class="cont-meses-grid" id="contMesesGrid"></div>
+    </div>
+</div>
+
+<script>
+let catalogoProductos = [
+    { id: 1, nombre: "Tinto o Americano", precio: 4000, categoria: "Bebidas Calientes" },
+    { id: 2, nombre: "Americano con Licor", precio: 7000, categoria: "Bebidas Calientes" },
+    { id: 3, nombre: "Expreso", precio: 4000, categoria: "Bebidas Calientes" },
+    { id: 4, nombre: "Latte", precio: 6000, categoria: "Bebidas Calientes" },
+    { id: 5, nombre: "Capuccino Clasico", precio: 7000, categoria: "Bebidas Calientes" },
+    { id: 6, nombre: "Capuccino Black", precio: 8000, categoria: "Bebidas Calientes" },
+    { id: 7, nombre: "Capuccino Gold", precio: 10000, categoria: "Bebidas Calientes" },
+    { id: 8, nombre: "Capuccino Vainilla", precio: 10000, categoria: "Bebidas Calientes" },
+    { id: 9, nombre: "Capuccino Menta", precio: 10000, categoria: "Bebidas Calientes" },
+    { id: 10, nombre: "Torta del Dia", precio: 9000, categoria: "Bebidas Calientes" },
+    { id: 11, nombre: "Soda Bretana", precio: 4000, categoria: "Bebida en Botella" },
+    { id: 12, nombre: "Ginger o Canada Dry", precio: 4000, categoria: "Bebida en Botella" },
+    { id: 13, nombre: "Agua Normal", precio: 3000, categoria: "Bebida en Botella" },
+    { id: 14, nombre: "Agua con Gas", precio: 3500, categoria: "Bebida en Botella" },
+    { id: 15, nombre: "Agua Tonica", precio: 5000, categoria: "Bebida en Botella" },
+    { id: 16, nombre: "Gaseosa PET 400", precio: 3500, categoria: "Bebida en Botella" },
+    { id: 17, nombre: "Gatorade", precio: 6000, categoria: "Bebida en Botella" },
+    { id: 18, nombre: "Gatorlite", precio: 7000, categoria: "Bebida en Botella" },
+    { id: 19, nombre: "Electrolit", precio: 12000, categoria: "Bebida en Botella" },
+    { id: 20, nombre: "Red Bull", precio: 9000, categoria: "Bebida en Botella" },
+    { id: 21, nombre: "Coca Cola 350 ml", precio: 3500, categoria: "Bebida en Botella" },
+    { id: 22, nombre: "Coca Cola PET 400", precio: 4000, categoria: "Bebida en Botella" },
+    { id: 23, nombre: "Coca Cola 1.5 L", precio: 9000, categoria: "Bebida en Botella" },
+    { id: 24, nombre: "Soda Hatsu", precio: 7000, categoria: "Bebida en Botella" },
+    { id: 25, nombre: "Speed", precio: 3500, categoria: "Bebida en Botella" },
+    { id: 30, nombre: "Aguila", precio: 4500, categoria: "Cervezas" },
+    { id: 31, nombre: "Aguila Light", precio: 4500, categoria: "Cervezas" },
+    { id: 32, nombre: "Club Dorada", precio: 6000, categoria: "Cervezas" },
+    { id: 33, nombre: "Club Roja", precio: 6000, categoria: "Cervezas" },
+    { id: 34, nombre: "Club Trigo", precio: 6000, categoria: "Cervezas" },
+    { id: 35, nombre: "Costeñita", precio: 3500, categoria: "Cervezas" },
+    { id: 36, nombre: "Stella", precio: 10000, categoria: "Cervezas" },
+    { id: 37, nombre: "Corona", precio: 10000, categoria: "Cervezas" },
+    { id: 38, nombre: "Coronita", precio: 5000, categoria: "Cervezas" },
+    { id: 39, nombre: "Heineken 330 ml", precio: 6000, categoria: "Cervezas" },
+    { id: 40, nombre: "Heineken 250 ml", precio: 4000, categoria: "Cervezas" },
+    { id: 41, nombre: "Cola y Pola", precio: 4000, categoria: "Cervezas" },
+    { id: 42, nombre: "Tres Cordilleras", precio: 8000, categoria: "Cervezas" },
+    { id: 43, nombre: "Sol", precio: 3500, categoria: "Cervezas" },
+    { id: 44, nombre: "Andina", precio: 4000, categoria: "Cervezas" },
+    { id: 50, nombre: "Corona x 10", precio: 90000, categoria: "Cubetazos" },
+    { id: 51, nombre: "Coronita x 10", precio: 45000, categoria: "Cubetazos" },
+    { id: 52, nombre: "Heineken 330ml x 10", precio: 45000, categoria: "Cubetazos" },
+    { id: 53, nombre: "Heineken 250ml x 10", precio: 35000, categoria: "Cubetazos" },
+    { id: 60, nombre: "Aguardiente Shot", precio: 7000, categoria: "Shots" },
+    { id: 61, nombre: "Ron Shot", precio: 10000, categoria: "Shots" },
+    { id: 62, nombre: "Ginebra Shot", precio: 10000, categoria: "Shots" },
+    { id: 63, nombre: "Tequila Shot", precio: 15000, categoria: "Shots" },
+    { id: 64, nombre: "Buchannans Master Shot", precio: 22000, categoria: "Shots" },
+    { id: 65, nombre: "Old Par Shot", precio: 19000, categoria: "Shots" },
+    { id: 66, nombre: "Copa de Vino", precio: 12000, categoria: "Shots" },
+    { id: 67, nombre: "Crema de Whisky Shot", precio: 10000, categoria: "Shots" },
+    { id: 80, nombre: "Pecera", precio: 40000, categoria: "Cocteles" },
+    { id: 81, nombre: "Barichara Blue", precio: 25000, categoria: "Cocteles" },
+    { id: 82, nombre: "Piña Colada", precio: 25000, categoria: "Cocteles" },
+    { id: 83, nombre: "Pantera Rosa", precio: 25000, categoria: "Cocteles" },
+    { id: 84, nombre: "Exotic", precio: 32000, categoria: "Cocteles" },
+    { id: 85, nombre: "Gin and Tonic", precio: 28000, categoria: "Cocteles" },
+    { id: 86, nombre: "Paloma", precio: 30000, categoria: "Cocteles" },
+    { id: 87, nombre: "Whisky Sour", precio: 28000, categoria: "Cocteles" },
+    { id: 100, nombre: "Michelada Clasica", precio: 3000, categoria: "Micheladas" },
+    { id: 101, nombre: "Michelada Maracumango", precio: 10000, categoria: "Micheladas" },
+    { id: 110, nombre: "Frappuccino", precio: 12000, categoria: "Granizados" },
+    { id: 130, nombre: "De Todito", precio: 3500, categoria: "Paquetes" },
+    { id: 131, nombre: "Doritos", precio: 3000, categoria: "Paquetes" },
+    { id: 140, nombre: "Gomitas", precio: 3500, categoria: "Otros" },
+    { id: 160, nombre: "Lucky Strike", precio: 9000, categoria: "Cigarrillos" },
+    { id: 200, nombre: "Aguardiente Amarillo 375ml", precio: 50000, categoria: "Aguardiente" },
+    { id: 201, nombre: "Aguardiente Amarillo 750ml", precio: 85000, categoria: "Aguardiente" },
+    { id: 210, nombre: "Ron Caldas 375ml", precio: 50000, categoria: "Ron" },
+    { id: 211, nombre: "Ron Caldas 750ml", precio: 85000, categoria: "Ron" },
+    { id: 220, nombre: "Buchannans Deluxe 750ml", precio: 220000, categoria: "Whisky" },
+    { id: 230, nombre: "Ginebra Gordons 750ml", precio: 110000, categoria: "Ginebra" },
+    { id: 240, nombre: "Smirnoff Verde 250ml", precio: 12000, categoria: "Vodka" },
+    { id: 250, nombre: "Tequila Olmeca 750ml", precio: 110000, categoria: "Tequilas" },
+    { id: 260, nombre: "Chennet Rosada 750ml", precio: 95000, categoria: "Espumosos" },
+    { id: 270, nombre: "Bailyes 750ml", precio: 100000, categoria: "Crema de Whisky" },
+    { id: 280, nombre: "Rosaleda Tinto", precio: 40000, categoria: "Vinos" },
+    { id: 281, nombre: "Reservado Santa Carolina", precio: 55000, categoria: "Vinos" }
+];
+
+let nextIdProducto = 300;
+let sitios = [
+    {id:1,tipo:"Mesa",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:2,tipo:"Mesa",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:3,tipo:"Mesa",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:4,tipo:"Mesa",nombre:"4",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:5,tipo:"Mesa",nombre:"5",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:6,tipo:"Mesa",nombre:"6",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:7,tipo:"Mesa",nombre:"7",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:8,tipo:"Mesa",nombre:"8",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:9,tipo:"Mesa",nombre:"9",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:10,tipo:"Mesa",nombre:"10",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:11,tipo:"Mesa",nombre:"11",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:12,tipo:"Mesa",nombre:"12",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:13,tipo:"Tarima",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:14,tipo:"Tarima",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:15,tipo:"Tarima",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:16,tipo:"Afuera",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:17,tipo:"Afuera",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
+    {id:18,tipo:"Afuera",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null}
+];
+let nextSitioId = 19;
+let categoriaActiva = "Todos";
+let sitioSeleccionadoId = null;
+let ventasRegistradas = [];
+let facturaActivaSitio = null;
+let propinaPorcentaje = 0; // porcentaje activo (0, 5, 8, 10)
+
+function cargarStorage() {
+    const v = localStorage.getItem('laEstacion_ventas_v2');
+    if (v) ventasRegistradas = JSON.parse(v);
+}
+function guardarStorage() {
+    localStorage.setItem('laEstacion_ventas_v2', JSON.stringify(ventasRegistradas));
+}
+function registrarVenta(sitio, propina) {
+    const ahora = new Date();
+    ventasRegistradas.push({
+        id: Date.now(),
+        fecha: ahora.toISOString(),
+        fechaDisplay: ahora.toLocaleDateString('es-CO'),
+        hora: ahora.toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit' }),
+        mes: ahora.getMonth(),
+        anio: ahora.getFullYear(),
+        sitio: `${sitio.tipo} ${sitio.nombre}`,
+        items: sitio.pedidos.map(i => ({ nombre:i.nombre, cantidad:i.cantidad, subtotal:i.subtotal })),
+        subtotal: sitio.total,
+        propina: propina,
+        total: sitio.total + propina
+    });
+    guardarStorage();
+}
+
+function actualizarReloj() {
+    const now = new Date();
+    const f = now.toLocaleDateString('es-CO', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    document.getElementById('fechaActual').innerText = f.charAt(0).toUpperCase() + f.slice(1);
+    document.getElementById('horaActual').innerText = now.toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit' });
+}
+setInterval(actualizarReloj, 1000);
+actualizarReloj();
+
+function getCategoriasUnicas() {
+    return Array.from(new Set(catalogoProductos.map(p => p.categoria))).sort();
+}
+
+function renderMesas() {
+    const c = document.getElementById('mesasContainer');
+    c.innerHTML = '';
+    sitios.forEach(sitio => {
+        const ec = sitio.estado === 'libre' ? 'estado-libre' : sitio.estado === 'ocupada' ? 'estado-ocupada' : 'estado-pendiente';
+        const et = sitio.estado === 'libre' ? 'LIBRE' : sitio.estado === 'ocupada' ? 'OCUPADA' : 'PENDIENTE';
+        const total = new Intl.NumberFormat('es-CO', { style:'currency', currency:'COP', minimumFractionDigits:0 }).format(sitio.total);
+        const card = document.createElement('div');
+        card.className = `mesa-card${sitioSeleccionadoId === sitio.id ? ' mesa-seleccionada' : ''}`;
+        card.innerHTML = `
+            <div class="mesa-numero">${sitio.tipo} ${sitio.nombre}</div>
+            <div class="tipo-badge">${sitio.tipo}</div>
+            <div class="mesa-estado ${ec}">${et}</div>
+            <div class="mesa-total">${total}</div>
+            <div class="mesa-hora"><i class="far fa-clock"></i> ${sitio.horaApertura || '--:--'}</div>`;
+        card.addEventListener('click', () => {
+            sitioSeleccionadoId = sitio.id;
+            propinaPorcentaje = 0;
+            renderMesas();
+            actualizarBotonesPropina();
+        });
+        c.appendChild(card);
+    });
+    actualizarPanelCuenta();
+}
+
+function agregarProductoASitio(producto) {
+    if (sitioSeleccionadoId === null) { alert("Primero selecciona un sitio"); return; }
+    const sitio = sitios.find(s => s.id === sitioSeleccionadoId);
+    if (!sitio) return;
+    const ahora = new Date();
+    if (sitio.estado === 'libre') {
+        sitio.estado = 'ocupada';
+        sitio.horaApertura = ahora.toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit' });
+        sitio.total = 0; sitio.pedidos = [];
+    }
+    const ex = sitio.pedidos.find(p => p.nombre === producto.nombre);
+    if (ex) { ex.cantidad++; ex.subtotal = ex.cantidad * ex.precioUnitario; }
+    else { sitio.pedidos.push({ nombre:producto.nombre, cantidad:1, precioUnitario:producto.precio, subtotal:producto.precio }); }
+    sitio.total = sitio.pedidos.reduce((s, i) => s + i.subtotal, 0);
+    renderMesas();
+    actualizarBotonesPropina();
+}
+window.agregarProductoASitio = agregarProductoASitio;
+
+function eliminarItemDeSitio(idx) {
+    if (sitioSeleccionadoId === null) return;
+    const sitio = sitios.find(s => s.id === sitioSeleccionadoId);
+    if (!sitio) return;
+    sitio.pedidos.splice(idx, 1);
+    sitio.total = sitio.pedidos.reduce((s, i) => s + i.subtotal, 0);
+    if (sitio.pedidos.length === 0) { sitio.estado = 'libre'; sitio.total = 0; sitio.horaApertura = null; propinaPorcentaje = 0; }
+    renderMesas();
+    actualizarBotonesPropina();
+}
+window.eliminarItemDeSitio = eliminarItemDeSitio;
+
+function calcularPropina(subtotal) {
+    return Math.round(subtotal * propinaPorcentaje / 100);
+}
+
+function actualizarBotonesPropina() {
+    // Sync active state visually
+    document.querySelectorAll('.propina-btn').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.dataset.pct) === propinaPorcentaje);
+    });
+    const sitio = sitioSeleccionadoId ? sitios.find(s => s.id === sitioSeleccionadoId) : null;
+    const subtotal = sitio ? sitio.total : 0;
+    const propinaMonto = calcularPropina(subtotal);
+    const disp = document.getElementById('propinaMontoDisplay');
+    if (propinaPorcentaje > 0 && subtotal > 0) {
+        disp.innerText = `Propina ${propinaPorcentaje}%: +$${propinaMonto.toLocaleString('es-CO')}`;
+    } else {
+        disp.innerText = '';
+    }
+    actualizarTotales();
+}
+
+function actualizarTotales() {
+    const sitio = sitioSeleccionadoId ? sitios.find(s => s.id === sitioSeleccionadoId) : null;
+    const subtotal = sitio ? sitio.total : 0;
+    const propinaMonto = calcularPropina(subtotal);
+    const totalFinal = subtotal + propinaMonto;
+
+    const subtotalRow = document.getElementById('subtotalRow');
+    const propinaRow = document.getElementById('propinaRow');
+
+    if (sitio && sitio.pedidos.length > 0 && propinaPorcentaje > 0) {
+        subtotalRow.style.display = 'flex';
+        propinaRow.style.display = 'flex';
+        document.getElementById('subtotalDisplay').innerText = '$' + subtotal.toLocaleString('es-CO');
+        document.getElementById('propinaRowLabel').innerText = `Propina (${propinaPorcentaje}%)`;
+        document.getElementById('propinaRowMonto').innerText = '+$' + propinaMonto.toLocaleString('es-CO');
+        document.getElementById('totalParcial').innerText = '$' + totalFinal.toLocaleString('es-CO');
+    } else {
+        subtotalRow.style.display = 'none';
+        propinaRow.style.display = 'none';
+        document.getElementById('totalParcial').innerText = '$' + subtotal.toLocaleString('es-CO');
+    }
+}
+
+function actualizarPanelCuenta() {
+    const spanSitio = document.getElementById('mesaSeleccionadaNombre');
+    const estadoInfo = document.getElementById('estadoMesaInfo');
+    const detalleDiv = document.getElementById('detallePedidoLista');
+    const btnPagar = document.getElementById('btnFacturarPagar');
+    const propinaSection = document.getElementById('propinaSection');
+
+    if (sitioSeleccionadoId === null) {
+        spanSitio.innerText = 'Ningún sitio'; estadoInfo.innerText = '';
+        detalleDiv.innerHTML = '<div class="text-muted" style="text-align:center;">Selecciona un sitio</div>';
+        document.getElementById('totalParcial').innerText = '$0';
+        document.getElementById('subtotalRow').style.display = 'none';
+        document.getElementById('propinaRow').style.display = 'none';
+        btnPagar.disabled = true;
+        propinaSection.style.display = 'none';
+        return;
+    }
+    const sitio = sitios.find(s => s.id === sitioSeleccionadoId);
+    if (!sitio) return;
+    spanSitio.innerText = `${sitio.tipo} ${sitio.nombre}`;
+    estadoInfo.innerText = sitio.estado === 'libre' ? 'Libre' : 'Cuenta activa';
+    if (sitio.pedidos.length === 0) {
+        detalleDiv.innerHTML = '<div class="text-muted" style="text-align:center;">Sin productos</div>';
+        document.getElementById('totalParcial').innerText = '$0';
+        document.getElementById('subtotalRow').style.display = 'none';
+        document.getElementById('propinaRow').style.display = 'none';
+        btnPagar.disabled = true;
+        propinaSection.style.display = 'none';
+        return;
+    }
+    let html = '';
+    sitio.pedidos.forEach((item, idx) => {
+        html += `<div class="item-pedido">
+            <div class="item-pedido-info"><strong>${item.nombre}</strong> x${item.cantidad}</div>
+            <div class="item-pedido-actions">$${item.subtotal.toLocaleString('es-CO')}
+                <button onclick="eliminarItemDeSitio(${idx})" style="background:none;border:none;color:#eb5757;cursor:pointer;padding:2px 4px;"><i class="fas fa-trash-alt"></i></button>
+            </div></div>`;
+    });
+    detalleDiv.innerHTML = html;
+    propinaSection.style.display = 'block';
+    actualizarTotales();
+    btnPagar.disabled = false;
+}
+
+function generarTicketHTML(sitio, propinaMonto, propinaPct) {
+    const ahora = new Date();
+    const fecha = ahora.toLocaleDateString('es-CO', { day:'2-digit', month:'2-digit', year:'numeric' });
+    const hora = ahora.toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    const numFactura = 'FAC-' + String(Date.now()).slice(-6);
+    const totalFinal = sitio.total + (propinaMonto || 0);
+
+    let itemsHTML = '';
+    sitio.pedidos.forEach(item => {
+        itemsHTML += `<div class="ticket-item">
+            <div class="ticket-item-nombre">
+                ${item.nombre}
+                <div class="ticket-item-nombre-desc">${item.cantidad} x $${item.precioUnitario.toLocaleString('es-CO')}</div>
+            </div>
+            <div class="ticket-item-precio">$${item.subtotal.toLocaleString('es-CO')}</div>
+        </div>`;
+    });
+
+    let propinaHTML = '';
+    if (propinaMonto && propinaMonto > 0) {
+        propinaHTML = `<div class="ticket-row-propina">
+            <span>Propina voluntaria (${propinaPct}%)</span>
+            <span>+$${propinaMonto.toLocaleString('es-CO')}</span>
+        </div>`;
+    }
+
+    return `<div class="ticket">
+        <div class="ticket-header">
+            <div class="ticket-logo">LA ESTACIÓN</div>
+            <div class="ticket-sub">CAFÉ BAR</div>
+            <div class="ticket-nit">NIT: 900.000.000-1 · Barichara, Santander</div>
+            <div class="ticket-titulo">FACTURA DE VENTA</div>
+            <div class="ticket-info">No. ${numFactura}</div>
+        </div>
+        <div class="ticket-info"><strong>Sitio:</strong> ${sitio.tipo} ${sitio.nombre}</div>
+        <div class="ticket-info"><strong>Fecha:</strong> ${fecha} &nbsp; <strong>Hora:</strong> ${hora}</div>
+        <hr class="ticket-divider">
+        <div class="ticket-col-header"><span>Descripción</span><span>Total</span></div>
+        ${itemsHTML}
+        <div class="ticket-subtotales">
+            <div class="ticket-row"><span>Subtotal</span><span>$${sitio.total.toLocaleString('es-CO')}</span></div>
+            <div class="ticket-row"><span>IVA (incl.)</span><span>$0</span></div>
+            ${propinaHTML}
+            <div class="ticket-total"><span>TOTAL</span><span>$${totalFinal.toLocaleString('es-CO')}</span></div>
+        </div>
+        <div class="ticket-footer">
+            <p class="gracias">¡Gracias por su visita!</p>
+            <p>Vuelva pronto · La Estación Café Bar</p>
+            <p style="margin-top:6px;font-size:10px;">Conserve este comprobante · ${numFactura}</p>
+        </div>
+    </div>`;
+}
+
+function cerrarCuenta() {
+    if (sitioSeleccionadoId === null) { alert("Selecciona un sitio"); return; }
+    const sitio = sitios.find(s => s.id === sitioSeleccionadoId);
+    if (!sitio || sitio.pedidos.length === 0) { alert("No hay productos"); return; }
+    const propinaMonto = calcularPropina(sitio.total);
+    facturaActivaSitio = JSON.parse(JSON.stringify(sitio));
+    facturaActivaSitio._propinaMonto = propinaMonto;
+    facturaActivaSitio._propinaPct = propinaPorcentaje;
+    registrarVenta(sitio, propinaMonto);
+    sitio.pedidos = []; sitio.total = 0; sitio.estado = 'libre'; sitio.horaApertura = null;
+    sitioSeleccionadoId = null;
+    propinaPorcentaje = 0;
+    renderMesas();
+    document.getElementById('ticketPrintArea').innerHTML = generarTicketHTML(facturaActivaSitio, facturaActivaSitio._propinaMonto, facturaActivaSitio._propinaPct);
+    document.getElementById('facturaModalOverlay').style.display = 'flex';
+}
+
+function imprimirFactura() {
+    const ticket = document.getElementById('ticketPrintArea').querySelector('.ticket');
+    if (!ticket) return;
+    const w = window.open('', '_blank', 'width=400,height=700');
+    w.document.write(`<!DOCTYPE html><html><head><title>Factura - La Estación</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background:#f0f0f0; display:flex; justify-content:center; padding:20px; font-family:'Courier New',monospace; }
+        .ticket { background:white; color:#111; width:310px; padding:22px 18px 24px; font-size:14px; line-height:1.6; }
+        .ticket-header { text-align:center; margin-bottom:14px; padding-bottom:12px; border-bottom:1px dashed #bbb; }
+        .ticket-logo { font-size:23px; font-weight:900; letter-spacing:2px; font-family:'Arial Black',sans-serif; }
+        .ticket-sub { font-size:11px; color:#666; letter-spacing:1px; }
+        .ticket-nit { font-size:11px; color:#555; }
+        .ticket-titulo { font-size:13px; font-weight:bold; letter-spacing:1px; margin:8px 0 4px; text-transform:uppercase; }
+        .ticket-info { font-size:12px; color:#444; margin-bottom:3px; }
+        .ticket-divider { border:none; border-top:1px dashed #bbb; margin:10px 0; }
+        .ticket-col-header { display:flex; justify-content:space-between; font-size:11px; font-weight:bold; color:#888; text-transform:uppercase; margin-bottom:7px; padding-bottom:5px; border-bottom:1px solid #ddd; }
+        .ticket-item { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; font-size:13px; gap:8px; }
+        .ticket-item-nombre { flex:1; }
+        .ticket-item-nombre-desc { font-size:11px; color:#888; }
+        .ticket-item-precio { white-space:nowrap; font-weight:bold; }
+        .ticket-subtotales { margin-top:10px; padding-top:9px; border-top:1px dashed #bbb; }
+        .ticket-row { display:flex; justify-content:space-between; font-size:12px; color:#555; margin-bottom:4px; }
+        .ticket-row-propina { display:flex; justify-content:space-between; font-size:12px; color:#777; margin-bottom:4px; font-style:italic; }
+        .ticket-total { display:flex; justify-content:space-between; font-size:17px; font-weight:900; margin-top:9px; padding-top:9px; border-top:2px solid #111; }
+        .ticket-footer { text-align:center; margin-top:14px; padding-top:12px; border-top:1px dashed #bbb; }
+        .ticket-footer p { font-size:12px; color:#555; margin-bottom:3px; }
+        .ticket-footer .gracias { font-size:15px; font-weight:bold; color:#111; }
+    </style></head><body>
+    ${ticket.outerHTML}
+    <script>window.onload=()=>{window.print();setTimeout(()=>window.close(),1000);}<\/script>
+    </body></html>`);
+    w.document.close();
+}
+
+function renderCategorias() {
+    const c = document.getElementById('categoriasContainer');
+    const cats = ['Todos', ...getCategoriasUnicas()];
+    c.innerHTML = cats.map(cat =>
+        `<button class="cat-btn ${categoriaActiva===cat?'active':''}" data-cat="${cat}">${cat}</button>`
+    ).join('');
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.addEventListener('click', () => { categoriaActiva = btn.dataset.cat; renderCategorias(); renderProductos(); });
+    });
+}
+
+function renderProductos() {
+    const c = document.getElementById('productosContainer');
+    let prods = catalogoProductos.filter(p => p.precio > 0);
+    if (categoriaActiva !== 'Todos') prods = prods.filter(p => p.categoria === categoriaActiva);
+    if (!prods.length) { c.innerHTML = '<div style="color:#777;text-align:center;padding:30px;">Sin productos</div>'; return; }
+    c.innerHTML = prods.map(p => `
+        <div class="producto-card" onclick='agregarProductoASitio(${JSON.stringify({nombre:p.nombre,precio:p.precio})})'>
+            <div class="producto-nombre">${p.nombre}</div>
+            <div class="producto-precio">$${p.precio.toLocaleString('es-CO')}</div>
+            <div class="producto-categoria-badge">${p.categoria}</div>
+        </div>`).join('');
+}
+
+// CONTABILIDAD
+function mostrarContabilidad() {
+    const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    const anio = new Date().getFullYear();
+    document.getElementById('anioCont').innerText = anio;
+
+    let ventasMes = Array(12).fill(0).map(() => ({ total:0, count:0, trans:[] }));
+    let totalAnio = 0, totalTrans = 0;
+    const contadorProductos = {};
+
+    ventasRegistradas.filter(v => v.anio === anio).forEach(v => {
+        const t = v.total || ((v.subtotal || 0) + (v.propina || 0));
+        ventasMes[v.mes].total += t;
+        ventasMes[v.mes].count++;
+        ventasMes[v.mes].trans.push({ ...v, total: t });
+        totalAnio += t;
+        totalTrans++;
+        (v.items || []).forEach(it => {
+            if (!contadorProductos[it.nombre]) contadorProductos[it.nombre] = { qty:0, total:0 };
+            contadorProductos[it.nombre].qty += it.cantidad;
+            contadorProductos[it.nombre].total += it.subtotal;
+        });
+    });
+
+    const mesMax = ventasMes.reduce((mx, m, i) => m.total > ventasMes[mx].total ? i : mx, 0);
+    const promedioMes = totalTrans > 0 ? Math.round(totalAnio / Math.max(1, ventasMes.filter(m=>m.count>0).length)) : 0;
+    document.getElementById('contStats').innerHTML = `
+        <div class="cont-stat-card"><div class="cont-stat-label">Ventas totales ${anio}</div><div class="cont-stat-value">$${totalAnio.toLocaleString('es-CO')}</div><div class="cont-stat-sub">${totalTrans} transacciones</div></div>
+        <div class="cont-stat-card"><div class="cont-stat-label">Mejor mes</div><div class="cont-stat-value">${ventasMes[mesMax].total > 0 ? meses[mesMax] : 'N/A'}</div><div class="cont-stat-sub">$${ventasMes[mesMax].total.toLocaleString('es-CO')}</div></div>
+        <div class="cont-stat-card"><div class="cont-stat-label">Promedio mensual</div><div class="cont-stat-value">$${promedioMes.toLocaleString('es-CO')}</div><div class="cont-stat-sub">En meses con ventas</div></div>
+        <div class="cont-stat-card"><div class="cont-stat-label">Productos registrados</div><div class="cont-stat-value">${catalogoProductos.length}</div><div class="cont-stat-sub">en el catálogo</div></div>`;
+
+    const topProds = Object.entries(contadorProductos).sort((a,b) => b[1].total - a[1].total).slice(0, 5);
+    const maxProd = topProds.length ? topProds[0][1].total : 1;
+    let topHTML = '';
+    if (topProds.length) {
+        topProds.forEach(([nombre, data], idx) => {
+            const pct = Math.round((data.total / maxProd) * 100);
+            topHTML += `<div class="top-prod-item">
+                <div class="top-prod-rank">${idx+1}</div>
+                <div class="top-prod-info">
+                    <div class="top-prod-nombre">${nombre} <span style="font-size:10px;color:#666;">(${data.qty} uds.)</span></div>
+                    <div class="top-prod-bar-wrap"><div class="top-prod-bar" style="width:${pct}%"></div></div>
+                </div>
+                <div class="top-prod-total">$${data.total.toLocaleString('es-CO')}</div>
+            </div>`;
+        });
+    } else {
+        topHTML = '<div class="text-muted" style="text-align:center;padding:20px;">Sin ventas registradas aún</div>';
+    }
+    document.getElementById('contTopProductos').innerHTML = `<h3><i class="fas fa-trophy" style="color:#c9a03d;margin-right:8px;"></i>Top productos más vendidos</h3>${topHTML}`;
+
+    const maxMes = Math.max(...ventasMes.map(m => m.total), 1);
+    let mesHTML = '';
+    meses.forEach((nombre, i) => {
+        const m = ventasMes[i];
+        const pct = Math.round((m.total / maxMes) * 100);
+        const tieneVentas = m.count > 0;
+        let transHTML = '';
+        if (tieneVentas) {
+            [...m.trans].reverse().slice(0, 8).forEach(t => {
+                transHTML += `<div class="cont-trans-item">
+                    <span class="cont-trans-sitio">${t.sitio}</span>
+                    <span class="cont-trans-fecha">${t.fechaDisplay} ${t.hora}</span>
+                    <span class="cont-trans-total">$${t.total.toLocaleString('es-CO')}</span>
+                </div>`;
+            });
+            if (m.trans.length > 8) transHTML += `<div class="text-muted" style="padding:4px 0;">+${m.trans.length-8} más transacciones</div>`;
+        } else {
+            transHTML = '<div class="text-muted" style="padding:8px 0;text-align:center;">Sin ventas</div>';
+        }
+        mesHTML += `<div class="cont-mes-card${tieneVentas?' tiene-ventas':''}">
+            <div class="cont-mes-header">
+                <div class="cont-mes-nombre">${nombre}</div>
+                <div class="cont-mes-badge${!tieneVentas?' sin-ventas':''}">${tieneVentas ? m.count+' ventas' : 'Sin ventas'}</div>
+            </div>
+            <div class="cont-mes-total">$${m.total.toLocaleString('es-CO')}</div>
+            <div class="cont-mes-count">${m.count} transacciones</div>
+            <div class="cont-bar"><div class="cont-bar-fill" style="width:${pct}%"></div></div>
+            <div class="cont-transacciones">${transHTML}</div>
+        </div>`;
+    });
+    document.getElementById('contMesesGrid').innerHTML = mesHTML;
+    document.getElementById('contabilidadOverlay').style.display = 'block';
+}
+
+function agregarProductoPersonalizado() {
+    const nombre = document.getElementById('nuevoProductoNombre').value.trim();
+    const precio = parseFloat(document.getElementById('nuevoProductoPrecio').value);
+    const categoria = document.getElementById('nuevoProductoCategoria').value.trim() || 'Otros';
+    if (!nombre || isNaN(precio) || precio <= 0) { alert("Ingresa nombre y precio válido"); return; }
+    catalogoProductos.push({ id:nextIdProducto++, nombre, precio, categoria });
+    document.getElementById('nuevoProductoNombre').value = '';
+    document.getElementById('nuevoProductoPrecio').value = '';
+    document.getElementById('nuevoProductoCategoria').value = '';
+    document.getElementById('modalProducto').style.display = 'none';
+    renderCategorias(); renderProductos();
+    alert(`✅ Producto "${nombre}" agregado`);
+}
+
+function agregarNuevoSitio() {
+    const tipo = document.getElementById('nuevoSitioTipo').value;
+    const nombre = document.getElementById('nuevoSitioNombre').value.trim();
+    if (!nombre) { alert("Ingresa el nombre del sitio"); return; }
+    if (sitios.some(s => s.tipo===tipo && s.nombre===nombre)) { alert(`Ya existe ${tipo} ${nombre}`); return; }
+    sitios.push({ id:nextSitioId++, tipo, nombre, estado:'libre', total:0, pedidos:[], horaApertura:null });
+    document.getElementById('nuevoSitioNombre').value = '';
+    document.getElementById('modalSitio').style.display = 'none';
+    renderMesas();
+    alert(`✅ ${tipo} ${nombre} agregado`);
+}
+
+function resetDemo() {
+    sitios = [
+        {id:1,tipo:"Mesa",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:2,tipo:"Mesa",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:3,tipo:"Mesa",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:4,tipo:"Mesa",nombre:"4",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:5,tipo:"Mesa",nombre:"5",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:6,tipo:"Mesa",nombre:"6",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:7,tipo:"Mesa",nombre:"7",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:8,tipo:"Mesa",nombre:"8",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:9,tipo:"Mesa",nombre:"9",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:10,tipo:"Mesa",nombre:"10",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:11,tipo:"Mesa",nombre:"11",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:12,tipo:"Mesa",nombre:"12",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:13,tipo:"Tarima",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:14,tipo:"Tarima",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:15,tipo:"Tarima",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:16,tipo:"Afuera",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:17,tipo:"Afuera",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
+        {id:18,tipo:"Afuera",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null}
+    ];
+    nextSitioId = 19; sitioSeleccionadoId = null; propinaPorcentaje = 0; renderMesas();
+}
+
+// PROPINA BOTONES
+document.querySelectorAll('.propina-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        propinaPorcentaje = parseInt(btn.dataset.pct);
+        actualizarBotonesPropina();
+    });
+});
+
+// EVENTOS
+cargarStorage();
+
+document.getElementById('btnFacturarPagar').addEventListener('click', cerrarCuenta);
+document.getElementById('resetDemoBtn').addEventListener('click', resetDemo);
+document.getElementById('limpiarMesaActivaBtn').addEventListener('click', () => { sitioSeleccionadoId = null; propinaPorcentaje = 0; renderMesas(); });
+document.getElementById('abrirModalBtn').addEventListener('click', () => document.getElementById('modalProducto').style.display = 'flex');
+document.getElementById('cerrarModalBtn').addEventListener('click', () => document.getElementById('modalProducto').style.display = 'none');
+document.getElementById('guardarProductoBtn').addEventListener('click', agregarProductoPersonalizado);
+document.getElementById('agregarSitioBtn').addEventListener('click', () => document.getElementById('modalSitio').style.display = 'flex');
+document.getElementById('cerrarSitioModalBtn').addEventListener('click', () => document.getElementById('modalSitio').style.display = 'none');
+document.getElementById('guardarSitioBtn').addEventListener('click', agregarNuevoSitio);
+
+document.getElementById('btnImprimirFactura').addEventListener('click', imprimirFactura);
+document.getElementById('btnEmailFactura').addEventListener('click', () => {
+    document.getElementById('facturaModalOverlay').style.display = 'none';
+    document.getElementById('emailModalOverlay').style.display = 'flex';
+});
+document.getElementById('btnCerrarFacturaModal').addEventListener('click', () => {
+    document.getElementById('facturaModalOverlay').style.display = 'none';
+    facturaActivaSitio = null;
+});
+
+document.getElementById('btnEnviarEmail').addEventListener('click', () => {
+    const email = document.getElementById('emailCliente').value.trim();
+    if (!email || !email.includes('@')) { alert("Ingresa un correo válido"); return; }
+    if (!facturaActivaSitio) return;
+
+    const ahora = new Date();
+    const fecha = ahora.toLocaleDateString('es-CO', { day:'2-digit', month:'2-digit', year:'numeric' });
+    const hora = ahora.toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit' });
+    const numFactura = 'FAC-' + String(Date.now()).slice(-6);
+    const propinaMonto = facturaActivaSitio._propinaMonto || 0;
+    const propinaPct = facturaActivaSitio._propinaPct || 0;
+    const totalFinal = facturaActivaSitio.total + propinaMonto;
+
+    // Construir cuerpo del correo en texto plano
+    const lineas = facturaActivaSitio.pedidos.map(i =>
+        `  ${i.nombre.padEnd(28)} x${i.cantidad}   $${i.subtotal.toLocaleString('es-CO')}`
+    ).join('\n');
+    const propinaLinea = propinaMonto > 0
+        ? `\n  Propina voluntaria (${propinaPct}%)       +$${propinaMonto.toLocaleString('es-CO')}`
+        : '';
+
+    const cuerpo =
+`LA ESTACIÓN CAFÉ BAR
+Barichara, Santander
+NIT: 900.000.000-1
+════════════════════════════════
+FACTURA DE VENTA · ${numFactura}
+════════════════════════════════
+Sitio : ${facturaActivaSitio.tipo} ${facturaActivaSitio.nombre}
+Fecha : ${fecha}   Hora: ${hora}
+────────────────────────────────
+DESCRIPCIÓN                  TOTAL
+${lineas}
+────────────────────────────────
+  Subtotal                   $${facturaActivaSitio.total.toLocaleString('es-CO')}${propinaLinea}
+════════════════════════════════
+  TOTAL A PAGAR              $${totalFinal.toLocaleString('es-CO')}
+════════════════════════════════
+
+¡Gracias por su visita!
+Vuelva pronto · La Estación Café Bar`;
+
+    const asunto = encodeURIComponent(`Factura La Estación · ${numFactura} · ${fecha}`);
+    const body = encodeURIComponent(cuerpo);
+    const mailtoLink = `mailto:${email}?subject=${asunto}&body=${body}`;
+
+    window.location.href = mailtoLink;
+
+    document.getElementById('emailModalOverlay').style.display = 'none';
+    document.getElementById('emailCliente').value = '';
+    document.getElementById('facturaModalOverlay').style.display = 'none';
+    facturaActivaSitio = null;
+});
+document.getElementById('btnCancelarEmail').addEventListener('click', () => {
+    document.getElementById('emailModalOverlay').style.display = 'none';
+    document.getElementById('emailCliente').value = '';
+    document.getElementById('facturaModalOverlay').style.display = 'flex';
+});
+
+document.getElementById('logoBtn').addEventListener('click', mostrarContabilidad);
+document.getElementById('btnCerrarContabilidad').addEventListener('click', () => document.getElementById('contabilidadOverlay').style.display = 'none');
+
+renderMesas();
+renderCategorias();
+renderProductos();
+</script>
+</body>
+</html>
