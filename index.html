@@ -38,32 +38,44 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 /* ── HEADER ── */
 .header {
   display:flex; align-items:center; justify-content:space-between;
-  padding:0 16px; height:56px;
+  padding:0 10px; height:52px;
   background:var(--amarillo);
   position:sticky; top:0; z-index:100;
-  gap:10px;
+  gap:6px;
+  min-width:0;
 }
-.logo-wrap { display:flex; align-items:center; gap:10px; }
+.logo-wrap { display:flex; align-items:center; gap:7px; min-width:0; flex-shrink:1; overflow:hidden; }
 .logo-icon {
-  width:36px; height:36px; background:var(--negro); border-radius:9px;
+  width:32px; height:32px; background:var(--negro); border-radius:8px;
   display:flex; align-items:center; justify-content:center;
-  font-size:17px; color:var(--amarillo); flex-shrink:0;
+  font-size:15px; color:var(--amarillo); flex-shrink:0;
 }
+.logo-text { min-width:0; overflow:hidden; }
 .logo-text h1 {
-  font-family:'Bebas Neue',sans-serif; font-size:22px;
-  color:var(--negro); letter-spacing:1.5px; line-height:1;
+  font-family:'Bebas Neue',sans-serif; font-size:17px;
+  color:var(--negro); letter-spacing:1px; line-height:1;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.logo-text span { font-size:9px; color:rgba(0,0,0,0.5); letter-spacing:2px; text-transform:uppercase; }
-.header-right { display:flex; align-items:center; gap:6px; }
+.logo-text span { font-size:8px; color:rgba(0,0,0,0.5); letter-spacing:1.5px; text-transform:uppercase; white-space:nowrap; }
+.header-right { display:flex; align-items:center; gap:4px; flex-shrink:0; }
 .header-clock {
-  font-size:11px; color:rgba(0,0,0,0.6);
+  font-size:10px; color:rgba(0,0,0,0.65);
   background:rgba(0,0,0,0.1); border-radius:99px;
-  padding:4px 10px; white-space:nowrap;
+  padding:3px 7px; white-space:nowrap; flex-shrink:0;
 }
+.sync-badge {
+  display:inline-flex; align-items:center; gap:3px;
+  font-size:9px; padding:3px 7px; border-radius:99px;
+  background:rgba(0,0,0,0.1); color:rgba(0,0,0,0.5);
+  flex-shrink:0; white-space:nowrap;
+}
+.sync-dot { width:5px; height:5px; border-radius:50%; background:var(--negro); opacity:0.4; flex-shrink:0; }
+.sync-dot.ok { background:#16a34a; opacity:1; animation:pulse .8s ease-out; }
+@keyframes pulse { 0%{transform:scale(1.5);opacity:0.5} 100%{transform:scale(1);opacity:1} }
 .btn-icon-hdr {
-  width:34px; height:34px; border-radius:8px;
+  width:30px; height:30px; border-radius:7px;
   background:rgba(0,0,0,0.12); border:none;
-  color:var(--negro); font-size:14px;
+  color:var(--negro); font-size:13px;
   display:flex; align-items:center; justify-content:center;
   cursor:pointer; transition:.15s; flex-shrink:0;
 }
@@ -114,8 +126,9 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   height:3px; border-radius:var(--r) var(--r) 0 0;
   background:var(--borde); transition:.2s;
 }
-.mesa-card.libre::before { background:var(--verde); }
-.mesa-card.ocupada::before { background:var(--amarillo); }
+/* LIBRE = amarillo, OCUPADA = rojo, PENDIENTE = rojo */
+.mesa-card.libre::before { background:var(--amarillo); }
+.mesa-card.ocupada::before { background:var(--rojo); }
 .mesa-card.pendiente::before { background:var(--rojo); }
 .mesa-card:hover { transform:translateY(-2px); border-color:var(--borde2); background:var(--negro3); }
 .mesa-card:active { transform:scale(0.96); }
@@ -125,8 +138,9 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;
   padding:2px 8px; border-radius:99px; display:inline-block; margin-bottom:6px;
 }
-.badge-libre { color:var(--verde); background:var(--verde-bg); }
-.badge-ocupada { color:var(--amarillo); background:rgba(245,200,0,0.1); }
+/* Badge colors: libre=amarillo, ocupada=rojo, pendiente=rojo */
+.badge-libre { color:var(--amarillo); background:rgba(245,200,0,0.12); }
+.badge-ocupada { color:var(--rojo); background:var(--rojo-bg); }
 .badge-pendiente { color:var(--rojo); background:var(--rojo-bg); }
 .mesa-total { font-size:13px; font-weight:700; color:var(--amarillo); }
 .mesa-hora { font-size:8px; color:var(--blanco3); margin-top:2px; }
@@ -362,16 +376,6 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .mti-total { color:var(--blanco); font-weight:600; white-space:nowrap; }
 .muted { color:var(--blanco3); font-size:10px; font-style:italic; text-align:center; padding:8px 0; }
 
-/* ── SYNC BADGE ── */
-.sync-badge {
-  display:inline-flex; align-items:center; gap:4px;
-  font-size:10px; padding:3px 9px; border-radius:99px;
-  background:rgba(0,0,0,0.1); color:rgba(0,0,0,0.5);
-}
-.sync-dot { width:6px; height:6px; border-radius:50%; background:var(--negro); opacity:0.4; }
-.sync-dot.ok { background:#16a34a; opacity:1; animation:pulse .8s ease-out; }
-@keyframes pulse { 0%{transform:scale(1.5);opacity:0.5} 100%{transform:scale(1);opacity:1} }
-
 /* ── EMAIL BOX ── */
 .email-box { max-width:360px; }
 .email-box p { font-size:12px; color:var(--blanco3); margin-bottom:12px; line-height:1.5; }
@@ -390,8 +394,20 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 /* ── RESPONSIVE ── */
 @media (max-width:480px) {
   .mesas-grid { grid-template-columns:repeat(3,1fr); gap:7px; }
-  .header-clock { display:none; }
   .mesas-screen { padding:10px 12px; }
+  /* Header mobile: todo en una sola fila sin recortes */
+  .header { padding:0 8px; gap:4px; }
+  .logo-text h1 { font-size:15px; }
+  .logo-icon { width:28px; height:28px; font-size:13px; }
+  .sync-badge { font-size:8px; padding:2px 5px; }
+  .header-clock { font-size:9px; padding:2px 6px; }
+  .btn-icon-hdr { width:28px; height:28px; font-size:12px; }
+}
+@media (max-width:380px) {
+  .mesas-grid { grid-template-columns:repeat(3,1fr); gap:6px; }
+  /* En pantallas muy pequeñas ocultar el texto "Café Bar" del logo */
+  .logo-text h1 small { display:none; }
+  .header-clock { display:none; }
 }
 @media (max-width:340px) {
   .mesas-grid { grid-template-columns:repeat(2,1fr); }
@@ -601,9 +617,8 @@ const SITIOS_DEFECTO = () => [
   {id:18,tipo:"Afuera",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null}
 ];
 
-/* ═══ CATÁLOGO COMPLETO (actualizado desde lista de productos) ═══ */
+/* ═══ CATÁLOGO COMPLETO ═══ */
 const CATALOGO_DEFECTO = [
-  /* ── Bebidas Calientes ── */
   {id:1,nombre:"Tinto o Americano",precio:4000,categoria:"Bebidas Calientes"},
   {id:2,nombre:"Americano con Licor",precio:7000,categoria:"Bebidas Calientes"},
   {id:3,nombre:"Expreso",precio:4000,categoria:"Bebidas Calientes"},
@@ -614,7 +629,6 @@ const CATALOGO_DEFECTO = [
   {id:8,nombre:"Capuccino Vainilla",precio:10000,categoria:"Bebidas Calientes"},
   {id:9,nombre:"Capuccino Menta",precio:10000,categoria:"Bebidas Calientes"},
   {id:10,nombre:"Torta del Dia",precio:9000,categoria:"Bebidas Calientes"},
-  /* ── Bebida en Botella ── */
   {id:11,nombre:"Soda Bretana",precio:4000,categoria:"Bebida en Botella"},
   {id:12,nombre:"Ginger o Canada Dry",precio:4000,categoria:"Bebida en Botella"},
   {id:13,nombre:"Agua Normal",precio:3000,categoria:"Bebida en Botella"},
@@ -630,13 +644,12 @@ const CATALOGO_DEFECTO = [
   {id:23,nombre:"Coca Cola 1.5 L",precio:9000,categoria:"Bebida en Botella"},
   {id:24,nombre:"Soda Hatsu",precio:7000,categoria:"Bebida en Botella"},
   {id:25,nombre:"Speed",precio:3500,categoria:"Bebida en Botella"},
-  /* ── Cervezas ── */
   {id:30,nombre:"Aguila",precio:4500,categoria:"Cervezas"},
   {id:31,nombre:"Aguila Light",precio:4500,categoria:"Cervezas"},
   {id:32,nombre:"Club Dorada",precio:6000,categoria:"Cervezas"},
   {id:33,nombre:"Club Roja",precio:6000,categoria:"Cervezas"},
   {id:34,nombre:"Club Trigo",precio:6000,categoria:"Cervezas"},
-  {id:35,nombre:"Coste\u00f1ita",precio:3500,categoria:"Cervezas"},
+  {id:35,nombre:"Costeñita",precio:3500,categoria:"Cervezas"},
   {id:36,nombre:"Stella",precio:10000,categoria:"Cervezas"},
   {id:37,nombre:"Corona",precio:10000,categoria:"Cervezas"},
   {id:38,nombre:"Coronita",precio:5000,categoria:"Cervezas"},
@@ -646,12 +659,10 @@ const CATALOGO_DEFECTO = [
   {id:42,nombre:"Tres Cordilleras",precio:8000,categoria:"Cervezas"},
   {id:43,nombre:"Sol",precio:3500,categoria:"Cervezas"},
   {id:44,nombre:"Andina",precio:4000,categoria:"Cervezas"},
-  /* ── Cubetazos ── */
   {id:50,nombre:"Corona x 10",precio:90000,categoria:"Cubetazos"},
   {id:51,nombre:"Coronita x 10",precio:45000,categoria:"Cubetazos"},
   {id:52,nombre:"Heineken 330ml x 10",precio:45000,categoria:"Cubetazos"},
   {id:53,nombre:"Heineken 250ml x 10",precio:35000,categoria:"Cubetazos"},
-  /* ── Shots ── */
   {id:60,nombre:"Aguardiente Shot",precio:7000,categoria:"Shots"},
   {id:61,nombre:"Ron Shot",precio:10000,categoria:"Shots"},
   {id:62,nombre:"Ginebra Shot",precio:10000,categoria:"Shots"},
@@ -663,10 +674,9 @@ const CATALOGO_DEFECTO = [
   {id:68,nombre:"Encanto Shot",precio:30000,categoria:"Shots"},
   {id:69,nombre:"Cucaracho Shot",precio:18000,categoria:"Shots"},
   {id:70,nombre:"Baby Shot",precio:18000,categoria:"Shots"},
-  /* ── Cocteles ── */
   {id:80,nombre:"Pecera",precio:40000,categoria:"Cocteles"},
   {id:81,nombre:"Barichara Blue",precio:25000,categoria:"Cocteles"},
-  {id:82,nombre:"Pi\u00f1a Colada",precio:25000,categoria:"Cocteles"},
+  {id:82,nombre:"Piña Colada",precio:25000,categoria:"Cocteles"},
   {id:83,nombre:"Pantera Rosa",precio:25000,categoria:"Cocteles"},
   {id:84,nombre:"Exotic",precio:32000,categoria:"Cocteles"},
   {id:85,nombre:"Gin and Tonic",precio:28000,categoria:"Cocteles"},
@@ -681,33 +691,28 @@ const CATALOGO_DEFECTO = [
   {id:94,nombre:"Black Rose",precio:28000,categoria:"Cocteles"},
   {id:95,nombre:"Cuba Libre",precio:25000,categoria:"Cocteles"},
   {id:96,nombre:"Margarita",precio:25000,categoria:"Cocteles"},
-  /* ── Micheladas ── */
   {id:100,nombre:"Michelada Clasica",precio:3000,categoria:"Micheladas"},
   {id:101,nombre:"Michelada Maracumango",precio:10000,categoria:"Micheladas"},
   {id:102,nombre:"Michelada Sandia",precio:10000,categoria:"Micheladas"},
   {id:103,nombre:"Michelada Sandia y Maracuya",precio:10000,categoria:"Micheladas"},
   {id:104,nombre:"Michelada Frutos del Bosque",precio:10000,categoria:"Micheladas"},
-  {id:105,nombre:"Michelada Pi\u00f1a con Hierbabuena",precio:10000,categoria:"Micheladas"},
+  {id:105,nombre:"Michelada Piña con Hierbabuena",precio:10000,categoria:"Micheladas"},
   {id:106,nombre:"Michelada Endiablada",precio:10000,categoria:"Micheladas"},
   {id:107,nombre:"Zumo de Limon",precio:1500,categoria:"Micheladas"},
-  /* ── Granizados ── */
   {id:110,nombre:"Frappuccino",precio:12000,categoria:"Granizados"},
   {id:111,nombre:"Granizado Maracumango",precio:10000,categoria:"Granizados"},
   {id:112,nombre:"Granizado Sandia",precio:10000,categoria:"Granizados"},
   {id:113,nombre:"Granizado Tamarindo",precio:10000,categoria:"Granizados"},
   {id:114,nombre:"Granizado Frutos del Bosque",precio:10000,categoria:"Granizados"},
-  /* ── Granizados Mix ── */
   {id:120,nombre:"Mangaso",precio:17000,categoria:"Granizados Mix"},
   {id:121,nombre:"Granizado Mix Sandia",precio:17000,categoria:"Granizados Mix"},
   {id:122,nombre:"Granizado Mix con Cerveza",precio:17000,categoria:"Granizados Mix"},
-  /* ── Paquetes ── */
   {id:130,nombre:"De Todito",precio:3500,categoria:"Paquetes"},
   {id:131,nombre:"Doritos",precio:3000,categoria:"Paquetes"},
   {id:132,nombre:"Platanitos",precio:3800,categoria:"Paquetes"},
   {id:133,nombre:"Papa Pobre",precio:3800,categoria:"Paquetes"},
   {id:134,nombre:"Papa Margrita",precio:2800,categoria:"Paquetes"},
   {id:135,nombre:"Chestresse",precio:2800,categoria:"Paquetes"},
-  /* ── Otros ── */
   {id:140,nombre:"Gomitas",precio:3500,categoria:"Otros"},
   {id:141,nombre:"Bon Bon Bum",precio:1000,categoria:"Otros"},
   {id:142,nombre:"Chickets",precio:400,categoria:"Otros"},
@@ -718,7 +723,6 @@ const CATALOGO_DEFECTO = [
   {id:147,nombre:"Alka Seltser",precio:3500,categoria:"Otros"},
   {id:148,nombre:"Sal de Frutas",precio:3500,categoria:"Otros"},
   {id:149,nombre:"Decoracion",precio:35000,categoria:"Otros"},
-  /* ── Cigarrillos ── */
   {id:160,nombre:"Lucky Strike",precio:9000,categoria:"Cigarrillos"},
   {id:161,nombre:"Rothmans Gris",precio:8000,categoria:"Cigarrillos"},
   {id:162,nombre:"Rothmans Mentolado",precio:8000,categoria:"Cigarrillos"},
@@ -726,19 +730,16 @@ const CATALOGO_DEFECTO = [
   {id:164,nombre:"Marlboro",precio:8000,categoria:"Cigarrillos"},
   {id:165,nombre:"Piel Roja",precio:12000,categoria:"Cigarrillos"},
   {id:166,nombre:"Cigarrillo por Unidad",precio:1000,categoria:"Cigarrillos"},
-  /* ── Aguardiente ── */
   {id:200,nombre:"Aguardiente Amarillo 375ml",precio:50000,categoria:"Aguardiente"},
   {id:201,nombre:"Aguardiente Amarillo 750ml",precio:85000,categoria:"Aguardiente"},
   {id:202,nombre:"Antioqueño 375ml",precio:50000,categoria:"Aguardiente"},
   {id:203,nombre:"Antioqueño 750ml",precio:85000,categoria:"Aguardiente"},
-  /* ── Ron ── */
   {id:210,nombre:"Ron Caldas 375ml",precio:50000,categoria:"Ron"},
   {id:211,nombre:"Ron Caldas 750ml",precio:85000,categoria:"Ron"},
   {id:212,nombre:"Ron Caldas 5 Anos 375ml",precio:75000,categoria:"Ron"},
   {id:213,nombre:"Ron Caldas 5 Anos 750ml",precio:140000,categoria:"Ron"},
   {id:214,nombre:"Ron Caldas 8 Anos 375ml",precio:85000,categoria:"Ron"},
   {id:215,nombre:"Ron Caldas 8 Anos 750ml",precio:160000,categoria:"Ron"},
-  /* ── Whisky ── */
   {id:220,nombre:"Buchannans Deluxe 750ml",precio:220000,categoria:"Whisky"},
   {id:221,nombre:"Buchannans Master 750ml",precio:250000,categoria:"Whisky"},
   {id:222,nombre:"Buchannans Two Souls 750ml",precio:260000,categoria:"Whisky"},
@@ -747,22 +748,16 @@ const CATALOGO_DEFECTO = [
   {id:225,nombre:"Red Level 750ml",precio:98000,categoria:"Whisky"},
   {id:226,nombre:"Chivas Regal 12 Anos",precio:195000,categoria:"Whisky"},
   {id:227,nombre:"Chivas Regal 18 Anos",precio:440000,categoria:"Whisky"},
-  /* ── Ginebra ── */
   {id:230,nombre:"Ginebra Gordons 750ml",precio:110000,categoria:"Ginebra"},
-  /* ── Vodka ── */
   {id:240,nombre:"Smirnoff Verde 250ml",precio:12000,categoria:"Vodka"},
   {id:241,nombre:"Smirnoff Tamarindo 750ml",precio:85000,categoria:"Vodka"},
   {id:242,nombre:"Smirnoff de Lulo 750ml",precio:85000,categoria:"Vodka"},
-  /* ── Tequilas ── */
   {id:250,nombre:"Tequila Olmeca 750ml",precio:110000,categoria:"Tequilas"},
   {id:251,nombre:"Jose Cuervo 70ml",precio:110000,categoria:"Tequilas"},
   {id:252,nombre:"Centenario Reposado",precio:250000,categoria:"Tequilas"},
   {id:253,nombre:"Centenario Blanco",precio:250000,categoria:"Tequilas"},
-  /* ── Espumosos ── */
   {id:260,nombre:"Chennet Rosada 750ml",precio:95000,categoria:"Espumosos"},
-  /* ── Crema de Whisky ── */
   {id:270,nombre:"Baileys 750ml",precio:100000,categoria:"Crema de Whisky"},
-  /* ── Vinos ── */
   {id:280,nombre:"Rosaleda Tinto",precio:40000,categoria:"Vinos"},
   {id:281,nombre:"Reservado Santa Carolina",precio:55000,categoria:"Vinos"}
 ];
