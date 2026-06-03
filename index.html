@@ -572,12 +572,10 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 <div id="toast"></div>
 
 <script>
-/* ═══ FIREBASE CONFIG ═══
-   Usamos Firebase Realtime Database para sincronización cross-device.
-   El usuario puede configurar su propia base de datos aquí. */
-const FB_URL = 'https://la-estacion-pos-default-rtdb.firebaseio.com'; // Cambiar si tienes tu propia DB
+/* ═══ FIREBASE CONFIG ═══ */
+const FB_URL = 'https://la-estacion-pos-default-rtdb.firebaseio.com';
 
-/* ═══ DATOS ═══ */
+/* ═══ STORAGE KEYS ═══ */
 const SK_SITIOS = 'laEstacion_sitios_v4';
 const SK_VENTAS = 'laEstacion_ventas_v4';
 const SK_PRODS  = 'laEstacion_prods_v4';
@@ -603,7 +601,9 @@ const SITIOS_DEFECTO = () => [
   {id:18,tipo:"Afuera",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null}
 ];
 
+/* ═══ CATÁLOGO COMPLETO (actualizado desde lista de productos) ═══ */
 const CATALOGO_DEFECTO = [
+  /* ── Bebidas Calientes ── */
   {id:1,nombre:"Tinto o Americano",precio:4000,categoria:"Bebidas Calientes"},
   {id:2,nombre:"Americano con Licor",precio:7000,categoria:"Bebidas Calientes"},
   {id:3,nombre:"Expreso",precio:4000,categoria:"Bebidas Calientes"},
@@ -614,6 +614,7 @@ const CATALOGO_DEFECTO = [
   {id:8,nombre:"Capuccino Vainilla",precio:10000,categoria:"Bebidas Calientes"},
   {id:9,nombre:"Capuccino Menta",precio:10000,categoria:"Bebidas Calientes"},
   {id:10,nombre:"Torta del Dia",precio:9000,categoria:"Bebidas Calientes"},
+  /* ── Bebida en Botella ── */
   {id:11,nombre:"Soda Bretana",precio:4000,categoria:"Bebida en Botella"},
   {id:12,nombre:"Ginger o Canada Dry",precio:4000,categoria:"Bebida en Botella"},
   {id:13,nombre:"Agua Normal",precio:3000,categoria:"Bebida en Botella"},
@@ -629,12 +630,13 @@ const CATALOGO_DEFECTO = [
   {id:23,nombre:"Coca Cola 1.5 L",precio:9000,categoria:"Bebida en Botella"},
   {id:24,nombre:"Soda Hatsu",precio:7000,categoria:"Bebida en Botella"},
   {id:25,nombre:"Speed",precio:3500,categoria:"Bebida en Botella"},
+  /* ── Cervezas ── */
   {id:30,nombre:"Aguila",precio:4500,categoria:"Cervezas"},
   {id:31,nombre:"Aguila Light",precio:4500,categoria:"Cervezas"},
   {id:32,nombre:"Club Dorada",precio:6000,categoria:"Cervezas"},
   {id:33,nombre:"Club Roja",precio:6000,categoria:"Cervezas"},
   {id:34,nombre:"Club Trigo",precio:6000,categoria:"Cervezas"},
-  {id:35,nombre:"Costeñita",precio:3500,categoria:"Cervezas"},
+  {id:35,nombre:"Coste\u00f1ita",precio:3500,categoria:"Cervezas"},
   {id:36,nombre:"Stella",precio:10000,categoria:"Cervezas"},
   {id:37,nombre:"Corona",precio:10000,categoria:"Cervezas"},
   {id:38,nombre:"Coronita",precio:5000,categoria:"Cervezas"},
@@ -644,10 +646,12 @@ const CATALOGO_DEFECTO = [
   {id:42,nombre:"Tres Cordilleras",precio:8000,categoria:"Cervezas"},
   {id:43,nombre:"Sol",precio:3500,categoria:"Cervezas"},
   {id:44,nombre:"Andina",precio:4000,categoria:"Cervezas"},
+  /* ── Cubetazos ── */
   {id:50,nombre:"Corona x 10",precio:90000,categoria:"Cubetazos"},
   {id:51,nombre:"Coronita x 10",precio:45000,categoria:"Cubetazos"},
   {id:52,nombre:"Heineken 330ml x 10",precio:45000,categoria:"Cubetazos"},
   {id:53,nombre:"Heineken 250ml x 10",precio:35000,categoria:"Cubetazos"},
+  /* ── Shots ── */
   {id:60,nombre:"Aguardiente Shot",precio:7000,categoria:"Shots"},
   {id:61,nombre:"Ron Shot",precio:10000,categoria:"Shots"},
   {id:62,nombre:"Ginebra Shot",precio:10000,categoria:"Shots"},
@@ -656,31 +660,109 @@ const CATALOGO_DEFECTO = [
   {id:65,nombre:"Old Par Shot",precio:19000,categoria:"Shots"},
   {id:66,nombre:"Copa de Vino",precio:12000,categoria:"Shots"},
   {id:67,nombre:"Crema de Whisky Shot",precio:10000,categoria:"Shots"},
+  {id:68,nombre:"Encanto Shot",precio:30000,categoria:"Shots"},
+  {id:69,nombre:"Cucaracho Shot",precio:18000,categoria:"Shots"},
+  {id:70,nombre:"Baby Shot",precio:18000,categoria:"Shots"},
+  /* ── Cocteles ── */
   {id:80,nombre:"Pecera",precio:40000,categoria:"Cocteles"},
   {id:81,nombre:"Barichara Blue",precio:25000,categoria:"Cocteles"},
-  {id:82,nombre:"Piña Colada",precio:25000,categoria:"Cocteles"},
+  {id:82,nombre:"Pi\u00f1a Colada",precio:25000,categoria:"Cocteles"},
   {id:83,nombre:"Pantera Rosa",precio:25000,categoria:"Cocteles"},
   {id:84,nombre:"Exotic",precio:32000,categoria:"Cocteles"},
   {id:85,nombre:"Gin and Tonic",precio:28000,categoria:"Cocteles"},
   {id:86,nombre:"Paloma",precio:30000,categoria:"Cocteles"},
   {id:87,nombre:"Whisky Sour",precio:28000,categoria:"Cocteles"},
+  {id:88,nombre:"Seduccion",precio:28000,categoria:"Cocteles"},
+  {id:89,nombre:"Lady Blue",precio:25000,categoria:"Cocteles"},
+  {id:90,nombre:"Mojito Sandia",precio:25000,categoria:"Cocteles"},
+  {id:91,nombre:"Mojito Coco",precio:25000,categoria:"Cocteles"},
+  {id:92,nombre:"Mojito Clasico",precio:25000,categoria:"Cocteles"},
+  {id:93,nombre:"Mojito Vino Tinto",precio:25000,categoria:"Cocteles"},
+  {id:94,nombre:"Black Rose",precio:28000,categoria:"Cocteles"},
+  {id:95,nombre:"Cuba Libre",precio:25000,categoria:"Cocteles"},
+  {id:96,nombre:"Margarita",precio:25000,categoria:"Cocteles"},
+  /* ── Micheladas ── */
   {id:100,nombre:"Michelada Clasica",precio:3000,categoria:"Micheladas"},
   {id:101,nombre:"Michelada Maracumango",precio:10000,categoria:"Micheladas"},
+  {id:102,nombre:"Michelada Sandia",precio:10000,categoria:"Micheladas"},
+  {id:103,nombre:"Michelada Sandia y Maracuya",precio:10000,categoria:"Micheladas"},
+  {id:104,nombre:"Michelada Frutos del Bosque",precio:10000,categoria:"Micheladas"},
+  {id:105,nombre:"Michelada Pi\u00f1a con Hierbabuena",precio:10000,categoria:"Micheladas"},
+  {id:106,nombre:"Michelada Endiablada",precio:10000,categoria:"Micheladas"},
+  {id:107,nombre:"Zumo de Limon",precio:1500,categoria:"Micheladas"},
+  /* ── Granizados ── */
   {id:110,nombre:"Frappuccino",precio:12000,categoria:"Granizados"},
+  {id:111,nombre:"Granizado Maracumango",precio:10000,categoria:"Granizados"},
+  {id:112,nombre:"Granizado Sandia",precio:10000,categoria:"Granizados"},
+  {id:113,nombre:"Granizado Tamarindo",precio:10000,categoria:"Granizados"},
+  {id:114,nombre:"Granizado Frutos del Bosque",precio:10000,categoria:"Granizados"},
+  /* ── Granizados Mix ── */
+  {id:120,nombre:"Mangaso",precio:17000,categoria:"Granizados Mix"},
+  {id:121,nombre:"Granizado Mix Sandia",precio:17000,categoria:"Granizados Mix"},
+  {id:122,nombre:"Granizado Mix con Cerveza",precio:17000,categoria:"Granizados Mix"},
+  /* ── Paquetes ── */
   {id:130,nombre:"De Todito",precio:3500,categoria:"Paquetes"},
   {id:131,nombre:"Doritos",precio:3000,categoria:"Paquetes"},
+  {id:132,nombre:"Platanitos",precio:3800,categoria:"Paquetes"},
+  {id:133,nombre:"Papa Pobre",precio:3800,categoria:"Paquetes"},
+  {id:134,nombre:"Papa Margrita",precio:2800,categoria:"Paquetes"},
+  {id:135,nombre:"Chestresse",precio:2800,categoria:"Paquetes"},
+  /* ── Otros ── */
   {id:140,nombre:"Gomitas",precio:3500,categoria:"Otros"},
+  {id:141,nombre:"Bon Bon Bum",precio:1000,categoria:"Otros"},
+  {id:142,nombre:"Chickets",precio:400,categoria:"Otros"},
+  {id:143,nombre:"Mentas",precio:300,categoria:"Otros"},
+  {id:144,nombre:"Trindent",precio:2500,categoria:"Otros"},
+  {id:145,nombre:"Halls Barra",precio:2500,categoria:"Otros"},
+  {id:146,nombre:"Bonfiest",precio:4500,categoria:"Otros"},
+  {id:147,nombre:"Alka Seltser",precio:3500,categoria:"Otros"},
+  {id:148,nombre:"Sal de Frutas",precio:3500,categoria:"Otros"},
+  {id:149,nombre:"Decoracion",precio:35000,categoria:"Otros"},
+  /* ── Cigarrillos ── */
   {id:160,nombre:"Lucky Strike",precio:9000,categoria:"Cigarrillos"},
+  {id:161,nombre:"Rothmans Gris",precio:8000,categoria:"Cigarrillos"},
+  {id:162,nombre:"Rothmans Mentolado",precio:8000,categoria:"Cigarrillos"},
+  {id:163,nombre:"Rothmans Blanco",precio:7000,categoria:"Cigarrillos"},
+  {id:164,nombre:"Marlboro",precio:8000,categoria:"Cigarrillos"},
+  {id:165,nombre:"Piel Roja",precio:12000,categoria:"Cigarrillos"},
+  {id:166,nombre:"Cigarrillo por Unidad",precio:1000,categoria:"Cigarrillos"},
+  /* ── Aguardiente ── */
   {id:200,nombre:"Aguardiente Amarillo 375ml",precio:50000,categoria:"Aguardiente"},
   {id:201,nombre:"Aguardiente Amarillo 750ml",precio:85000,categoria:"Aguardiente"},
+  {id:202,nombre:"Antioqueño 375ml",precio:50000,categoria:"Aguardiente"},
+  {id:203,nombre:"Antioqueño 750ml",precio:85000,categoria:"Aguardiente"},
+  /* ── Ron ── */
   {id:210,nombre:"Ron Caldas 375ml",precio:50000,categoria:"Ron"},
   {id:211,nombre:"Ron Caldas 750ml",precio:85000,categoria:"Ron"},
+  {id:212,nombre:"Ron Caldas 5 Anos 375ml",precio:75000,categoria:"Ron"},
+  {id:213,nombre:"Ron Caldas 5 Anos 750ml",precio:140000,categoria:"Ron"},
+  {id:214,nombre:"Ron Caldas 8 Anos 375ml",precio:85000,categoria:"Ron"},
+  {id:215,nombre:"Ron Caldas 8 Anos 750ml",precio:160000,categoria:"Ron"},
+  /* ── Whisky ── */
   {id:220,nombre:"Buchannans Deluxe 750ml",precio:220000,categoria:"Whisky"},
+  {id:221,nombre:"Buchannans Master 750ml",precio:250000,categoria:"Whisky"},
+  {id:222,nombre:"Buchannans Two Souls 750ml",precio:260000,categoria:"Whisky"},
+  {id:223,nombre:"Buchannans 18 Anos 750ml",precio:400000,categoria:"Whisky"},
+  {id:224,nombre:"Old Par 750ml",precio:185000,categoria:"Whisky"},
+  {id:225,nombre:"Red Level 750ml",precio:98000,categoria:"Whisky"},
+  {id:226,nombre:"Chivas Regal 12 Anos",precio:195000,categoria:"Whisky"},
+  {id:227,nombre:"Chivas Regal 18 Anos",precio:440000,categoria:"Whisky"},
+  /* ── Ginebra ── */
   {id:230,nombre:"Ginebra Gordons 750ml",precio:110000,categoria:"Ginebra"},
+  /* ── Vodka ── */
   {id:240,nombre:"Smirnoff Verde 250ml",precio:12000,categoria:"Vodka"},
+  {id:241,nombre:"Smirnoff Tamarindo 750ml",precio:85000,categoria:"Vodka"},
+  {id:242,nombre:"Smirnoff de Lulo 750ml",precio:85000,categoria:"Vodka"},
+  /* ── Tequilas ── */
   {id:250,nombre:"Tequila Olmeca 750ml",precio:110000,categoria:"Tequilas"},
+  {id:251,nombre:"Jose Cuervo 70ml",precio:110000,categoria:"Tequilas"},
+  {id:252,nombre:"Centenario Reposado",precio:250000,categoria:"Tequilas"},
+  {id:253,nombre:"Centenario Blanco",precio:250000,categoria:"Tequilas"},
+  /* ── Espumosos ── */
   {id:260,nombre:"Chennet Rosada 750ml",precio:95000,categoria:"Espumosos"},
+  /* ── Crema de Whisky ── */
   {id:270,nombre:"Baileys 750ml",precio:100000,categoria:"Crema de Whisky"},
+  /* ── Vinos ── */
   {id:280,nombre:"Rosaleda Tinto",precio:40000,categoria:"Vinos"},
   {id:281,nombre:"Reservado Santa Carolina",precio:55000,categoria:"Vinos"}
 ];
@@ -773,7 +855,6 @@ function indicarSync(estado) {
 
 function guardar() { syncGuardar(); }
 
-/* Escucha cambios en otras pestañas/dispositivos */
 window.addEventListener('storage', e => {
   if (e.key === SK_SITIOS || e.key === SK_VENTAS) {
     cargarLocal(); renderMesas();
@@ -781,7 +862,6 @@ window.addEventListener('storage', e => {
   }
 });
 
-/* Polling cross-device cada 15 segundos */
 setInterval(async () => {
   if (!document.hidden) {
     await syncCargar();
@@ -866,7 +946,6 @@ function renderPanelProductos() {
   const el = document.getElementById('panelProductos');
   let prods = catalogo.filter(p=>p.precio>0);
 
-  /* Si hay búsqueda activa, filtrar por texto y mostrar flat */
   if (busqueda) {
     const q = busqueda.toLowerCase();
     prods = prods.filter(p=>p.nombre.toLowerCase().includes(q) || p.categoria.toLowerCase().includes(q));
@@ -877,12 +956,10 @@ function renderPanelProductos() {
       <div class="prod-item-add"><i class="fas fa-plus"></i></div>
     </div>`).join('');
   } else {
-    /* Por categoría agrupada */
     if (panelCatActiva!=='Todos') prods=prods.filter(p=>p.categoria===panelCatActiva);
     if (!prods.length) { el.innerHTML='<div class="panel-empty">Sin productos</div>'; return; }
 
     if (panelCatActiva==='Todos') {
-      /* Agrupar por categoría */
       const grupos = {};
       prods.forEach(p=>{ if(!grupos[p.categoria]) grupos[p.categoria]=[]; grupos[p.categoria].push(p); });
       el.innerHTML = Object.keys(grupos).sort().map(cat=>`
@@ -1078,7 +1155,6 @@ document.getElementById('btnCerrarPanel').addEventListener('click',cerrarPanel);
 document.getElementById('btnFacturar').addEventListener('click',facturar);
 document.querySelectorAll('.propina-opt').forEach(b=>b.addEventListener('click',()=>{propinaPct=parseInt(b.dataset.pct);actualizarBotonesPropina();}));
 
-/* Buscador */
 document.getElementById('buscarProducto').addEventListener('input',e=>{
   busqueda=e.target.value.trim();
   document.getElementById('btnClearSearch').classList.toggle('visible',busqueda.length>0);
