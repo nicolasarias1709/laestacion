@@ -102,6 +102,17 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .pill-btn.danger { border-color:rgba(248,113,113,0.3); color:var(--rojo); }
 .pill-btn.danger:hover { background:var(--rojo-bg); }
 
+/* ── MODO EDICIÓN TOGGLE ── */
+.edit-mode-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:10px; padding:4px 10px; border-radius:99px;
+  background:rgba(248,113,113,0.15); color:var(--rojo);
+  border:1px solid rgba(248,113,113,0.3);
+  font-weight:600; letter-spacing:0.3px;
+  animation: parpadeo 1.5s ease-in-out infinite;
+}
+@keyframes parpadeo { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
 /* ── MESAS GRID ── */
 .mesas-screen { padding:14px 16px; max-width:1400px; margin:0 auto; }
 .mesas-section-label {
@@ -126,7 +137,6 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   height:3px; border-radius:var(--r) var(--r) 0 0;
   background:var(--borde); transition:.2s;
 }
-/* LIBRE = amarillo, OCUPADA = rojo, PENDIENTE = rojo */
 .mesa-card.libre::before { background:var(--amarillo); }
 .mesa-card.ocupada::before { background:var(--rojo); }
 .mesa-card.pendiente::before { background:var(--rojo); }
@@ -138,13 +148,32 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;
   padding:2px 8px; border-radius:99px; display:inline-block; margin-bottom:6px;
 }
-/* Badge colors: libre=amarillo, ocupada=rojo, pendiente=rojo */
 .badge-libre { color:var(--amarillo); background:rgba(245,200,0,0.12); }
 .badge-ocupada { color:var(--rojo); background:var(--rojo-bg); }
 .badge-pendiente { color:var(--rojo); background:var(--rojo-bg); }
 .mesa-total { font-size:13px; font-weight:700; color:var(--amarillo); }
 .mesa-hora { font-size:8px; color:var(--blanco3); margin-top:2px; }
 .mesa-items-count { font-size:9px; color:var(--blanco3); margin-top:1px; }
+
+/* ── BOTÓN ELIMINAR MESA ── */
+.btn-eliminar-mesa {
+  position:absolute; top:6px; right:6px;
+  width:22px; height:22px; border-radius:6px;
+  background:var(--rojo-bg); border:1px solid rgba(248,113,113,0.4);
+  color:var(--rojo); font-size:10px;
+  display:none; align-items:center; justify-content:center;
+  cursor:pointer; transition:.15s; z-index:10;
+  flex-shrink:0;
+}
+.btn-eliminar-mesa:hover { background:var(--rojo); color:#fff; transform:scale(1.1); }
+.modo-edicion .mesa-card.libre .btn-eliminar-mesa { display:flex; }
+.modo-edicion .mesa-card { border-color:rgba(248,113,113,0.25); }
+.modo-edicion .mesa-card.libre { animation: wiggle 0.4s ease-in-out infinite alternate; }
+@keyframes wiggle { 0%{transform:rotate(-0.5deg)} 100%{transform:rotate(0.5deg)} }
+.modo-edicion .mesa-card.libre:hover { transform:translateY(-2px) rotate(0); animation:none; }
+/* Mesas ocupadas no vibran ni se pueden borrar en modo edicion */
+.modo-edicion .mesa-card.ocupada,
+.modo-edicion .mesa-card.pendiente { animation:none; cursor:pointer; }
 
 /* ── PANEL OVERLAY ── */
 .panel-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:500; backdrop-filter:blur(2px); }
@@ -294,6 +323,12 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .modal-btns { display:flex; gap:8px; margin-top:14px; }
 .modal-btns .pill-btn { flex:1; justify-content:center; }
 
+/* Modal eliminar sitio */
+.modal-box.danger-box { border-color:var(--rojo); }
+.modal-box.danger-box h3 { color:var(--rojo); }
+.modal-eliminar-info { background:var(--rojo-bg); border:1px solid rgba(248,113,113,0.2); border-radius:var(--r-sm); padding:10px 12px; margin-bottom:14px; font-size:12px; color:var(--blanco2); line-height:1.5; }
+.modal-eliminar-info strong { color:var(--amarillo); font-size:15px; }
+
 /* ── FACTURA ── */
 .factura-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.97); z-index:2000; overflow-y:auto; padding:20px 14px; }
 .factura-overlay.open { display:block; }
@@ -395,7 +430,6 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 @media (max-width:480px) {
   .mesas-grid { grid-template-columns:repeat(3,1fr); gap:7px; }
   .mesas-screen { padding:10px 12px; }
-  /* Header mobile: todo en una sola fila sin recortes */
   .header { padding:0 8px; gap:4px; }
   .logo-text h1 { font-size:15px; }
   .logo-icon { width:28px; height:28px; font-size:13px; }
@@ -405,7 +439,6 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 }
 @media (max-width:380px) {
   .mesas-grid { grid-template-columns:repeat(3,1fr); gap:6px; }
-  /* En pantallas muy pequeñas ocultar el texto "Café Bar" del logo */
   .logo-text h1 small { display:none; }
   .header-clock { display:none; }
 }
@@ -444,6 +477,7 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 <!-- BARRA ACCIONES -->
 <div class="actions-bar">
   <div class="abiertas-info"><strong id="countAbiertas">0</strong> mesas en uso</div>
+  <button class="pill-btn" id="btnModoEdicion" title="Eliminar sitios"><i class="fas fa-trash-alt"></i> <span id="btnModoEdicionTxt">Eliminar sitio</span></button>
   <button class="pill-btn danger" id="btnReset"><i class="fas fa-sync-alt"></i> <span>Reiniciar</span></button>
 </div>
 
@@ -526,6 +560,22 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
     <div class="modal-btns">
       <button class="pill-btn primary" id="btnGuardarSitio">Agregar</button>
       <button class="pill-btn" id="btnCancelarSitio">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ELIMINAR SITIO -->
+<div class="modal-overlay" id="modalEliminarSitio">
+  <div class="modal-box danger-box">
+    <h3><i class="fas fa-trash-alt"></i> Eliminar Sitio</h3>
+    <div class="modal-eliminar-info">
+      <strong id="eliminarSitioNombre">—</strong><br>
+      <span id="eliminarSitioDetalle">Este sitio está libre y puede eliminarse.</span>
+    </div>
+    <p style="font-size:11px;color:var(--blanco3);margin-bottom:4px;">Esta acción no se puede deshacer.</p>
+    <div class="modal-btns">
+      <button class="pill-btn danger" id="btnConfirmarEliminar"><i class="fas fa-trash-alt"></i> Sí, eliminar</button>
+      <button class="pill-btn" id="btnCancelarEliminar">Cancelar</button>
     </div>
   </div>
 </div>
@@ -769,6 +819,8 @@ let sitioActivoId = null, panelCatActiva = 'Todos';
 let propinaPct = 0, facturaTemp = null;
 let busqueda = '';
 let syncTimer = null;
+let modoEdicion = false;
+let sitioParaEliminarId = null;
 
 /* ═══ STORAGE LOCAL ═══ */
 function guardarLocal() {
@@ -791,7 +843,7 @@ function cargarLocal() {
   } catch(e) { sitios=SITIOS_DEFECTO(); ventas=[]; catalogo=[...CATALOGO_DEFECTO]; }
 }
 
-/* ═══ SINCRONIZACIÓN CROSS-DEVICE (Firebase REST API) ═══ */
+/* ═══ SINCRONIZACIÓN CROSS-DEVICE ═══ */
 async function syncGuardar() {
   clearTimeout(syncTimer);
   syncTimer = setTimeout(async () => {
@@ -805,9 +857,7 @@ async function syncGuardar() {
       });
       if (r.ok) indicarSync('ok');
       else indicarSync('error');
-    } catch(e) {
-      indicarSync('error');
-    }
+    } catch(e) { indicarSync('error'); }
   }, 600);
 }
 
@@ -825,18 +875,11 @@ async function syncCargar() {
         catalogo = data.catalogo || [...CATALOGO_DEFECTO];
         nextProdId = data.nextProdId || 300;
         localStorage.setItem('_ts', data.ts || Date.now());
-        guardarLocal();
-        indicarSync('ok');
-        return true;
+        guardarLocal(); indicarSync('ok'); return true;
       }
     }
-    indicarSync('ok');
-    return false;
-  } catch(e) {
-    cargarLocal();
-    indicarSync('error');
-    return false;
-  }
+    indicarSync('ok'); return false;
+  } catch(e) { cargarLocal(); indicarSync('error'); return false; }
 }
 
 function indicarSync(estado) {
@@ -859,8 +902,7 @@ window.addEventListener('storage', e => {
 
 setInterval(async () => {
   if (!document.hidden) {
-    await syncCargar();
-    renderMesas();
+    await syncCargar(); renderMesas();
     if (sitioActivoId) renderPanel();
   }
 }, 15000);
@@ -878,6 +920,24 @@ function sitioActivo() { return sitios.find(s=>s.id===sitioActivoId)||null; }
 function reloj() { document.getElementById('relojDisplay').textContent = new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); }
 setInterval(reloj,1000); reloj();
 
+/* ═══ MODO EDICIÓN ═══ */
+function toggleModoEdicion() {
+  modoEdicion = !modoEdicion;
+  const btn = document.getElementById('btnModoEdicion');
+  const txt = document.getElementById('btnModoEdicionTxt');
+  const screen = document.getElementById('mesasScreen');
+  if (modoEdicion) {
+    screen.classList.add('modo-edicion');
+    btn.classList.add('danger');
+    txt.textContent = 'Salir de edición';
+    toast('✏ Modo edición: toca el ✕ de una mesa libre para eliminarla', 2800);
+  } else {
+    screen.classList.remove('modo-edicion');
+    btn.classList.remove('danger');
+    txt.textContent = 'Eliminar sitio';
+  }
+}
+
 /* ═══ RENDER MESAS ═══ */
 function renderMesas() {
   const screen = document.getElementById('mesasScreen');
@@ -892,6 +952,7 @@ function renderMesas() {
       const etq  = s.estado==='libre'?'LIBRE':s.estado==='ocupada'?'OCUPADA':'PENDIENTE';
       const items = s.pedidos?s.pedidos.length:0;
       html += `<div class="mesa-card ${s.estado}" data-id="${s.id}">
+        ${s.estado==='libre' ? `<button class="btn-eliminar-mesa" data-id="${s.id}" title="Eliminar este sitio"><i class="fas fa-times"></i></button>` : ''}
         <div class="mesa-numero">${s.nombre}</div>
         <div class="mesa-tipo">${s.tipo}</div>
         <div class="mesa-estado-badge ${bCls}">${etq}</div>
@@ -903,12 +964,57 @@ function renderMesas() {
     html += '</div>';
   });
   screen.innerHTML = html;
+  if (modoEdicion) screen.classList.add('modo-edicion');
   document.getElementById('countAbiertas').textContent = sitios.filter(s=>s.estado!=='libre').length;
-  screen.querySelectorAll('.mesa-card').forEach(c=>c.addEventListener('click',()=>abrirPanel(parseInt(c.dataset.id))));
+
+  /* Eventos tarjetas */
+  screen.querySelectorAll('.mesa-card').forEach(c => {
+    c.addEventListener('click', e => {
+      /* Si el clic fue en el botón de eliminar, no abrir panel */
+      if (e.target.closest('.btn-eliminar-mesa')) return;
+      /* En modo edición no abrir panel para mesas libres */
+      if (modoEdicion && c.classList.contains('libre')) return;
+      abrirPanel(parseInt(c.dataset.id));
+    });
+  });
+
+  /* Eventos botones eliminar */
+  screen.querySelectorAll('.btn-eliminar-mesa').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = parseInt(btn.dataset.id);
+      abrirModalEliminar(id);
+    });
+  });
+}
+
+/* ═══ MODAL ELIMINAR SITIO ═══ */
+function abrirModalEliminar(id) {
+  const s = sitios.find(x=>x.id===id);
+  if (!s) return;
+  sitioParaEliminarId = id;
+  document.getElementById('eliminarSitioNombre').textContent = `${s.tipo} ${s.nombre}`;
+  document.getElementById('eliminarSitioDetalle').textContent = `Este sitio está libre y no tiene pedidos activos.`;
+  document.getElementById('modalEliminarSitio').classList.add('open');
+}
+
+function confirmarEliminarSitio() {
+  if (!sitioParaEliminarId) return;
+  const s = sitios.find(x=>x.id===sitioParaEliminarId);
+  if (!s) { sitioParaEliminarId=null; return; }
+  if (s.estado !== 'libre') { toast('⚠ Solo puedes eliminar sitios libres'); sitioParaEliminarId=null; return; }
+  const nombre = `${s.tipo} ${s.nombre}`;
+  sitios = sitios.filter(x=>x.id!==sitioParaEliminarId);
+  sitioParaEliminarId = null;
+  document.getElementById('modalEliminarSitio').classList.remove('open');
+  guardar(); renderMesas();
+  toast(`🗑 ${nombre} eliminado`);
 }
 
 /* ═══ PANEL ═══ */
 function abrirPanel(id) {
+  /* Salir de modo edición al abrir un panel */
+  if (modoEdicion) { toggleModoEdicion(); }
   sitioActivoId=id; propinaPct=0; panelCatActiva='Todos'; busqueda='';
   document.getElementById('buscarProducto').value='';
   document.getElementById('btnClearSearch').classList.remove('visible');
@@ -953,7 +1059,6 @@ function renderPanelProductos() {
   } else {
     if (panelCatActiva!=='Todos') prods=prods.filter(p=>p.categoria===panelCatActiva);
     if (!prods.length) { el.innerHTML='<div class="panel-empty">Sin productos</div>'; return; }
-
     if (panelCatActiva==='Todos') {
       const grupos = {};
       prods.forEach(p=>{ if(!grupos[p.categoria]) grupos[p.categoria]=[]; grupos[p.categoria].push(p); });
@@ -1161,6 +1266,7 @@ document.getElementById('btnClearSearch').addEventListener('click',()=>{
   renderPanelCats(); renderPanelProductos();
 });
 
+document.getElementById('btnModoEdicion').addEventListener('click', toggleModoEdicion);
 document.getElementById('btnContabilidad').addEventListener('click',mostrarContabilidad);
 document.getElementById('btnCerrarCont').addEventListener('click',()=>document.getElementById('contOverlay').classList.remove('open'));
 document.getElementById('btnAgregarProducto').addEventListener('click',()=>document.getElementById('modalProducto').classList.add('open'));
@@ -1169,9 +1275,18 @@ document.getElementById('btnGuardarProducto').addEventListener('click',agregarPr
 document.getElementById('btnAgregarSitio').addEventListener('click',()=>document.getElementById('modalSitio').classList.add('open'));
 document.getElementById('btnCancelarSitio').addEventListener('click',()=>document.getElementById('modalSitio').classList.remove('open'));
 document.getElementById('btnGuardarSitio').addEventListener('click',agregarSitio);
+
+/* Eliminar sitio */
+document.getElementById('btnConfirmarEliminar').addEventListener('click', confirmarEliminarSitio);
+document.getElementById('btnCancelarEliminar').addEventListener('click', ()=>{
+  sitioParaEliminarId=null;
+  document.getElementById('modalEliminarSitio').classList.remove('open');
+});
+
 document.getElementById('btnReset').addEventListener('click',()=>{
   if(!confirm('¿Reiniciar todas las mesas? Los pedidos actuales se perderán.'))return;
   sitios=SITIOS_DEFECTO(); nextSitioId=19; sitioActivoId=null;
+  if(modoEdicion) toggleModoEdicion();
   guardar(); cerrarPanel(); renderMesas(); toast('✓ Mesas reiniciadas');
 });
 document.getElementById('fBtnImprimir').addEventListener('click',imprimirFactura);
@@ -1186,7 +1301,8 @@ document.getElementById('btnEnviarEmail').addEventListener('click',()=>{
 document.getElementById('btnCancelarEmail').addEventListener('click',()=>{document.getElementById('modalEmail').classList.remove('open');document.getElementById('facturaOverlay').classList.add('open');});
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
-    ['contOverlay','facturaOverlay','modalProducto','modalSitio','modalEmail'].forEach(id=>{
+    if(modoEdicion) { toggleModoEdicion(); return; }
+    ['contOverlay','facturaOverlay','modalProducto','modalSitio','modalEmail','modalEliminarSitio'].forEach(id=>{
       if(document.getElementById(id).classList.contains('open')) document.getElementById(id).classList.remove('open');
     });
     cerrarPanel();
