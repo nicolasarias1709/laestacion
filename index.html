@@ -41,102 +41,42 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   padding:0 10px; height:52px;
   background:var(--amarillo);
   position:sticky; top:0; z-index:100;
-  gap:6px;
-  min-width:0;
+  gap:6px; min-width:0;
 }
 .logo-wrap { display:flex; align-items:center; gap:7px; min-width:0; flex-shrink:1; overflow:hidden; }
-.logo-icon {
-  width:32px; height:32px; background:var(--negro); border-radius:8px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:15px; color:var(--amarillo); flex-shrink:0;
-}
+.logo-icon { width:32px; height:32px; background:var(--negro); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--amarillo); flex-shrink:0; }
 .logo-text { min-width:0; overflow:hidden; }
-.logo-text h1 {
-  font-family:'Bebas Neue',sans-serif; font-size:17px;
-  color:var(--negro); letter-spacing:1px; line-height:1;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-}
+.logo-text h1 { font-family:'Bebas Neue',sans-serif; font-size:17px; color:var(--negro); letter-spacing:1px; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .logo-text span { font-size:8px; color:rgba(0,0,0,0.5); letter-spacing:1.5px; text-transform:uppercase; white-space:nowrap; }
 .header-right { display:flex; align-items:center; gap:4px; flex-shrink:0; }
-.header-clock {
-  font-size:10px; color:rgba(0,0,0,0.65);
-  background:rgba(0,0,0,0.1); border-radius:99px;
-  padding:3px 7px; white-space:nowrap; flex-shrink:0;
-}
-.sync-badge {
-  display:inline-flex; align-items:center; gap:3px;
-  font-size:9px; padding:3px 7px; border-radius:99px;
-  background:rgba(0,0,0,0.1); color:rgba(0,0,0,0.5);
-  flex-shrink:0; white-space:nowrap;
-}
+.header-clock { font-size:10px; color:rgba(0,0,0,0.65); background:rgba(0,0,0,0.1); border-radius:99px; padding:3px 7px; white-space:nowrap; flex-shrink:0; }
+.sync-badge { display:inline-flex; align-items:center; gap:3px; font-size:9px; padding:3px 7px; border-radius:99px; background:rgba(0,0,0,0.1); color:rgba(0,0,0,0.5); flex-shrink:0; white-space:nowrap; }
 .sync-dot { width:5px; height:5px; border-radius:50%; background:var(--negro); opacity:0.4; flex-shrink:0; }
 .sync-dot.ok { background:#16a34a; opacity:1; animation:pulse .8s ease-out; }
 @keyframes pulse { 0%{transform:scale(1.5);opacity:0.5} 100%{transform:scale(1);opacity:1} }
-.btn-icon-hdr {
-  width:30px; height:30px; border-radius:7px;
-  background:rgba(0,0,0,0.12); border:none;
-  color:var(--negro); font-size:13px;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; transition:.15s; flex-shrink:0;
-}
+.btn-icon-hdr { width:30px; height:30px; border-radius:7px; background:rgba(0,0,0,0.12); border:none; color:var(--negro); font-size:13px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.15s; flex-shrink:0; }
 .btn-icon-hdr:hover { background:var(--negro); color:var(--amarillo); }
 
 /* ── BARRA ACCIONES ── */
-.actions-bar {
-  display:flex; align-items:center; gap:8px;
-  padding:10px 16px; background:var(--negro2);
-  border-bottom:1px solid var(--borde); flex-wrap:wrap;
-}
+.actions-bar { display:flex; align-items:center; gap:8px; padding:10px 16px; background:var(--negro2); border-bottom:1px solid var(--borde); flex-wrap:wrap; }
 .abiertas-info { font-size:12px; color:var(--blanco3); margin-right:auto; }
 .abiertas-info strong { color:var(--amarillo); }
-.pill-btn {
-  display:flex; align-items:center; gap:6px;
-  padding:6px 13px; border-radius:99px;
-  border:1px solid var(--borde2); background:var(--negro3);
-  color:var(--blanco2); font-family:'DM Sans',sans-serif;
-  font-size:12px; font-weight:500; cursor:pointer; transition:.15s; white-space:nowrap;
-}
+.pill-btn { display:flex; align-items:center; gap:6px; padding:6px 13px; border-radius:99px; border:1px solid var(--borde2); background:var(--negro3); color:var(--blanco2); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; cursor:pointer; transition:.15s; white-space:nowrap; }
 .pill-btn:hover { border-color:var(--amarillo); color:var(--blanco); background:var(--amarillo-dim); }
 .pill-btn.primary { background:var(--amarillo); color:var(--negro); border-color:var(--amarillo); font-weight:700; }
 .pill-btn.primary:hover { background:var(--amarillo2); }
 .pill-btn.danger { border-color:rgba(248,113,113,0.3); color:var(--rojo); }
 .pill-btn.danger:hover { background:var(--rojo-bg); }
-
-/* ── MODO EDICIÓN TOGGLE ── */
-.edit-mode-badge {
-  display:inline-flex; align-items:center; gap:5px;
-  font-size:10px; padding:4px 10px; border-radius:99px;
-  background:rgba(248,113,113,0.15); color:var(--rojo);
-  border:1px solid rgba(248,113,113,0.3);
-  font-weight:600; letter-spacing:0.3px;
-  animation: parpadeo 1.5s ease-in-out infinite;
-}
+.edit-mode-badge { display:inline-flex; align-items:center; gap:5px; font-size:10px; padding:4px 10px; border-radius:99px; background:rgba(248,113,113,0.15); color:var(--rojo); border:1px solid rgba(248,113,113,0.3); font-weight:600; letter-spacing:0.3px; animation: parpadeo 1.5s ease-in-out infinite; }
 @keyframes parpadeo { 0%,100%{opacity:1} 50%{opacity:0.6} }
 
 /* ── MESAS GRID ── */
 .mesas-screen { padding:14px 16px; max-width:1400px; margin:0 auto; }
-.mesas-section-label {
-  font-family:'Bebas Neue',sans-serif; font-size:13px; color:var(--blanco3);
-  letter-spacing:3px; margin-bottom:8px; padding-left:2px;
-  display:flex; align-items:center; gap:8px;
-}
+.mesas-section-label { font-family:'Bebas Neue',sans-serif; font-size:13px; color:var(--blanco3); letter-spacing:3px; margin-bottom:8px; padding-left:2px; display:flex; align-items:center; gap:8px; }
 .mesas-section-label::after { content:''; flex:1; height:1px; background:var(--borde); }
-.mesas-grid {
-  display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
-  gap:8px; margin-bottom:20px;
-}
-.mesa-card {
-  background:var(--negro2); border:1px solid var(--borde);
-  border-radius:var(--r); padding:14px 8px 12px;
-  text-align:center; cursor:pointer;
-  transition:transform .12s, border-color .12s, background .12s;
-  position:relative; overflow:hidden;
-}
-.mesa-card::before {
-  content:''; position:absolute; top:0; left:0; right:0;
-  height:3px; border-radius:var(--r) var(--r) 0 0;
-  background:var(--borde); transition:.2s;
-}
+.mesas-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:8px; margin-bottom:20px; }
+.mesa-card { background:var(--negro2); border:1px solid var(--borde); border-radius:var(--r); padding:14px 8px 12px; text-align:center; cursor:pointer; transition:transform .12s, border-color .12s, background .12s; position:relative; overflow:hidden; }
+.mesa-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:var(--r) var(--r) 0 0; background:var(--borde); transition:.2s; }
 .mesa-card.libre::before { background:var(--amarillo); }
 .mesa-card.ocupada::before { background:var(--rojo); }
 .mesa-card.pendiente::before { background:var(--rojo); }
@@ -144,171 +84,75 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .mesa-card:active { transform:scale(0.96); }
 .mesa-numero { font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--blanco); line-height:1; margin-bottom:1px; }
 .mesa-tipo { font-size:8px; color:var(--blanco3); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
-.mesa-estado-badge {
-  font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;
-  padding:2px 8px; border-radius:99px; display:inline-block; margin-bottom:6px;
-}
+.mesa-estado-badge { font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; padding:2px 8px; border-radius:99px; display:inline-block; margin-bottom:6px; }
 .badge-libre { color:var(--amarillo); background:rgba(245,200,0,0.12); }
 .badge-ocupada { color:var(--rojo); background:var(--rojo-bg); }
 .badge-pendiente { color:var(--rojo); background:var(--rojo-bg); }
 .mesa-total { font-size:13px; font-weight:700; color:var(--amarillo); }
 .mesa-hora { font-size:8px; color:var(--blanco3); margin-top:2px; }
 .mesa-items-count { font-size:9px; color:var(--blanco3); margin-top:1px; }
-
-/* ── BOTÓN ELIMINAR MESA ── */
-.btn-eliminar-mesa {
-  position:absolute; top:6px; right:6px;
-  width:22px; height:22px; border-radius:6px;
-  background:var(--rojo-bg); border:1px solid rgba(248,113,113,0.4);
-  color:var(--rojo); font-size:10px;
-  display:none; align-items:center; justify-content:center;
-  cursor:pointer; transition:.15s; z-index:10;
-  flex-shrink:0;
-}
+.btn-eliminar-mesa { position:absolute; top:6px; right:6px; width:22px; height:22px; border-radius:6px; background:var(--rojo-bg); border:1px solid rgba(248,113,113,0.4); color:var(--rojo); font-size:10px; display:none; align-items:center; justify-content:center; cursor:pointer; transition:.15s; z-index:10; flex-shrink:0; }
 .btn-eliminar-mesa:hover { background:var(--rojo); color:#fff; transform:scale(1.1); }
 .modo-edicion .mesa-card.libre .btn-eliminar-mesa { display:flex; }
 .modo-edicion .mesa-card { border-color:rgba(248,113,113,0.25); }
 .modo-edicion .mesa-card.libre { animation: wiggle 0.4s ease-in-out infinite alternate; }
 @keyframes wiggle { 0%{transform:rotate(-0.5deg)} 100%{transform:rotate(0.5deg)} }
 .modo-edicion .mesa-card.libre:hover { transform:translateY(-2px) rotate(0); animation:none; }
-/* Mesas ocupadas no vibran ni se pueden borrar en modo edicion */
-.modo-edicion .mesa-card.ocupada,
-.modo-edicion .mesa-card.pendiente { animation:none; cursor:pointer; }
+.modo-edicion .mesa-card.ocupada, .modo-edicion .mesa-card.pendiente { animation:none; cursor:pointer; }
 
 /* ── PANEL OVERLAY ── */
 .panel-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:500; backdrop-filter:blur(2px); }
 .panel-overlay.open { display:block; }
-.mesa-panel {
-  position:fixed; top:0; right:0; bottom:0;
-  width:min(100%,460px); background:var(--negro2);
-  border-left:1px solid var(--borde); z-index:501;
-  display:flex; flex-direction:column;
-  transform:translateX(110%); transition:transform .28s cubic-bezier(.4,0,.2,1); overflow:hidden;
-}
+.mesa-panel { position:fixed; top:0; right:0; bottom:0; width:min(100%,460px); background:var(--negro2); border-left:1px solid var(--borde); z-index:501; display:flex; flex-direction:column; transform:translateX(110%); transition:transform .28s cubic-bezier(.4,0,.2,1); overflow:hidden; }
 .mesa-panel.open { transform:translateX(0); }
-
-/* Panel header */
-.panel-header {
-  display:flex; align-items:center; gap:10px;
-  padding:14px 16px; border-bottom:1px solid var(--borde);
-  background:var(--amarillo); flex-shrink:0;
-}
+.panel-header { display:flex; align-items:center; gap:10px; padding:14px 16px; border-bottom:1px solid var(--borde); background:var(--amarillo); flex-shrink:0; }
 .panel-header-info { flex:1; min-width:0; }
 .panel-header-info h2 { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--negro); letter-spacing:1px; }
 .panel-header-info span { font-size:10px; color:rgba(0,0,0,0.5); }
-.btn-close-panel {
-  width:32px; height:32px; border-radius:8px; border:none;
-  background:rgba(0,0,0,0.15); color:var(--negro);
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; transition:.15s; flex-shrink:0; font-size:13px;
-}
+.btn-close-panel { width:32px; height:32px; border-radius:8px; border:none; background:rgba(0,0,0,0.15); color:var(--negro); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.15s; flex-shrink:0; font-size:13px; }
 .btn-close-panel:hover { background:var(--negro); color:var(--amarillo); }
-
-/* ── BUSCADOR PANEL ── */
-.panel-search-wrap {
-  padding:10px 12px 0; flex-shrink:0; background:var(--negro2);
-}
-.panel-search {
-  display:flex; align-items:center; gap:8px;
-  background:var(--negro3); border:1px solid var(--borde2);
-  border-radius:var(--r-sm); padding:7px 12px;
-  transition:.15s;
-}
+.panel-search-wrap { padding:10px 12px 0; flex-shrink:0; background:var(--negro2); }
+.panel-search { display:flex; align-items:center; gap:8px; background:var(--negro3); border:1px solid var(--borde2); border-radius:var(--r-sm); padding:7px 12px; transition:.15s; }
 .panel-search:focus-within { border-color:var(--amarillo); }
 .panel-search i { color:var(--blanco3); font-size:12px; }
-.panel-search input {
-  flex:1; background:none; border:none; color:var(--blanco);
-  font-family:'DM Sans',sans-serif; font-size:13px;
-  outline:none;
-}
+.panel-search input { flex:1; background:none; border:none; color:var(--blanco); font-family:'DM Sans',sans-serif; font-size:13px; outline:none; }
 .panel-search input::placeholder { color:var(--blanco3); }
-.btn-clear-search {
-  background:none; border:none; color:var(--blanco3);
-  cursor:pointer; font-size:12px; padding:2px; display:none;
-}
+.btn-clear-search { background:none; border:none; color:var(--blanco3); cursor:pointer; font-size:12px; padding:2px; display:none; }
 .btn-clear-search.visible { display:block; }
-
-/* ── CATS ── */
-.panel-cats {
-  display:flex; gap:5px; padding:8px 12px 8px;
-  overflow-x:auto; flex-shrink:0;
-  -webkit-overflow-scrolling:touch;
-}
+.panel-cats { display:flex; gap:5px; padding:8px 12px 8px; overflow-x:auto; flex-shrink:0; -webkit-overflow-scrolling:touch; }
 .panel-cats::-webkit-scrollbar { display:none; }
-.cat-chip {
-  padding:4px 11px; border-radius:99px; border:1px solid var(--borde2);
-  background:var(--negro3); color:var(--blanco3);
-  font-size:10px; font-weight:600; cursor:pointer; transition:.12s;
-  white-space:nowrap; font-family:'DM Sans',sans-serif; text-transform:uppercase; letter-spacing:0.5px;
-}
+.cat-chip { padding:4px 11px; border-radius:99px; border:1px solid var(--borde2); background:var(--negro3); color:var(--blanco3); font-size:10px; font-weight:600; cursor:pointer; transition:.12s; white-space:nowrap; font-family:'DM Sans',sans-serif; text-transform:uppercase; letter-spacing:0.5px; }
 .cat-chip.active { background:var(--amarillo); color:var(--negro); border-color:var(--amarillo); }
 .cat-chip:hover:not(.active) { border-color:var(--amarillo); color:var(--blanco); }
-
-/* ── PRODUCTOS LISTA ── */
-.panel-productos {
-  flex:1; overflow-y:auto; padding:0 12px 8px;
-}
-.prod-item {
-  display:flex; align-items:center; gap:10px;
-  padding:9px 10px; border-radius:var(--r-sm);
-  cursor:pointer; transition:.12s; border:1px solid transparent;
-  margin-bottom:3px;
-}
+.panel-productos { flex:1; overflow-y:auto; padding:0 12px 8px; }
+.prod-item { display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:var(--r-sm); cursor:pointer; transition:.12s; border:1px solid transparent; margin-bottom:3px; }
 .prod-item:hover { background:var(--negro3); border-color:var(--borde); }
 .prod-item:active { background:var(--amarillo-dim); border-color:var(--amarillo); transform:scale(0.99); }
 .prod-item-nombre { flex:1; font-size:13px; font-weight:500; color:var(--blanco); line-height:1.3; min-width:0; }
 .prod-item-cat { font-size:9px; color:var(--blanco3); text-transform:uppercase; letter-spacing:0.5px; }
 .prod-item-precio { font-size:13px; font-weight:700; color:var(--amarillo); white-space:nowrap; }
-.prod-item-add {
-  width:24px; height:24px; border-radius:6px;
-  background:var(--amarillo-dim); color:var(--amarillo);
-  display:flex; align-items:center; justify-content:center;
-  font-size:12px; flex-shrink:0; transition:.12s;
-}
+.prod-item-add { width:24px; height:24px; border-radius:6px; background:var(--amarillo-dim); color:var(--amarillo); display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; transition:.12s; }
 .prod-item:hover .prod-item-add { background:var(--amarillo); color:var(--negro); }
-.cat-group-label {
-  font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:2px;
-  color:var(--blanco3); padding:10px 2px 4px;
-  border-bottom:1px solid var(--borde); margin-bottom:4px;
-}
-.panel-empty {
-  padding:40px 20px; text-align:center; color:var(--blanco3); font-size:13px;
-}
-
-/* ── CUENTA ── */
-.panel-cuenta {
-  flex-shrink:0; padding:12px 16px; border-top:2px solid var(--amarillo);
-  background:var(--negro); max-height:52vh; overflow-y:auto;
-}
+.cat-group-label { font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:2px; color:var(--blanco3); padding:10px 2px 4px; border-bottom:1px solid var(--borde); margin-bottom:4px; }
+.panel-empty { padding:40px 20px; text-align:center; color:var(--blanco3); font-size:13px; }
+.panel-cuenta { flex-shrink:0; padding:12px 16px; border-top:2px solid var(--amarillo); background:var(--negro); max-height:52vh; overflow-y:auto; }
 .cuenta-titulo { font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--blanco3); margin-bottom:8px; display:flex; align-items:center; gap:5px; }
 .cuenta-lista { margin-bottom:8px; }
-.cuenta-item {
-  display:flex; align-items:center; gap:8px;
-  padding:6px 0; border-bottom:1px solid var(--borde); font-size:12px;
-}
+.cuenta-item { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid var(--borde); font-size:12px; }
 .cuenta-item-nombre { flex:1; min-width:0; }
 .cuenta-item-nombre strong { display:block; font-size:13px; }
 .cuenta-item-nombre span { font-size:10px; color:var(--blanco3); }
 .cuenta-item-precio { font-weight:700; white-space:nowrap; color:var(--blanco2); font-size:13px; }
 .btn-quitar { background:none; border:none; color:var(--blanco3); cursor:pointer; padding:3px 4px; font-size:12px; border-radius:5px; transition:.12s; flex-shrink:0; }
 .btn-quitar:hover { color:var(--rojo); background:var(--rojo-bg); }
-
-/* Propina */
 .propina-wrap { background:var(--negro3); border:1px solid var(--borde); border-radius:var(--r-sm); padding:9px 11px; margin-bottom:9px; }
 .propina-label { font-size:10px; color:var(--blanco3); margin-bottom:6px; }
 .propina-btns { display:flex; gap:5px; flex-wrap:wrap; }
 .propina-opt { padding:3px 10px; border-radius:99px; border:1px solid var(--borde2); background:var(--negro4); color:var(--blanco3); font-size:10px; font-weight:700; cursor:pointer; transition:.12s; font-family:'DM Sans',sans-serif; }
 .propina-opt.active { border-color:var(--amarillo); color:var(--amarillo); background:var(--amarillo-dim); }
-
-/* Totales */
 .total-row { display:flex; justify-content:space-between; font-size:11px; color:var(--blanco3); margin-bottom:2px; }
 .total-final { display:flex; justify-content:space-between; align-items:baseline; font-size:22px; font-weight:700; color:var(--amarillo); font-family:'Bebas Neue',sans-serif; margin-top:5px; letter-spacing:1px; }
-.btn-facturar {
-  width:100%; padding:13px; border-radius:99px; border:none;
-  background:var(--amarillo); color:var(--negro);
-  font-family:'Bebas Neue',sans-serif; font-size:17px; font-weight:400;
-  letter-spacing:1.5px; cursor:pointer; transition:.15s; margin-top:10px;
-}
+.btn-facturar { width:100%; padding:13px; border-radius:99px; border:none; background:var(--amarillo); color:var(--negro); font-family:'Bebas Neue',sans-serif; font-size:17px; font-weight:400; letter-spacing:1.5px; cursor:pointer; transition:.15s; margin-top:10px; }
 .btn-facturar:hover:not(:disabled) { background:var(--amarillo2); }
 .btn-facturar:active:not(:disabled) { transform:scale(0.98); }
 .btn-facturar:disabled { opacity:0.3; cursor:not-allowed; }
@@ -322,8 +166,6 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .modal-input:focus { outline:none; border-color:var(--amarillo); }
 .modal-btns { display:flex; gap:8px; margin-top:14px; }
 .modal-btns .pill-btn { flex:1; justify-content:center; }
-
-/* Modal eliminar sitio */
 .modal-box.danger-box { border-color:var(--rojo); }
 .modal-box.danger-box h3 { color:var(--rojo); }
 .modal-eliminar-info { background:var(--rojo-bg); border:1px solid rgba(248,113,113,0.2); border-radius:var(--r-sm); padding:10px 12px; margin-bottom:14px; font-size:12px; color:var(--blanco2); line-height:1.5; }
@@ -371,62 +213,258 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .tk-footer p { font-size:10px; color:#555; margin-bottom:2px; }
 .tk-footer .gracias { font-size:13px; font-weight:bold; color:#111; }
 
-/* ── CONTABILIDAD ── */
-.cont-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.98); z-index:3000; overflow-y:auto; padding:20px 14px; }
+/* ═══════════════════════════════════════════
+   CONTABILIDAD — DISEÑO PROFESIONAL NUEVO
+   ═══════════════════════════════════════════ */
+.cont-overlay {
+  display:none; position:fixed; inset:0;
+  background:#080808; z-index:3000;
+  overflow-y:auto; padding:0;
+}
 .cont-overlay.open { display:block; }
-.cont-inner { max-width:1300px; margin:0 auto; }
-.cont-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:20px; }
-.cont-header h2 { font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--amarillo); letter-spacing:1.5px; }
-.cont-header p { font-size:11px; color:var(--blanco3); margin-top:2px; }
-.cont-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:20px; }
-.cont-stat { background:var(--negro3); border:1px solid var(--borde); border-radius:var(--r); padding:14px; }
-.cont-stat-label { font-size:9px; text-transform:uppercase; letter-spacing:1.5px; color:var(--blanco3); margin-bottom:5px; }
-.cont-stat-value { font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--amarillo); letter-spacing:1px; }
-.cont-stat-sub { font-size:10px; color:var(--blanco3); margin-top:2px; }
-.cont-top { background:var(--negro3); border:1px solid var(--borde); border-radius:var(--r); padding:16px; margin-bottom:16px; }
-.cont-top h3 { font-family:'Bebas Neue',sans-serif; font-size:15px; color:var(--blanco2); margin-bottom:12px; letter-spacing:1px; }
-.tp-item { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
-.tp-rank { font-family:'Bebas Neue',sans-serif; font-size:16px; color:var(--borde2); font-weight:700; width:22px; text-align:center; }
-.tp-info { flex:1; }
-.tp-nombre { font-size:12px; font-weight:600; }
-.tp-bar-wrap { background:var(--negro4); height:3px; border-radius:4px; margin-top:3px; }
+
+/* Header contabilidad */
+.cont-topbar {
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 24px;
+  background:rgba(8,8,8,0.95);
+  border-bottom:1px solid var(--borde);
+  backdrop-filter:blur(12px);
+  gap:12px; flex-wrap:wrap;
+}
+.cont-topbar-left h2 {
+  font-family:'Bebas Neue',sans-serif; font-size:22px;
+  color:var(--amarillo); letter-spacing:2px; line-height:1;
+}
+.cont-topbar-left p { font-size:10px; color:var(--blanco3); margin-top:2px; letter-spacing:0.5px; }
+.cont-topbar-right { display:flex; align-items:center; gap:8px; }
+
+/* Tab nav */
+.cont-tabs {
+  display:flex; gap:2px; padding:0 24px;
+  border-bottom:1px solid var(--borde);
+  background:#080808;
+}
+.cont-tab {
+  padding:10px 18px; font-size:12px; font-weight:600;
+  color:var(--blanco3); cursor:pointer; border:none;
+  background:none; border-bottom:2px solid transparent;
+  transition:.15s; font-family:'DM Sans',sans-serif;
+  letter-spacing:0.3px; white-space:nowrap;
+}
+.cont-tab.active { color:var(--amarillo); border-bottom-color:var(--amarillo); }
+.cont-tab:hover:not(.active) { color:var(--blanco2); }
+
+/* Tab content */
+.cont-tab-content { display:none; padding:20px 24px; max-width:1400px; margin:0 auto; }
+.cont-tab-content.active { display:block; }
+
+/* ── KPI row ── */
+.cont-kpis {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px; margin-bottom:24px;
+}
+.kpi-card {
+  background:var(--negro3);
+  border:1px solid var(--borde);
+  border-radius:12px; padding:16px 18px;
+  position:relative; overflow:hidden;
+  transition:.15s;
+}
+.kpi-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:var(--amarillo); opacity:0.5;
+}
+.kpi-card.accent::before { opacity:1; }
+.kpi-label { font-size:9px; text-transform:uppercase; letter-spacing:2px; color:var(--blanco3); margin-bottom:8px; }
+.kpi-value { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--amarillo); letter-spacing:1px; line-height:1; }
+.kpi-value.small { font-size:20px; }
+.kpi-sub { font-size:10px; color:var(--blanco3); margin-top:4px; }
+.kpi-trend { position:absolute; top:14px; right:14px; font-size:9px; font-weight:700; padding:2px 7px; border-radius:99px; }
+.kpi-trend.up { background:var(--verde-bg); color:var(--verde); }
+.kpi-trend.neutral { background:var(--negro4); color:var(--blanco3); }
+
+/* ── HOY: panel especial ── */
+.hoy-panel {
+  background:linear-gradient(135deg, #161200 0%, #1a1500 100%);
+  border:1px solid rgba(245,200,0,0.3);
+  border-radius:16px; padding:20px; margin-bottom:24px;
+}
+.hoy-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:16px; flex-wrap:wrap; gap:10px;
+}
+.hoy-title {
+  display:flex; align-items:center; gap:10px;
+}
+.hoy-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:var(--verde); flex-shrink:0;
+  box-shadow:0 0 8px var(--verde);
+  animation: livepulse 2s ease-in-out infinite;
+}
+@keyframes livepulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+.hoy-title h3 {
+  font-family:'Bebas Neue',sans-serif; font-size:18px;
+  color:var(--amarillo); letter-spacing:1.5px;
+}
+.hoy-title span { font-size:10px; color:var(--blanco3); }
+.hoy-total-big {
+  font-family:'Bebas Neue',sans-serif; font-size:36px;
+  color:var(--amarillo); letter-spacing:2px; line-height:1;
+}
+.hoy-stats-row {
+  display:flex; gap:16px; margin-bottom:14px; flex-wrap:wrap;
+}
+.hoy-stat { background:rgba(0,0,0,0.3); border-radius:8px; padding:8px 14px; }
+.hoy-stat-label { font-size:8px; text-transform:uppercase; letter-spacing:1.5px; color:var(--blanco3); }
+.hoy-stat-val { font-size:16px; font-weight:700; color:var(--blanco); margin-top:2px; }
+.hoy-stat-val.am { color:var(--amarillo); }
+
+/* Tabla de transacciones del día */
+.hoy-txs-wrap { overflow:hidden; }
+.hoy-txs-header {
+  display:grid; grid-template-columns:1fr 90px 80px 80px 60px;
+  gap:8px; padding:6px 10px;
+  font-size:9px; text-transform:uppercase; letter-spacing:1px;
+  color:var(--blanco3); border-bottom:1px solid var(--borde);
+}
+.hoy-tx-row {
+  display:grid; grid-template-columns:1fr 90px 80px 80px 60px;
+  gap:8px; padding:8px 10px;
+  border-bottom:1px solid rgba(42,42,42,0.5);
+  align-items:center; transition:.12s;
+}
+.hoy-tx-row:hover { background:rgba(245,200,0,0.04); }
+.hoy-tx-row:last-child { border-bottom:none; }
+.hoy-tx-sitio { font-size:12px; font-weight:600; color:var(--amarillo); }
+.hoy-tx-hora { font-size:11px; color:var(--blanco3); }
+.hoy-tx-items { font-size:11px; color:var(--blanco2); }
+.hoy-tx-total { font-size:13px; font-weight:700; color:var(--blanco); }
+.hoy-tx-actions { display:flex; gap:4px; justify-content:flex-end; }
+.btn-tx-edit, .btn-tx-del {
+  width:24px; height:24px; border-radius:6px; border:none;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:10px; transition:.12s;
+}
+.btn-tx-edit { background:rgba(245,200,0,0.1); color:var(--amarillo); }
+.btn-tx-edit:hover { background:var(--amarillo); color:var(--negro); }
+.btn-tx-del { background:var(--rojo-bg); color:var(--rojo); }
+.btn-tx-del:hover { background:var(--rojo); color:#fff; }
+.hoy-empty { padding:24px; text-align:center; color:var(--blanco3); font-size:12px; }
+
+/* ── MESES: grid limpio ── */
+.meses-year-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:12px;
+}
+.mes-pro-card {
+  background:var(--negro3); border:1px solid var(--borde);
+  border-radius:14px; overflow:hidden;
+  transition:border-color .2s;
+  cursor:pointer;
+}
+.mes-pro-card:hover { border-color:var(--borde2); }
+.mes-pro-card.activo { border-color:rgba(245,200,0,0.25); }
+.mes-pro-head {
+  padding:14px 16px 10px;
+  display:flex; align-items:flex-start; justify-content:space-between;
+}
+.mes-pro-nombre {
+  font-family:'Bebas Neue',sans-serif; font-size:16px;
+  color:var(--blanco2); letter-spacing:1.5px;
+}
+.mes-pro-badge {
+  font-size:9px; padding:2px 9px; border-radius:99px; font-weight:700;
+}
+.mes-pro-badge.ok { background:var(--verde-bg); color:var(--verde); }
+.mes-pro-badge.no { background:var(--negro4); color:var(--blanco3); }
+.mes-pro-total {
+  font-family:'Bebas Neue',sans-serif; font-size:24px;
+  color:var(--amarillo); letter-spacing:1px; padding:0 16px 4px;
+}
+.mes-pro-meta {
+  display:flex; gap:16px; padding:0 16px 12px;
+  font-size:10px; color:var(--blanco3);
+}
+.mes-pro-bar-wrap {
+  height:3px; background:var(--negro4);
+  margin:0 0 12px;
+}
+.mes-pro-bar { height:100%; background:var(--amarillo); border-radius:0; transition:width .6s; }
+
+/* Top 3 productos del mes — pequeño */
+.mes-top3 { padding:0 16px 14px; }
+.mes-top3-label { font-size:9px; text-transform:uppercase; letter-spacing:1.5px; color:var(--blanco3); margin-bottom:6px; }
+.mes-top3-item {
+  display:flex; align-items:center; gap:6px;
+  margin-bottom:4px; font-size:11px;
+}
+.mes-top3-rank { font-family:'Bebas Neue',sans-serif; font-size:11px; color:var(--borde2); width:14px; text-align:center; }
+.mes-top3-name { flex:1; color:var(--blanco2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.mes-top3-val { color:var(--amarillo); font-weight:700; white-space:nowrap; }
+
+/* ── TOP PRODUCTOS global ── */
+.top-prods-section { margin-bottom:24px; }
+.section-title {
+  font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:2px;
+  color:var(--blanco3); margin-bottom:12px;
+  display:flex; align-items:center; gap:8px;
+}
+.section-title::after { content:''; flex:1; height:1px; background:var(--borde); }
+.top-prod-list { display:flex; flex-direction:column; gap:6px; }
+.tp-row {
+  display:flex; align-items:center; gap:10px;
+  background:var(--negro3); border:1px solid var(--borde);
+  border-radius:10px; padding:10px 14px;
+}
+.tp-rank { font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--borde2); width:24px; text-align:center; flex-shrink:0; }
+.tp-info { flex:1; min-width:0; }
+.tp-nombre { font-size:13px; font-weight:600; }
+.tp-cat { font-size:9px; color:var(--blanco3); text-transform:uppercase; letter-spacing:0.5px; }
+.tp-bar-wrap { height:2px; background:var(--negro4); border-radius:4px; margin-top:4px; }
 .tp-bar { height:100%; background:var(--amarillo); border-radius:4px; }
-.tp-total { font-size:12px; font-weight:700; color:var(--amarillo); white-space:nowrap; }
-.cont-meses { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
-.mes-card { background:var(--negro3); border:1px solid var(--borde); border-radius:var(--r); padding:14px; }
-.mes-card.activo { border-color:var(--borde2); }
-.mes-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
-.mes-nombre { font-family:'Bebas Neue',sans-serif; font-size:15px; color:var(--blanco2); letter-spacing:1px; }
-.mes-badge { font-size:9px; padding:2px 8px; border-radius:99px; }
-.mes-badge.ok { background:var(--verde-bg); color:var(--verde); }
-.mes-badge.no { background:var(--negro4); color:var(--blanco3); }
-.mes-total { font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--amarillo); margin-bottom:2px; letter-spacing:1px; }
-.mes-count { font-size:10px; color:var(--blanco3); margin-bottom:8px; }
-.mes-bar { background:var(--negro4); border-radius:6px; height:4px; margin-bottom:8px; overflow:hidden; }
-.mes-bar-fill { height:100%; background:var(--amarillo); border-radius:6px; }
-.mes-trans { max-height:130px; overflow-y:auto; }
-.mes-trans-item { display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px solid var(--borde); font-size:9px; gap:5px; }
-.mti-sitio { color:var(--amarillo); font-weight:600; white-space:nowrap; }
-.mti-fecha { color:var(--blanco3); white-space:nowrap; }
-.mti-total { color:var(--blanco); font-weight:600; white-space:nowrap; }
-.muted { color:var(--blanco3); font-size:10px; font-style:italic; text-align:center; padding:8px 0; }
+.tp-qty { font-size:10px; color:var(--blanco3); white-space:nowrap; }
+.tp-total { font-size:13px; font-weight:700; color:var(--amarillo); white-space:nowrap; }
+
+/* ── MODAL EDITAR VENTA ── */
+.modal-box.edit-venta { max-width:480px; border-color:var(--amarillo); }
+.ev-lista { max-height:260px; overflow-y:auto; margin-bottom:12px; }
+.ev-item {
+  display:flex; align-items:center; gap:8px;
+  padding:7px 0; border-bottom:1px solid var(--borde);
+  font-size:12px;
+}
+.ev-item-nombre { flex:1; }
+.ev-item-nombre strong { display:block; font-size:13px; }
+.ev-item-nombre small { color:var(--blanco3); font-size:10px; }
+.ev-item-precio { font-weight:700; color:var(--amarillo); white-space:nowrap; }
+.ev-item-del { background:none; border:none; color:var(--blanco3); cursor:pointer; padding:4px; border-radius:5px; transition:.12s; }
+.ev-item-del:hover { color:var(--rojo); background:var(--rojo-bg); }
+.ev-agregar { width:100%; padding:8px; background:var(--amarillo-dim); border:1px dashed rgba(245,200,0,0.4); border-radius:var(--r-sm); color:var(--amarillo); font-size:11px; font-family:'DM Sans',sans-serif; cursor:pointer; transition:.12s; margin-top:4px; }
+.ev-agregar:hover { background:var(--amarillo); color:var(--negro); }
+.ev-total-row { display:flex; justify-content:space-between; padding:10px 0 0; font-size:14px; font-weight:700; border-top:1px solid var(--borde); }
+.ev-total-row span:last-child { color:var(--amarillo); }
+
+/* ── TOAST ── */
+#toast { position:fixed; bottom:18px; left:50%; transform:translateX(-50%) translateY(70px); background:var(--amarillo); color:var(--negro); padding:8px 18px; border-radius:99px; font-size:12px; font-weight:700; z-index:9999; transition:transform .25s; white-space:nowrap; pointer-events:none; box-shadow:0 8px 24px rgba(0,0,0,0.5); }
+#toast.show { transform:translateX(-50%) translateY(0); }
 
 /* ── EMAIL BOX ── */
 .email-box { max-width:360px; }
 .email-box p { font-size:12px; color:var(--blanco3); margin-bottom:12px; line-height:1.5; }
 
-/* ── TOAST ── */
-#toast {
-  position:fixed; bottom:18px; left:50%;
-  transform:translateX(-50%) translateY(70px);
-  background:var(--amarillo); color:var(--negro);
-  padding:8px 18px; border-radius:99px; font-size:12px; font-weight:700;
-  z-index:9999; transition:transform .25s; white-space:nowrap; pointer-events:none;
-  box-shadow:0 8px 24px rgba(0,0,0,0.5);
-}
-#toast.show { transform:translateX(-50%) translateY(0); }
-
 /* ── RESPONSIVE ── */
+@media (max-width:600px) {
+  .cont-tab-content { padding:14px 14px; }
+  .cont-topbar { padding:12px 14px; }
+  .cont-tabs { padding:0 14px; }
+  .hoy-txs-header, .hoy-tx-row { grid-template-columns:1fr 70px 70px 60px; }
+  .hoy-txs-header .col-items, .hoy-tx-row .col-items { display:none; }
+  .kpi-value { font-size:22px; }
+  .hoy-total-big { font-size:28px; }
+}
 @media (max-width:480px) {
   .mesas-grid { grid-template-columns:repeat(3,1fr); gap:7px; }
   .mesas-screen { padding:10px 12px; }
@@ -436,15 +474,14 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   .sync-badge { font-size:8px; padding:2px 5px; }
   .header-clock { font-size:9px; padding:2px 6px; }
   .btn-icon-hdr { width:28px; height:28px; font-size:12px; }
+  .meses-year-grid { grid-template-columns:1fr; }
 }
 @media (max-width:380px) {
   .mesas-grid { grid-template-columns:repeat(3,1fr); gap:6px; }
   .logo-text h1 small { display:none; }
   .header-clock { display:none; }
 }
-@media (max-width:340px) {
-  .mesas-grid { grid-template-columns:repeat(2,1fr); }
-}
+@media (max-width:340px) { .mesas-grid { grid-template-columns:repeat(2,1fr); } }
 
 @media print {
   body * { visibility:hidden; }
@@ -477,7 +514,7 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 <!-- BARRA ACCIONES -->
 <div class="actions-bar">
   <div class="abiertas-info"><strong id="countAbiertas">0</strong> mesas en uso</div>
-  <button class="pill-btn" id="btnModoEdicion" title="Eliminar sitios"><i class="fas fa-trash-alt"></i> <span id="btnModoEdicionTxt">Eliminar sitio</span></button>
+  <button class="pill-btn" id="btnModoEdicion"><i class="fas fa-trash-alt"></i> <span id="btnModoEdicionTxt">Eliminar sitio</span></button>
   <button class="pill-btn danger" id="btnReset"><i class="fas fa-sync-alt"></i> <span>Reiniciar</span></button>
 </div>
 
@@ -494,8 +531,6 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
     </div>
     <button class="btn-close-panel" id="btnCerrarPanel"><i class="fas fa-times"></i></button>
   </div>
-
-  <!-- BUSCADOR -->
   <div class="panel-search-wrap">
     <div class="panel-search">
       <i class="fas fa-search"></i>
@@ -503,14 +538,8 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
       <button class="btn-clear-search" id="btnClearSearch"><i class="fas fa-times"></i></button>
     </div>
   </div>
-
-  <!-- CATEGORIAS -->
   <div class="panel-cats" id="panelCats"></div>
-
-  <!-- LISTA PRODUCTOS -->
   <div class="panel-productos" id="panelProductos"></div>
-
-  <!-- CUENTA -->
   <div class="panel-cuenta" id="panelCuenta">
     <div class="cuenta-titulo"><i class="fas fa-receipt" style="color:var(--amarillo);"></i> Cuenta actual</div>
     <div class="cuenta-lista" id="cuentaLista"><div class="muted">Sin productos</div></div>
@@ -593,6 +622,37 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   </div>
 </div>
 
+<!-- MODAL: EDITAR VENTA -->
+<div class="modal-overlay" id="modalEditarVenta">
+  <div class="modal-box edit-venta">
+    <h3><i class="fas fa-pen"></i> Editar Venta</h3>
+    <div style="font-size:11px;color:var(--blanco3);margin-bottom:12px;" id="evInfoHeader">—</div>
+    <div class="ev-lista" id="evLista"></div>
+    <div class="ev-total-row">
+      <span>Total de la venta</span>
+      <span id="evTotalDisplay">$0</span>
+    </div>
+    <div class="modal-btns" style="margin-top:14px;">
+      <button class="pill-btn primary" id="btnGuardarEdicionVenta"><i class="fas fa-check"></i> Guardar cambios</button>
+      <button class="pill-btn" id="btnCancelarEdicionVenta">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: AGREGAR ITEM A VENTA -->
+<div class="modal-overlay" id="modalAgregarItemVenta">
+  <div class="modal-box">
+    <h3><i class="fas fa-plus"></i> Agregar producto</h3>
+    <input class="modal-input" type="text" id="aiNombre" placeholder="Nombre del producto" autocomplete="off">
+    <input class="modal-input" type="number" id="aiCantidad" placeholder="Cantidad" value="1" min="1">
+    <input class="modal-input" type="number" id="aiPrecio" placeholder="Precio unitario (COP)">
+    <div class="modal-btns">
+      <button class="pill-btn primary" id="btnConfirmarAgregarItem">Agregar</button>
+      <button class="pill-btn" id="btnCancelarAgregarItem">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 <!-- FACTURA -->
 <div class="factura-overlay" id="facturaOverlay">
   <div class="factura-inner">
@@ -619,19 +679,96 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   </div>
 </div>
 
-<!-- CONTABILIDAD -->
+<!-- ═══ CONTABILIDAD ═══ -->
 <div class="cont-overlay" id="contOverlay">
-  <div class="cont-inner">
-    <div class="cont-header">
-      <div>
-        <h2><i class="fas fa-chart-bar" style="margin-right:8px;"></i>Contabilidad · Ventas</h2>
-        <p>Registro de ventas mensuales <span id="anioLabel"></span></p>
-      </div>
-      <button class="pill-btn" id="btnCerrarCont"><i class="fas fa-times"></i> Cerrar</button>
+  <!-- Top bar -->
+  <div class="cont-topbar">
+    <div class="cont-topbar-left">
+      <h2><i class="fas fa-chart-bar" style="margin-right:8px;font-size:16px;"></i>CONTABILIDAD</h2>
+      <p>La Estación Café Bar · <span id="anioLabel"></span></p>
     </div>
-    <div class="cont-stats" id="contStats"></div>
-    <div class="cont-top" id="contTop"></div>
-    <div class="cont-meses" id="contMeses"></div>
+    <div class="cont-topbar-right">
+      <button class="pill-btn" id="btnExportarCSV"><i class="fas fa-download"></i> Exportar CSV</button>
+      <button class="pill-btn danger" id="btnCerrarCont"><i class="fas fa-times"></i> Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="cont-tabs">
+    <button class="cont-tab active" data-tab="hoy">Hoy</button>
+    <button class="cont-tab" data-tab="resumen">Resumen anual</button>
+    <button class="cont-tab" data-tab="meses">Por mes</button>
+    <button class="cont-tab" data-tab="productos">Productos</button>
+  </div>
+
+  <!-- TAB: HOY -->
+  <div class="cont-tab-content active" id="tab-hoy">
+    <div class="hoy-panel">
+      <div class="hoy-header">
+        <div class="hoy-title">
+          <div class="hoy-dot"></div>
+          <div>
+            <h3>VENTAS DE HOY</h3>
+            <span id="hoyFechaLabel">—</span>
+          </div>
+        </div>
+        <div class="hoy-total-big" id="hoyTotalBig">$0</div>
+      </div>
+      <div class="hoy-stats-row">
+        <div class="hoy-stat">
+          <div class="hoy-stat-label">Transacciones</div>
+          <div class="hoy-stat-val am" id="hoyCount">0</div>
+        </div>
+        <div class="hoy-stat">
+          <div class="hoy-stat-label">Ticket promedio</div>
+          <div class="hoy-stat-val" id="hoyPromedio">$0</div>
+        </div>
+        <div class="hoy-stat">
+          <div class="hoy-stat-label">Propinas</div>
+          <div class="hoy-stat-val" id="hoyPropinas">$0</div>
+        </div>
+        <div class="hoy-stat">
+          <div class="hoy-stat-label">Productos vendidos</div>
+          <div class="hoy-stat-val" id="hoyProductos">0</div>
+        </div>
+      </div>
+      <!-- Tabla transacciones -->
+      <div class="hoy-txs-wrap" id="hoyTxsWrap">
+        <div class="hoy-txs-header">
+          <span>Sitio</span>
+          <span>Hora</span>
+          <span class="col-items">Productos</span>
+          <span>Total</span>
+          <span></span>
+        </div>
+        <div id="hoyTxsList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: RESUMEN ANUAL -->
+  <div class="cont-tab-content" id="tab-resumen">
+    <div class="cont-kpis" id="contKpis"></div>
+    <div class="top-prods-section">
+      <div class="section-title"><i class="fas fa-trophy" style="color:var(--amarillo);font-size:11px;"></i> Top 10 productos del año</div>
+      <div class="top-prod-list" id="topProdList"></div>
+    </div>
+  </div>
+
+  <!-- TAB: MESES -->
+  <div class="cont-tab-content" id="tab-meses">
+    <div class="meses-year-grid" id="mesesGrid"></div>
+  </div>
+
+  <!-- TAB: PRODUCTOS -->
+  <div class="cont-tab-content" id="tab-productos">
+    <div style="margin-bottom:12px;">
+      <div class="panel-search" style="max-width:340px;">
+        <i class="fas fa-search"></i>
+        <input type="text" id="buscarProdCont" placeholder="Buscar producto…" style="flex:1;background:none;border:none;color:var(--blanco);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;">
+      </div>
+    </div>
+    <div id="prodContTable"></div>
   </div>
 </div>
 
@@ -667,7 +804,6 @@ const SITIOS_DEFECTO = () => [
   {id:18,tipo:"Afuera",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null}
 ];
 
-/* ═══ CATÁLOGO COMPLETO ═══ */
 const CATALOGO_DEFECTO = [
   {id:1,nombre:"Tinto o Americano",precio:4000,categoria:"Bebidas Calientes"},
   {id:2,nombre:"Americano con Licor",precio:7000,categoria:"Bebidas Calientes"},
@@ -813,14 +949,16 @@ const CATALOGO_DEFECTO = [
 ];
 
 /* ═══ ESTADO ═══ */
-let sitios = [], ventas = [], catalogo = [];
-let nextSitioId = 19, nextProdId = 300;
-let sitioActivoId = null, panelCatActiva = 'Todos';
-let propinaPct = 0, facturaTemp = null;
-let busqueda = '';
-let syncTimer = null;
-let modoEdicion = false;
-let sitioParaEliminarId = null;
+let sitios=[], ventas=[], catalogo=[];
+let nextSitioId=19, nextProdId=300;
+let sitioActivoId=null, panelCatActiva='Todos';
+let propinaPct=0, facturaTemp=null;
+let busqueda='';
+let syncTimer=null;
+let modoEdicion=false;
+let sitioParaEliminarId=null;
+let ventaEditandoId=null; // ID de la venta que se está editando
+let ventaEditandoItems=[]; // copia editable de items
 
 /* ═══ STORAGE LOCAL ═══ */
 function guardarLocal() {
@@ -828,131 +966,118 @@ function guardarLocal() {
     localStorage.setItem(SK_SITIOS, JSON.stringify({sitios, nextSitioId}));
     localStorage.setItem(SK_VENTAS, JSON.stringify(ventas));
     localStorage.setItem(SK_PRODS, JSON.stringify({catalogo, nextProdId}));
-  } catch(e) {}
+  } catch(e){}
 }
 function cargarLocal() {
   try {
-    const sv = localStorage.getItem(SK_SITIOS);
-    if (sv) { const d=JSON.parse(sv); sitios=d.sitios; nextSitioId=d.nextSitioId||19; }
-    else sitios = SITIOS_DEFECTO();
-    const vv = localStorage.getItem(SK_VENTAS);
-    ventas = vv ? JSON.parse(vv) : [];
-    const pv = localStorage.getItem(SK_PRODS);
-    if (pv) { const d=JSON.parse(pv); catalogo=d.catalogo; nextProdId=d.nextProdId||300; }
-    else catalogo = [...CATALOGO_DEFECTO];
-  } catch(e) { sitios=SITIOS_DEFECTO(); ventas=[]; catalogo=[...CATALOGO_DEFECTO]; }
+    const sv=localStorage.getItem(SK_SITIOS);
+    if(sv){const d=JSON.parse(sv);sitios=d.sitios;nextSitioId=d.nextSitioId||19;}
+    else sitios=SITIOS_DEFECTO();
+    const vv=localStorage.getItem(SK_VENTAS);
+    ventas=vv?JSON.parse(vv):[];
+    const pv=localStorage.getItem(SK_PRODS);
+    if(pv){const d=JSON.parse(pv);catalogo=d.catalogo;nextProdId=d.nextProdId||300;}
+    else catalogo=[...CATALOGO_DEFECTO];
+  } catch(e){sitios=SITIOS_DEFECTO();ventas=[];catalogo=[...CATALOGO_DEFECTO];}
 }
 
-/* ═══ SINCRONIZACIÓN CROSS-DEVICE ═══ */
+/* ═══ SYNC ═══ */
 async function syncGuardar() {
   clearTimeout(syncTimer);
-  syncTimer = setTimeout(async () => {
-    guardarLocal();
-    indicarSync('guardando');
+  syncTimer=setTimeout(async()=>{
+    guardarLocal(); indicarSync('guardando');
     try {
-      const data = { sitios, nextSitioId, ventas, catalogo, nextProdId, ts: Date.now() };
-      const r = await fetch(`${FB_URL}/pos.json`, {
-        method:'PUT', body: JSON.stringify(data),
-        headers:{'Content-Type':'application/json'}
-      });
-      if (r.ok) indicarSync('ok');
-      else indicarSync('error');
-    } catch(e) { indicarSync('error'); }
-  }, 600);
+      const data={sitios,nextSitioId,ventas,catalogo,nextProdId,ts:Date.now()};
+      const r=await fetch(`${FB_URL}/pos.json`,{method:'PUT',body:JSON.stringify(data),headers:{'Content-Type':'application/json'}});
+      if(r.ok) indicarSync('ok'); else indicarSync('error');
+    } catch(e){indicarSync('error');}
+  },600);
 }
-
 async function syncCargar() {
   indicarSync('guardando');
   try {
-    const r = await fetch(`${FB_URL}/pos.json`);
-    if (!r.ok) throw new Error();
-    const data = await r.json();
-    if (data && data.sitios) {
-      const localTs = parseInt(localStorage.getItem('_ts') || '0');
-      if (!data.ts || data.ts >= localTs) {
-        sitios = data.sitios; nextSitioId = data.nextSitioId || 19;
-        ventas = data.ventas || [];
-        catalogo = data.catalogo || [...CATALOGO_DEFECTO];
-        nextProdId = data.nextProdId || 300;
-        localStorage.setItem('_ts', data.ts || Date.now());
+    const r=await fetch(`${FB_URL}/pos.json`);
+    if(!r.ok) throw new Error();
+    const data=await r.json();
+    if(data&&data.sitios){
+      const localTs=parseInt(localStorage.getItem('_ts')||'0');
+      if(!data.ts||data.ts>=localTs){
+        sitios=data.sitios; nextSitioId=data.nextSitioId||19;
+        ventas=data.ventas||[];
+        catalogo=data.catalogo||[...CATALOGO_DEFECTO];
+        nextProdId=data.nextProdId||300;
+        localStorage.setItem('_ts',data.ts||Date.now());
         guardarLocal(); indicarSync('ok'); return true;
       }
     }
     indicarSync('ok'); return false;
-  } catch(e) { cargarLocal(); indicarSync('error'); return false; }
+  } catch(e){cargarLocal(); indicarSync('error'); return false;}
 }
-
 function indicarSync(estado) {
-  const dot = document.getElementById('syncDot');
-  const txt = document.getElementById('syncTxt');
-  dot.className = 'sync-dot';
-  if (estado === 'ok') { dot.classList.add('ok'); txt.textContent = 'sync ✓'; }
-  else if (estado === 'guardando') { txt.textContent = 'sync…'; }
-  else { txt.textContent = 'local'; }
+  const dot=document.getElementById('syncDot'); const txt=document.getElementById('syncTxt');
+  dot.className='sync-dot';
+  if(estado==='ok'){dot.classList.add('ok');txt.textContent='sync ✓';}
+  else if(estado==='guardando'){txt.textContent='sync…';}
+  else{txt.textContent='local';}
 }
+function guardar(){syncGuardar();}
 
-function guardar() { syncGuardar(); }
-
-window.addEventListener('storage', e => {
-  if (e.key === SK_SITIOS || e.key === SK_VENTAS) {
+window.addEventListener('storage',e=>{
+  if(e.key===SK_SITIOS||e.key===SK_VENTAS){
     cargarLocal(); renderMesas();
-    if (sitioActivoId) renderPanel();
+    if(sitioActivoId) renderPanel();
   }
 });
-
-setInterval(async () => {
-  if (!document.hidden) {
-    await syncCargar(); renderMesas();
-    if (sitioActivoId) renderPanel();
-  }
-}, 15000);
+setInterval(async()=>{
+  if(!document.hidden){await syncCargar();renderMesas();if(sitioActivoId)renderPanel();}
+},15000);
 
 /* ═══ HELPERS ═══ */
-function cop(n) { return '$' + Math.round(n).toLocaleString('es-CO'); }
-function toast(msg, ms=1800) {
-  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+function cop(n){return '$'+Math.round(n).toLocaleString('es-CO');}
+function toast(msg,ms=1800){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),ms);
 }
-function getCats() { return Array.from(new Set(catalogo.map(p=>p.categoria))).sort(); }
-function sitioActivo() { return sitios.find(s=>s.id===sitioActivoId)||null; }
+function getCats(){return Array.from(new Set(catalogo.map(p=>p.categoria))).sort();}
+function sitioActivo(){return sitios.find(s=>s.id===sitioActivoId)||null;}
 
 /* ═══ RELOJ ═══ */
-function reloj() { document.getElementById('relojDisplay').textContent = new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}); }
-setInterval(reloj,1000); reloj();
+function reloj(){document.getElementById('relojDisplay').textContent=new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});}
+setInterval(reloj,1000);reloj();
 
 /* ═══ MODO EDICIÓN ═══ */
-function toggleModoEdicion() {
-  modoEdicion = !modoEdicion;
-  const btn = document.getElementById('btnModoEdicion');
-  const txt = document.getElementById('btnModoEdicionTxt');
-  const screen = document.getElementById('mesasScreen');
-  if (modoEdicion) {
+function toggleModoEdicion(){
+  modoEdicion=!modoEdicion;
+  const btn=document.getElementById('btnModoEdicion');
+  const txt=document.getElementById('btnModoEdicionTxt');
+  const screen=document.getElementById('mesasScreen');
+  if(modoEdicion){
     screen.classList.add('modo-edicion');
     btn.classList.add('danger');
-    txt.textContent = 'Salir de edición';
-    toast('✏ Modo edición: toca el ✕ de una mesa libre para eliminarla', 2800);
+    txt.textContent='Salir de edición';
+    toast('✏ Modo edición: toca el ✕ de una mesa libre para eliminarla',2800);
   } else {
     screen.classList.remove('modo-edicion');
     btn.classList.remove('danger');
-    txt.textContent = 'Eliminar sitio';
+    txt.textContent='Eliminar sitio';
   }
 }
 
 /* ═══ RENDER MESAS ═══ */
-function renderMesas() {
-  const screen = document.getElementById('mesasScreen');
-  const tipos = [...new Set(sitios.map(s=>s.tipo))];
-  const icons = {Mesa:'chair', Tarima:'music', Afuera:'tree', Otro:'map-marker-alt'};
-  let html = '';
-  tipos.forEach(tipo => {
-    const grupo = sitios.filter(s=>s.tipo===tipo);
-    html += `<div class="mesas-section-label"><i class="fas fa-${icons[tipo]||'circle'}" style="color:var(--amarillo);font-size:10px;"></i> ${tipo}s</div><div class="mesas-grid">`;
-    grupo.forEach(s => {
-      const bCls = s.estado==='libre'?'badge-libre':s.estado==='ocupada'?'badge-ocupada':'badge-pendiente';
-      const etq  = s.estado==='libre'?'LIBRE':s.estado==='ocupada'?'OCUPADA':'PENDIENTE';
-      const items = s.pedidos?s.pedidos.length:0;
-      html += `<div class="mesa-card ${s.estado}" data-id="${s.id}">
-        ${s.estado==='libre' ? `<button class="btn-eliminar-mesa" data-id="${s.id}" title="Eliminar este sitio"><i class="fas fa-times"></i></button>` : ''}
+function renderMesas(){
+  const screen=document.getElementById('mesasScreen');
+  const tipos=[...new Set(sitios.map(s=>s.tipo))];
+  const icons={Mesa:'chair',Tarima:'music',Afuera:'tree',Otro:'map-marker-alt'};
+  let html='';
+  tipos.forEach(tipo=>{
+    const grupo=sitios.filter(s=>s.tipo===tipo);
+    html+=`<div class="mesas-section-label"><i class="fas fa-${icons[tipo]||'circle'}" style="color:var(--amarillo);font-size:10px;"></i> ${tipo}s</div><div class="mesas-grid">`;
+    grupo.forEach(s=>{
+      const bCls=s.estado==='libre'?'badge-libre':s.estado==='ocupada'?'badge-ocupada':'badge-pendiente';
+      const etq=s.estado==='libre'?'LIBRE':s.estado==='ocupada'?'OCUPADA':'PENDIENTE';
+      const items=s.pedidos?s.pedidos.length:0;
+      html+=`<div class="mesa-card ${s.estado}" data-id="${s.id}">
+        ${s.estado==='libre'?`<button class="btn-eliminar-mesa" data-id="${s.id}"><i class="fas fa-times"></i></button>`:''}
         <div class="mesa-numero">${s.nombre}</div>
         <div class="mesa-tipo">${s.tipo}</div>
         <div class="mesa-estado-badge ${bCls}">${etq}</div>
@@ -961,108 +1086,92 @@ function renderMesas() {
         <div class="mesa-hora">${s.horaApertura||'—'}</div>
       </div>`;
     });
-    html += '</div>';
+    html+='</div>';
   });
-  screen.innerHTML = html;
-  if (modoEdicion) screen.classList.add('modo-edicion');
-  document.getElementById('countAbiertas').textContent = sitios.filter(s=>s.estado!=='libre').length;
-
-  /* Eventos tarjetas */
-  screen.querySelectorAll('.mesa-card').forEach(c => {
-    c.addEventListener('click', e => {
-      /* Si el clic fue en el botón de eliminar, no abrir panel */
-      if (e.target.closest('.btn-eliminar-mesa')) return;
-      /* En modo edición no abrir panel para mesas libres */
-      if (modoEdicion && c.classList.contains('libre')) return;
+  screen.innerHTML=html;
+  if(modoEdicion) screen.classList.add('modo-edicion');
+  document.getElementById('countAbiertas').textContent=sitios.filter(s=>s.estado!=='libre').length;
+  screen.querySelectorAll('.mesa-card').forEach(c=>{
+    c.addEventListener('click',e=>{
+      if(e.target.closest('.btn-eliminar-mesa')) return;
+      if(modoEdicion&&c.classList.contains('libre')) return;
       abrirPanel(parseInt(c.dataset.id));
     });
   });
-
-  /* Eventos botones eliminar */
-  screen.querySelectorAll('.btn-eliminar-mesa').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const id = parseInt(btn.dataset.id);
-      abrirModalEliminar(id);
-    });
+  screen.querySelectorAll('.btn-eliminar-mesa').forEach(btn=>{
+    btn.addEventListener('click',e=>{e.stopPropagation();abrirModalEliminar(parseInt(btn.dataset.id));});
   });
 }
 
 /* ═══ MODAL ELIMINAR SITIO ═══ */
-function abrirModalEliminar(id) {
-  const s = sitios.find(x=>x.id===id);
-  if (!s) return;
-  sitioParaEliminarId = id;
-  document.getElementById('eliminarSitioNombre').textContent = `${s.tipo} ${s.nombre}`;
-  document.getElementById('eliminarSitioDetalle').textContent = `Este sitio está libre y no tiene pedidos activos.`;
+function abrirModalEliminar(id){
+  const s=sitios.find(x=>x.id===id); if(!s) return;
+  sitioParaEliminarId=id;
+  document.getElementById('eliminarSitioNombre').textContent=`${s.tipo} ${s.nombre}`;
+  document.getElementById('eliminarSitioDetalle').textContent='Este sitio está libre y no tiene pedidos activos.';
   document.getElementById('modalEliminarSitio').classList.add('open');
 }
-
-function confirmarEliminarSitio() {
-  if (!sitioParaEliminarId) return;
-  const s = sitios.find(x=>x.id===sitioParaEliminarId);
-  if (!s) { sitioParaEliminarId=null; return; }
-  if (s.estado !== 'libre') { toast('⚠ Solo puedes eliminar sitios libres'); sitioParaEliminarId=null; return; }
-  const nombre = `${s.tipo} ${s.nombre}`;
-  sitios = sitios.filter(x=>x.id!==sitioParaEliminarId);
-  sitioParaEliminarId = null;
+function confirmarEliminarSitio(){
+  if(!sitioParaEliminarId) return;
+  const s=sitios.find(x=>x.id===sitioParaEliminarId);
+  if(!s){sitioParaEliminarId=null;return;}
+  if(s.estado!=='libre'){toast('⚠ Solo puedes eliminar sitios libres');sitioParaEliminarId=null;return;}
+  const nombre=`${s.tipo} ${s.nombre}`;
+  sitios=sitios.filter(x=>x.id!==sitioParaEliminarId);
+  sitioParaEliminarId=null;
   document.getElementById('modalEliminarSitio').classList.remove('open');
-  guardar(); renderMesas();
-  toast(`🗑 ${nombre} eliminado`);
+  guardar();renderMesas();toast(`🗑 ${nombre} eliminado`);
 }
 
 /* ═══ PANEL ═══ */
-function abrirPanel(id) {
-  /* Salir de modo edición al abrir un panel */
-  if (modoEdicion) { toggleModoEdicion(); }
-  sitioActivoId=id; propinaPct=0; panelCatActiva='Todos'; busqueda='';
+function abrirPanel(id){
+  if(modoEdicion) toggleModoEdicion();
+  sitioActivoId=id;propinaPct=0;panelCatActiva='Todos';busqueda='';
   document.getElementById('buscarProducto').value='';
   document.getElementById('btnClearSearch').classList.remove('visible');
-  actualizarBotonesPropina(); renderPanel();
+  actualizarBotonesPropina();renderPanel();
   document.getElementById('mesaPanel').classList.add('open');
   document.getElementById('panelOverlay').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function cerrarPanel() {
+function cerrarPanel(){
   document.getElementById('mesaPanel').classList.remove('open');
   document.getElementById('panelOverlay').classList.remove('open');
-  document.body.style.overflow=''; sitioActivoId=null; renderMesas();
+  document.body.style.overflow='';sitioActivoId=null;renderMesas();
 }
-function renderPanel() {
-  const s=sitioActivo(); if(!s) return;
+function renderPanel(){
+  const s=sitioActivo();if(!s) return;
   document.getElementById('panelTitulo').textContent=`${s.tipo} ${s.nombre}`;
   document.getElementById('panelSubtitulo').textContent=s.estado==='libre'?'Libre · Toca un producto para agregar':`Abierta desde las ${s.horaApertura}`;
-  renderPanelCats(); renderPanelProductos(); renderCuenta();
+  renderPanelCats();renderPanelProductos();renderCuenta();
 }
-function renderPanelCats() {
+function renderPanelCats(){
   const cats=['Todos',...getCats()];
   const el=document.getElementById('panelCats');
-  if (busqueda) { el.style.display='none'; return; }
+  if(busqueda){el.style.display='none';return;}
   el.style.display='flex';
   el.innerHTML=cats.map(c=>`<button class="cat-chip${panelCatActiva===c?' active':''}" data-cat="${c}">${c}</button>`).join('');
-  el.querySelectorAll('.cat-chip').forEach(b=>b.addEventListener('click',()=>{panelCatActiva=b.dataset.cat; renderPanelCats(); renderPanelProductos();}));
+  el.querySelectorAll('.cat-chip').forEach(b=>b.addEventListener('click',()=>{panelCatActiva=b.dataset.cat;renderPanelCats();renderPanelProductos();}));
 }
-
-function renderPanelProductos() {
-  const el = document.getElementById('panelProductos');
-  let prods = catalogo.filter(p=>p.precio>0);
-
-  if (busqueda) {
-    const q = busqueda.toLowerCase();
-    prods = prods.filter(p=>p.nombre.toLowerCase().includes(q) || p.categoria.toLowerCase().includes(q));
-    if (!prods.length) { el.innerHTML='<div class="panel-empty"><i class="fas fa-search" style="font-size:24px;color:var(--borde2);display:block;margin-bottom:6px;"></i>Sin resultados para "'+busqueda+'"</div>'; return; }
-    el.innerHTML = prods.map(p=>`<div class="prod-item" data-nombre="${encodeURIComponent(p.nombre)}" data-precio="${p.precio}">
+function renderPanelProductos(){
+  const el=document.getElementById('panelProductos');
+  let prods=catalogo.filter(p=>p.precio>0);
+  if(busqueda){
+    const q=busqueda.toLowerCase();
+    prods=prods.filter(p=>p.nombre.toLowerCase().includes(q)||p.categoria.toLowerCase().includes(q));
+    if(!prods.length){el.innerHTML=`<div class="panel-empty"><i class="fas fa-search" style="font-size:24px;color:var(--borde2);display:block;margin-bottom:6px;"></i>Sin resultados para "${busqueda}"</div>`;return;}
+    el.innerHTML=prods.map(p=>`<div class="prod-item" data-nombre="${encodeURIComponent(p.nombre)}" data-precio="${p.precio}">
       <div><div class="prod-item-nombre">${p.nombre}</div><div class="prod-item-cat">${p.categoria}</div></div>
       <div class="prod-item-precio">${cop(p.precio)}</div>
       <div class="prod-item-add"><i class="fas fa-plus"></i></div>
     </div>`).join('');
   } else {
-    if (panelCatActiva!=='Todos') prods=prods.filter(p=>p.categoria===panelCatActiva);
-    if (!prods.length) { el.innerHTML='<div class="panel-empty">Sin productos</div>'; return; }
-    if (panelCatActiva==='Todos') {
-      const grupos = {};
-      prods.forEach(p=>{ if(!grupos[p.categoria]) grupos[p.categoria]=[]; grupos[p.categoria].push(p); });
-      el.innerHTML = Object.keys(grupos).sort().map(cat=>`
+    if(panelCatActiva!=='Todos') prods=prods.filter(p=>p.categoria===panelCatActiva);
+    if(!prods.length){el.innerHTML='<div class="panel-empty">Sin productos</div>';return;}
+    if(panelCatActiva==='Todos'){
+      const grupos={};
+      prods.forEach(p=>{if(!grupos[p.categoria])grupos[p.categoria]=[];grupos[p.categoria].push(p);});
+      el.innerHTML=Object.keys(grupos).sort().map(cat=>`
         <div class="cat-group-label">${cat}</div>
         ${grupos[cat].map(p=>`<div class="prod-item" data-nombre="${encodeURIComponent(p.nombre)}" data-precio="${p.precio}">
           <div class="prod-item-nombre">${p.nombre}</div>
@@ -1070,54 +1179,53 @@ function renderPanelProductos() {
           <div class="prod-item-add"><i class="fas fa-plus"></i></div>
         </div>`).join('')}`).join('');
     } else {
-      el.innerHTML = prods.map(p=>`<div class="prod-item" data-nombre="${encodeURIComponent(p.nombre)}" data-precio="${p.precio}">
+      el.innerHTML=prods.map(p=>`<div class="prod-item" data-nombre="${encodeURIComponent(p.nombre)}" data-precio="${p.precio}">
         <div class="prod-item-nombre">${p.nombre}</div>
         <div class="prod-item-precio">${cop(p.precio)}</div>
         <div class="prod-item-add"><i class="fas fa-plus"></i></div>
       </div>`).join('');
     }
   }
-
   el.querySelectorAll('.prod-item').forEach(c=>{
     c.addEventListener('click',()=>agregarProducto(decodeURIComponent(c.dataset.nombre),parseInt(c.dataset.precio)));
   });
 }
 
 /* ═══ AGREGAR / QUITAR PRODUCTOS ═══ */
-function agregarProducto(nombre, precio) {
-  const s=sitioActivo(); if(!s) return;
+function agregarProducto(nombre,precio){
+  const s=sitioActivo();if(!s) return;
   const ahora=new Date();
-  if (s.estado==='libre') {
-    s.estado='ocupada'; s.horaApertura=ahora.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-    s.total=0; s.pedidos=[];
+  if(s.estado==='libre'){
+    s.estado='ocupada';s.horaApertura=ahora.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+    s.total=0;s.pedidos=[];
     document.getElementById('panelSubtitulo').textContent=`Abierta desde las ${s.horaApertura}`;
   }
   const ex=s.pedidos.find(p=>p.nombre===nombre);
   if(ex){ex.cantidad++;ex.subtotal=ex.cantidad*ex.precioUnitario;}
   else{s.pedidos.push({nombre,cantidad:1,precioUnitario:precio,subtotal:precio});}
   s.total=s.pedidos.reduce((a,i)=>a+i.subtotal,0);
-  guardar(); renderCuenta(); renderMesas(); toast(`✓ ${nombre}`);
+  guardar();renderCuenta();renderMesas();toast(`✓ ${nombre}`);
 }
-function quitarItem(idx) {
-  const s=sitioActivo(); if(!s) return;
+function quitarItem(idx){
+  const s=sitioActivo();if(!s) return;
   s.pedidos.splice(idx,1);
   s.total=s.pedidos.reduce((a,i)=>a+i.subtotal,0);
   if(!s.pedidos.length){s.estado='libre';s.total=0;s.horaApertura=null;propinaPct=0;}
-  guardar(); renderCuenta(); renderMesas();
+  guardar();renderCuenta();renderMesas();
 }
 
 /* ═══ CUENTA ═══ */
-function renderCuenta() {
+function renderCuenta(){
   const s=sitioActivo();
   const lista=document.getElementById('cuentaLista');
   const btnF=document.getElementById('btnFacturar');
   const pw=document.getElementById('propinaWrap');
   if(!s||!s.pedidos.length){
     lista.innerHTML='<div class="muted">Sin productos aún</div>';
-    btnF.disabled=true; pw.style.display='none';
+    btnF.disabled=true;pw.style.display='none';
     document.getElementById('valTotal').textContent='$0';
     document.getElementById('rowSubtotal').style.display='none';
-    document.getElementById('rowPropina').style.display='none'; return;
+    document.getElementById('rowPropina').style.display='none';return;
   }
   lista.innerHTML=s.pedidos.map((item,idx)=>`<div class="cuenta-item">
     <div class="cuenta-item-nombre"><strong>${item.nombre}</strong><span>x${item.cantidad} · ${cop(item.precioUnitario)} c/u</span></div>
@@ -1125,48 +1233,47 @@ function renderCuenta() {
     <button class="btn-quitar" data-idx="${idx}"><i class="fas fa-minus-circle"></i></button>
   </div>`).join('');
   lista.querySelectorAll('.btn-quitar').forEach(b=>b.addEventListener('click',()=>quitarItem(parseInt(b.dataset.idx))));
-  pw.style.display='block'; actualizarTotales(); btnF.disabled=false;
+  pw.style.display='block';actualizarTotales();btnF.disabled=false;
 }
-function actualizarTotales() {
-  const s=sitioActivo(); const sub=s?s.total:0;
-  const prop=Math.round(sub*propinaPct/100); const total=sub+prop;
-  const rS=document.getElementById('rowSubtotal'), rP=document.getElementById('rowPropina');
+function actualizarTotales(){
+  const s=sitioActivo();const sub=s?s.total:0;
+  const prop=Math.round(sub*propinaPct/100);const total=sub+prop;
+  const rS=document.getElementById('rowSubtotal'),rP=document.getElementById('rowPropina');
   if(propinaPct>0&&sub>0){
-    rS.style.display='flex'; rP.style.display='flex';
+    rS.style.display='flex';rP.style.display='flex';
     document.getElementById('valSubtotal').textContent=cop(sub);
     document.getElementById('lblPropina').textContent=`Propina (${propinaPct}%)`;
     document.getElementById('valPropina').textContent='+'+cop(prop);
-  } else { rS.style.display='none'; rP.style.display='none'; }
+  } else {rS.style.display='none';rP.style.display='none';}
   document.getElementById('valTotal').textContent=cop(total);
 }
-function actualizarBotonesPropina() {
+function actualizarBotonesPropina(){
   document.querySelectorAll('.propina-opt').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.pct)===propinaPct));
   actualizarTotales();
 }
 
 /* ═══ FACTURAR ═══ */
-function facturar() {
-  const s=sitioActivo(); if(!s||!s.pedidos.length) return;
+function facturar(){
+  const s=sitioActivo();if(!s||!s.pedidos.length) return;
   const propinaMonto=Math.round(s.total*propinaPct/100);
   const ahora=new Date();
   ventas.push({
-    id:Date.now(), fecha:ahora.toISOString(),
+    id:Date.now(),fecha:ahora.toISOString(),
     fechaDisplay:ahora.toLocaleDateString('es-CO'),
     hora:ahora.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}),
-    mes:ahora.getMonth(), anio:ahora.getFullYear(),
+    mes:ahora.getMonth(),anio:ahora.getFullYear(),
     sitio:`${s.tipo} ${s.nombre}`,
-    items:s.pedidos.map(i=>({nombre:i.nombre,cantidad:i.cantidad,subtotal:i.subtotal})),
-    subtotal:s.total, propina:propinaMonto, total:s.total+propinaMonto
+    items:s.pedidos.map(i=>({nombre:i.nombre,cantidad:i.cantidad,subtotal:i.subtotal,precioUnitario:i.precioUnitario})),
+    subtotal:s.total,propina:propinaMonto,total:s.total+propinaMonto
   });
   facturaTemp={...JSON.parse(JSON.stringify(s)),_propinaMonto:propinaMonto,_propinaPct:propinaPct};
-  s.pedidos=[]; s.total=0; s.estado='libre'; s.horaApertura=null;
-  sitioActivoId=null; propinaPct=0;
-  guardar(); cerrarPanel();
+  s.pedidos=[];s.total=0;s.estado='libre';s.horaApertura=null;
+  sitioActivoId=null;propinaPct=0;
+  guardar();cerrarPanel();
   document.getElementById('ticketPrintArea').innerHTML=generarTicketHTML(facturaTemp);
   document.getElementById('facturaOverlay').classList.add('open');
 }
-
-function generarTicketHTML(f) {
+function generarTicketHTML(f){
   const ahora=new Date();
   const fecha=ahora.toLocaleDateString('es-CO',{day:'2-digit',month:'2-digit',year:'numeric'});
   const hora=ahora.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
@@ -1176,20 +1283,18 @@ function generarTicketHTML(f) {
   const propHTML=(f._propinaMonto>0)?`<div class="tk-row-p"><span>Propina (${f._propinaPct}%)</span><span>+$${f._propinaMonto.toLocaleString('es-CO')}</span></div>`:'';
   return `<div class="ticket"><div class="tk-header"><div class="tk-logo">LA ESTACIÓN</div><div class="tk-sub">CAFÉ BAR</div><div class="tk-nit">NIT: 900.000.000-1 · Barichara, Santander</div><div class="tk-titulo">FACTURA DE VENTA</div><div class="tk-info">No. ${num}</div></div><div class="tk-info"><strong>Sitio:</strong> ${f.tipo} ${f.nombre}</div><div class="tk-info"><strong>Fecha:</strong> ${fecha} &nbsp; <strong>Hora:</strong> ${hora}</div><hr class="tk-div"><div class="tk-col-h"><span>Descripción</span><span>Total</span></div>${items}<div class="tk-subs"><div class="tk-row"><span>Subtotal</span><span>$${f.total.toLocaleString('es-CO')}</span></div><div class="tk-row"><span>IVA (incl.)</span><span>$0</span></div>${propHTML}<div class="tk-total"><span>TOTAL</span><span>$${total.toLocaleString('es-CO')}</span></div></div><div class="tk-footer"><p class="gracias">¡Gracias por su visita!</p><p>Vuelva pronto · La Estación Café Bar</p><p style="margin-top:4px;font-size:9px;">Conserve este comprobante · ${num}</p></div></div>`;
 }
-
-function imprimirFactura() {
-  const tk=document.getElementById('ticketPrintArea').querySelector('.ticket'); if(!tk) return;
+function imprimirFactura(){
+  const tk=document.getElementById('ticketPrintArea').querySelector('.ticket');if(!tk) return;
   const w=window.open('','_blank','width=400,height=700');
   w.document.write(`<!DOCTYPE html><html><head><title>Factura</title><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#f0f0f0;display:flex;justify-content:center;padding:20px;font-family:'Courier New',monospace;}.ticket{background:white;color:#111;width:300px;padding:20px 16px 22px;font-size:12px;line-height:1.6;}.tk-header{text-align:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px dashed #bbb;}.tk-logo{font-size:20px;font-weight:900;letter-spacing:2px;}.tk-sub{font-size:9px;color:#666;letter-spacing:1px;}.tk-nit{font-size:9px;color:#555;}.tk-titulo{font-size:11px;font-weight:bold;letter-spacing:1px;margin:6px 0 3px;text-transform:uppercase;}.tk-info{font-size:10px;color:#444;margin-bottom:2px;}.tk-div{border:none;border-top:1px dashed #bbb;margin:7px 0;}.tk-col-h{display:flex;justify-content:space-between;font-size:9px;font-weight:bold;color:#888;text-transform:uppercase;margin-bottom:5px;padding-bottom:3px;border-bottom:1px solid #ddd;}.tk-item{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;font-size:11px;gap:6px;}.tk-item-n{flex:1;}.tk-item-p{white-space:nowrap;font-weight:bold;}.tk-subs{margin-top:8px;padding-top:7px;border-top:1px dashed #bbb;}.tk-row{display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:2px;}.tk-row-p{display:flex;justify-content:space-between;font-size:10px;color:#777;margin-bottom:2px;font-style:italic;}.tk-total{display:flex;justify-content:space-between;font-size:15px;font-weight:900;margin-top:7px;padding-top:7px;border-top:2px solid #111;}.tk-footer{text-align:center;margin-top:10px;padding-top:10px;border-top:1px dashed #bbb;}.tk-footer p{font-size:10px;color:#555;margin-bottom:2px;}.gracias{font-size:13px;font-weight:bold;color:#111;}</style></head><body>${tk.outerHTML}<script>window.onload=()=>{window.print();setTimeout(()=>window.close(),1000);}<\/script></body></html>`);
   w.document.close();
 }
-
-function enviarEmail(email) {
+function enviarEmail(email){
   if(!facturaTemp) return;
   const ahora=new Date();
   const fecha=ahora.toLocaleDateString('es-CO',{day:'2-digit',month:'2-digit',year:'numeric'});
   const num='FAC-'+String(Date.now()).slice(-6);
-  const prop=facturaTemp._propinaMonto||0, pct=facturaTemp._propinaPct||0;
+  const prop=facturaTemp._propinaMonto||0,pct=facturaTemp._propinaPct||0;
   const total=facturaTemp.total+prop;
   const lineas=facturaTemp.pedidos.map(i=>`  ${i.nombre.padEnd(26)} x${i.cantidad}  $${i.subtotal.toLocaleString('es-CO')}`).join('\n');
   const propLinea=prop>0?`\n  Propina voluntaria (${pct}%)     +$${prop.toLocaleString('es-CO')}`:'';
@@ -1197,56 +1302,345 @@ function enviarEmail(email) {
   window.location.href=`mailto:${email}?subject=${encodeURIComponent(`Factura La Estación · ${num} · ${fecha}`)}&body=${encodeURIComponent(body)}`;
 }
 
-/* ═══ CONTABILIDAD ═══ */
+/* ═══════════════════════════════════════
+   CONTABILIDAD — NUEVO SISTEMA
+   ═══════════════════════════════════════ */
+
+let contTabActiva = 'hoy';
+
 function mostrarContabilidad() {
+  const anio = new Date().getFullYear();
+  document.getElementById('anioLabel').textContent = anio;
+  document.getElementById('contOverlay').classList.add('open');
+  renderContTab(contTabActiva);
+}
+
+function renderContTab(tab) {
+  contTabActiva = tab;
+  // Actualizar tab buttons
+  document.querySelectorAll('.cont-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('.cont-tab-content').forEach(c => c.classList.toggle('active', c.id === `tab-${tab}`));
+  if(tab==='hoy') renderContHoy();
+  else if(tab==='resumen') renderContResumen();
+  else if(tab==='meses') renderContMeses();
+  else if(tab==='productos') renderContProductos();
+}
+
+/* ── HOY ── */
+function renderContHoy() {
+  const ahora = new Date();
+  const hoyStr = ahora.toDateString();
+  document.getElementById('hoyFechaLabel').textContent =
+    ahora.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  const ventasHoy = ventas.filter(v => new Date(v.fecha).toDateString() === hoyStr);
+  const totalHoy = ventasHoy.reduce((a,v)=>a+(v.total||0),0);
+  const propinasHoy = ventasHoy.reduce((a,v)=>a+(v.propina||0),0);
+  const prodsHoy = ventasHoy.reduce((a,v)=>a+(v.items||[]).reduce((b,i)=>b+i.cantidad,0),0);
+  const promedio = ventasHoy.length ? Math.round(totalHoy/ventasHoy.length) : 0;
+
+  document.getElementById('hoyTotalBig').textContent = cop(totalHoy);
+  document.getElementById('hoyCount').textContent = ventasHoy.length;
+  document.getElementById('hoyPromedio').textContent = cop(promedio);
+  document.getElementById('hoyPropinas').textContent = cop(propinasHoy);
+  document.getElementById('hoyProductos').textContent = prodsHoy;
+
+  const lista = document.getElementById('hoyTxsList');
+  if(!ventasHoy.length) {
+    lista.innerHTML = '<div class="hoy-empty"><i class="fas fa-coffee" style="font-size:24px;color:var(--borde2);display:block;margin-bottom:8px;"></i>Sin ventas registradas hoy</div>';
+    return;
+  }
+  lista.innerHTML = [...ventasHoy].reverse().map(v => {
+    const totalV = v.total || ((v.subtotal||0)+(v.propina||0));
+    const itemCount = (v.items||[]).reduce((a,i)=>a+i.cantidad,0);
+    return `<div class="hoy-tx-row">
+      <div class="hoy-tx-sitio">${v.sitio}</div>
+      <div class="hoy-tx-hora">${v.hora||'—'}</div>
+      <div class="hoy-tx-items col-items">${itemCount} prod.</div>
+      <div class="hoy-tx-total">${cop(totalV)}</div>
+      <div class="hoy-tx-actions">
+        <button class="btn-tx-edit" data-id="${v.id}" title="Editar venta"><i class="fas fa-pen"></i></button>
+        <button class="btn-tx-del" data-id="${v.id}" title="Eliminar venta"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`;
+  }).join('');
+
+  lista.querySelectorAll('.btn-tx-edit').forEach(b =>
+    b.addEventListener('click', () => abrirEditarVenta(parseInt(b.dataset.id))));
+  lista.querySelectorAll('.btn-tx-del').forEach(b =>
+    b.addEventListener('click', () => eliminarVenta(parseInt(b.dataset.id))));
+}
+
+/* ── EDITAR VENTA ── */
+function abrirEditarVenta(id) {
+  const v = ventas.find(x=>x.id===id); if(!v) return;
+  ventaEditandoId = id;
+  ventaEditandoItems = v.items ? v.items.map(i=>({...i})) : [];
+  document.getElementById('evInfoHeader').textContent = `${v.sitio} · ${v.fechaDisplay} ${v.hora}`;
+  renderEvLista();
+  document.getElementById('modalEditarVenta').classList.add('open');
+}
+
+function renderEvLista() {
+  const lista = document.getElementById('evLista');
+  const total = ventaEditandoItems.reduce((a,i)=>a+(i.subtotal||0),0);
+  document.getElementById('evTotalDisplay').textContent = cop(total);
+
+  if(!ventaEditandoItems.length) {
+    lista.innerHTML = '<div style="padding:16px;text-align:center;color:var(--blanco3);font-size:12px;">Sin productos</div>';
+    return;
+  }
+  lista.innerHTML = ventaEditandoItems.map((item,idx) => `
+    <div class="ev-item">
+      <div class="ev-item-nombre">
+        <strong>${item.nombre}</strong>
+        <small>x${item.cantidad} · ${cop(item.precioUnitario||Math.round(item.subtotal/item.cantidad))} c/u</small>
+      </div>
+      <div class="ev-item-precio">${cop(item.subtotal)}</div>
+      <button class="ev-item-del" data-idx="${idx}"><i class="fas fa-minus-circle"></i></button>
+    </div>`).join('') +
+    `<button class="ev-agregar" id="evAgregarBtn"><i class="fas fa-plus"></i> Agregar producto</button>`;
+
+  lista.querySelectorAll('.ev-item-del').forEach(b =>
+    b.addEventListener('click', () => {
+      ventaEditandoItems.splice(parseInt(b.dataset.idx),1);
+      renderEvLista();
+    }));
+  document.getElementById('evAgregarBtn').addEventListener('click', () => {
+    document.getElementById('modalEditarVenta').classList.remove('open');
+    document.getElementById('modalAgregarItemVenta').classList.add('open');
+    document.getElementById('aiNombre').value='';
+    document.getElementById('aiCantidad').value='1';
+    document.getElementById('aiPrecio').value='';
+    setTimeout(()=>document.getElementById('aiNombre').focus(),100);
+  });
+}
+
+function guardarEdicionVenta() {
+  const v = ventas.find(x=>x.id===ventaEditandoId); if(!v) return;
+  v.items = ventaEditandoItems.map(i=>({...i}));
+  v.subtotal = ventaEditandoItems.reduce((a,i)=>a+(i.subtotal||0),0);
+  v.total = v.subtotal + (v.propina||0);
+  ventaEditandoId = null; ventaEditandoItems = [];
+  document.getElementById('modalEditarVenta').classList.remove('open');
+  guardar();
+  renderContHoy();
+  toast('✓ Venta actualizada');
+}
+
+function confirmarAgregarItemVenta() {
+  const nombre = document.getElementById('aiNombre').value.trim();
+  const cantidad = parseInt(document.getElementById('aiCantidad').value)||1;
+  const precio = parseFloat(document.getElementById('aiPrecio').value);
+  if(!nombre||isNaN(precio)||precio<=0){toast('⚠ Completa todos los campos');return;}
+  const subtotal = Math.round(precio*cantidad);
+  const existe = ventaEditandoItems.find(i=>i.nombre===nombre);
+  if(existe){ existe.cantidad+=cantidad; existe.subtotal+=subtotal; }
+  else { ventaEditandoItems.push({nombre,cantidad,precioUnitario:precio,subtotal}); }
+  document.getElementById('modalAgregarItemVenta').classList.remove('open');
+  document.getElementById('modalEditarVenta').classList.add('open');
+  renderEvLista();
+}
+
+function eliminarVenta(id) {
+  if(!confirm('¿Eliminar esta venta del registro?')) return;
+  ventas = ventas.filter(v=>v.id!==id);
+  guardar();
+  renderContHoy();
+  toast('🗑 Venta eliminada');
+}
+
+/* ── RESUMEN ANUAL ── */
+function renderContResumen() {
+  const anio = new Date().getFullYear();
+  const vAnio = ventas.filter(v=>v.anio===anio);
+  const totalAnio = vAnio.reduce((a,v)=>a+(v.total||0),0);
+  const totalTx = vAnio.length;
+  const mesesConVentas = new Set(vAnio.map(v=>v.mes)).size || 1;
+  const promMes = Math.round(totalAnio/mesesConVentas);
+  const mesMax = Array(12).fill(0).map((_,i)=>vAnio.filter(v=>v.mes===i).reduce((a,v)=>a+(v.total||0),0));
+  const mesMaxIdx = mesMax.indexOf(Math.max(...mesMax));
   const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const anio=new Date().getFullYear();
-  document.getElementById('anioLabel').textContent=anio;
-  let vMes=Array(12).fill(0).map(()=>({total:0,count:0,trans:[]}));
-  let totalAnio=0, totalTx=0; const cProd={};
+
+  document.getElementById('contKpis').innerHTML = `
+    <div class="kpi-card accent">
+      <div class="kpi-label">Ventas totales ${anio}</div>
+      <div class="kpi-value">${cop(totalAnio)}</div>
+      <div class="kpi-sub">${totalTx} transacciones</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Mejor mes</div>
+      <div class="kpi-value small">${mesMax[mesMaxIdx]>0?meses[mesMaxIdx]:'N/A'}</div>
+      <div class="kpi-sub">${cop(mesMax[mesMaxIdx])}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Promedio mensual</div>
+      <div class="kpi-value">${cop(promMes)}</div>
+      <div class="kpi-sub">Meses con ventas: ${mesesConVentas}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Ticket promedio</div>
+      <div class="kpi-value">${cop(totalTx?Math.round(totalAnio/totalTx):0)}</div>
+      <div class="kpi-sub">Por transacción</div>
+    </div>`;
+
+  // Top productos
+  const cProd = {};
+  vAnio.forEach(v=>(v.items||[]).forEach(it=>{
+    if(!cProd[it.nombre]) cProd[it.nombre]={qty:0,total:0,cat:''};
+    cProd[it.nombre].qty+=it.cantidad;
+    cProd[it.nombre].total+=it.subtotal;
+  }));
+  const top = Object.entries(cProd).sort((a,b)=>b[1].total-a[1].total).slice(0,10);
+  const maxT = top.length ? top[0][1].total : 1;
+  document.getElementById('topProdList').innerHTML = top.length
+    ? top.map(([n,d],i)=>`<div class="tp-row">
+        <div class="tp-rank">${i+1}</div>
+        <div class="tp-info">
+          <div class="tp-nombre">${n}</div>
+          <div class="tp-bar-wrap"><div class="tp-bar" style="width:${Math.round(d.total/maxT*100)}%"></div></div>
+        </div>
+        <div class="tp-qty">${d.qty} uds.</div>
+        <div class="tp-total">${cop(d.total)}</div>
+      </div>`).join('')
+    : '<div style="padding:24px;text-align:center;color:var(--blanco3);font-size:12px;">Sin datos de ventas</div>';
+}
+
+/* ── MESES ── */
+function renderContMeses() {
+  const anio = new Date().getFullYear();
+  const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  let vMes = Array(12).fill(null).map(()=>({total:0,count:0,items:{}}));
+
   ventas.filter(v=>v.anio===anio).forEach(v=>{
     const t=v.total||((v.subtotal||0)+(v.propina||0));
-    vMes[v.mes].total+=t; vMes[v.mes].count++; vMes[v.mes].trans.push({...v,total:t});
-    totalAnio+=t; totalTx++;
-    (v.items||[]).forEach(it=>{ if(!cProd[it.nombre]) cProd[it.nombre]={qty:0,total:0}; cProd[it.nombre].qty+=it.cantidad; cProd[it.nombre].total+=it.subtotal; });
+    vMes[v.mes].total+=t; vMes[v.mes].count++;
+    (v.items||[]).forEach(it=>{
+      if(!vMes[v.mes].items[it.nombre]) vMes[v.mes].items[it.nombre]={qty:0,total:0};
+      vMes[v.mes].items[it.nombre].qty+=it.cantidad;
+      vMes[v.mes].items[it.nombre].total+=it.subtotal;
+    });
   });
-  const mesMaxIdx=vMes.reduce((mx,m,i)=>m.total>vMes[mx].total?i:mx,0);
-  const mesesConVentas=vMes.filter(m=>m.count>0).length||1;
-  document.getElementById('contStats').innerHTML=`
-    <div class="cont-stat"><div class="cont-stat-label">Ventas totales ${anio}</div><div class="cont-stat-value">${cop(totalAnio)}</div><div class="cont-stat-sub">${totalTx} transacciones</div></div>
-    <div class="cont-stat"><div class="cont-stat-label">Mejor mes</div><div class="cont-stat-value">${vMes[mesMaxIdx].total>0?meses[mesMaxIdx]:'N/A'}</div><div class="cont-stat-sub">${cop(vMes[mesMaxIdx].total)}</div></div>
-    <div class="cont-stat"><div class="cont-stat-label">Promedio mensual</div><div class="cont-stat-value">${cop(Math.round(totalAnio/mesesConVentas))}</div><div class="cont-stat-sub">Meses con ventas</div></div>
-    <div class="cont-stat"><div class="cont-stat-label">Productos</div><div class="cont-stat-value">${catalogo.length}</div><div class="cont-stat-sub">en el catálogo</div></div>`;
-  const top=Object.entries(cProd).sort((a,b)=>b[1].total-a[1].total).slice(0,5);
-  const maxT=top.length?top[0][1].total:1;
-  document.getElementById('contTop').innerHTML=`<h3><i class="fas fa-trophy" style="color:var(--amarillo);margin-right:6px;"></i>Top productos</h3>${top.length?top.map(([n,d],i)=>`<div class="tp-item"><div class="tp-rank">${i+1}</div><div class="tp-info"><div class="tp-nombre">${n} <span style="font-size:9px;color:var(--blanco3);">(${d.qty} uds.)</span></div><div class="tp-bar-wrap"><div class="tp-bar" style="width:${Math.round(d.total/maxT*100)}%"></div></div></div><div class="tp-total">${cop(d.total)}</div></div>`).join(''):'<div class="muted">Sin ventas registradas</div>'}`;
-  const maxMes=Math.max(...vMes.map(m=>m.total),1);
-  document.getElementById('contMeses').innerHTML=meses.map((nombre,i)=>{
-    const m=vMes[i]; const pct=Math.round(m.total/maxMes*100);
-    const trans=m.count>0?[...m.trans].reverse().slice(0,8).map(t=>`<div class="mes-trans-item"><span class="mti-sitio">${t.sitio}</span><span class="mti-fecha">${t.fechaDisplay} ${t.hora}</span><span class="mti-total">${cop(t.total)}</span></div>`).join('')+(m.trans.length>8?`<div class="muted">+${m.trans.length-8} más</div>`:''):'<div class="muted">Sin ventas</div>';
-    return `<div class="mes-card${m.count>0?' activo':''}"><div class="mes-header"><div class="mes-nombre">${nombre}</div><div class="mes-badge ${m.count>0?'ok':'no'}">${m.count>0?m.count+' ventas':'Sin ventas'}</div></div><div class="mes-total">${cop(m.total)}</div><div class="mes-count">${m.count} transacciones</div><div class="mes-bar"><div class="mes-bar-fill" style="width:${pct}%"></div></div><div class="mes-trans">${trans}</div></div>`;
+  const maxMes = Math.max(...vMes.map(m=>m.total),1);
+
+  document.getElementById('mesesGrid').innerHTML = meses.map((nombre,i)=>{
+    const m=vMes[i];
+    const pct=Math.round(m.total/maxMes*100);
+    const top3=Object.entries(m.items).sort((a,b)=>b[1].total-a[1].total).slice(0,3);
+    const top3html=top3.length?top3.map(([n,d],j)=>`
+      <div class="mes-top3-item">
+        <span class="mes-top3-rank">${j+1}</span>
+        <span class="mes-top3-name">${n}</span>
+        <span class="mes-top3-val">${cop(d.total)}</span>
+      </div>`).join(''):'<div style="font-size:10px;color:var(--blanco3);padding:4px 0;">Sin ventas este mes</div>';
+    return `<div class="mes-pro-card${m.count>0?' activo':''}">
+      <div class="mes-pro-head">
+        <div>
+          <div class="mes-pro-nombre">${nombre}</div>
+        </div>
+        <div class="mes-pro-badge ${m.count>0?'ok':'no'}">${m.count>0?m.count+' ventas':'Sin ventas'}</div>
+      </div>
+      <div class="mes-pro-total">${cop(m.total)}</div>
+      <div class="mes-pro-meta">
+        <span><i class="fas fa-receipt" style="margin-right:3px;"></i>${m.count} transacciones</span>
+        <span><i class="fas fa-chart-bar" style="margin-right:3px;"></i>${pct}% del máximo</span>
+      </div>
+      <div class="mes-pro-bar-wrap"><div class="mes-pro-bar" style="width:${pct}%"></div></div>
+      ${top3.length?`<div class="mes-top3"><div class="mes-top3-label">Top productos</div>${top3html}</div>`:''}
+    </div>`;
   }).join('');
-  document.getElementById('contOverlay').classList.add('open');
+}
+
+/* ── PRODUCTOS ── */
+function renderContProductos(q='') {
+  const anio = new Date().getFullYear();
+  const cProd = {};
+  ventas.filter(v=>v.anio===anio).forEach(v=>(v.items||[]).forEach(it=>{
+    const cat = catalogo.find(p=>p.nombre===it.nombre)?.categoria||'—';
+    if(!cProd[it.nombre]) cProd[it.nombre]={qty:0,total:0,cat,ventas:0};
+    cProd[it.nombre].qty+=it.cantidad;
+    cProd[it.nombre].total+=it.subtotal;
+    cProd[it.nombre].ventas++;
+  }));
+
+  let entries = Object.entries(cProd).sort((a,b)=>b[1].total-a[1].total);
+  if(q) entries = entries.filter(([n])=>n.toLowerCase().includes(q.toLowerCase()));
+
+  const cont = document.getElementById('prodContTable');
+  if(!entries.length){
+    cont.innerHTML='<div style="padding:32px;text-align:center;color:var(--blanco3);font-size:13px;">Sin datos para mostrar</div>';
+    return;
+  }
+  const maxT = entries[0][1].total;
+  cont.innerHTML = `
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead>
+          <tr style="border-bottom:2px solid var(--amarillo);">
+            <th style="text-align:left;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">#</th>
+            <th style="text-align:left;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Producto</th>
+            <th style="text-align:left;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Categoría</th>
+            <th style="text-align:right;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Unidades</th>
+            <th style="text-align:right;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Total</th>
+            <th style="padding:8px 10px;min-width:80px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${entries.map(([n,d],i)=>`
+            <tr style="border-bottom:1px solid var(--borde);transition:.12s;" onmouseover="this.style.background='rgba(245,200,0,0.03)'" onmouseout="this.style.background='none'">
+              <td style="padding:9px 10px;color:var(--blanco3);font-family:'Bebas Neue',sans-serif;font-size:14px;">${i+1}</td>
+              <td style="padding:9px 10px;font-weight:600;">${n}</td>
+              <td style="padding:9px 10px;color:var(--blanco3);font-size:10px;text-transform:uppercase;letter-spacing:0.5px;">${d.cat}</td>
+              <td style="padding:9px 10px;text-align:right;font-weight:700;">${d.qty}</td>
+              <td style="padding:9px 10px;text-align:right;font-weight:700;color:var(--amarillo);">${cop(d.total)}</td>
+              <td style="padding:9px 10px;">
+                <div style="background:var(--negro4);height:3px;border-radius:4px;overflow:hidden;">
+                  <div style="height:100%;background:var(--amarillo);width:${Math.round(d.total/maxT*100)}%;"></div>
+                </div>
+              </td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+/* ── EXPORTAR CSV ── */
+function exportarCSV() {
+  const anio = new Date().getFullYear();
+  const vAnio = ventas.filter(v=>v.anio===anio);
+  if(!vAnio.length){toast('⚠ Sin ventas para exportar');return;}
+  const filas = [['ID','Sitio','Fecha','Hora','Subtotal','Propina','Total','Productos']];
+  vAnio.forEach(v=>{
+    const prods=(v.items||[]).map(i=>`${i.nombre}(x${i.cantidad})`).join(' | ');
+    filas.push([v.id,v.sitio,v.fechaDisplay,v.hora||'',v.subtotal||0,v.propina||0,v.total||0,prods]);
+  });
+  const csv = filas.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url;
+  a.download=`laestacion_ventas_${anio}.csv`; a.click();
+  URL.revokeObjectURL(url);
+  toast('✓ CSV descargado');
 }
 
 /* ═══ SITIOS / PRODUCTOS ═══ */
-function agregarSitio() {
-  const tipo=document.getElementById('nsTipo').value, nombre=document.getElementById('nsNombre').value.trim();
+function agregarSitio(){
+  const tipo=document.getElementById('nsTipo').value,nombre=document.getElementById('nsNombre').value.trim();
   if(!nombre){toast('⚠ Ingresa el nombre');return;}
   if(sitios.some(s=>s.tipo===tipo&&s.nombre===nombre)){toast('⚠ Ya existe ese sitio');return;}
   sitios.push({id:nextSitioId++,tipo,nombre,estado:'libre',total:0,pedidos:[],horaApertura:null});
-  guardar(); document.getElementById('nsNombre').value='';
-  document.getElementById('modalSitio').classList.remove('open'); renderMesas(); toast(`✓ ${tipo} ${nombre} agregado`);
+  guardar();document.getElementById('nsNombre').value='';
+  document.getElementById('modalSitio').classList.remove('open');renderMesas();toast(`✓ ${tipo} ${nombre} agregado`);
 }
-function agregarProductoCatalogo() {
+function agregarProductoCatalogo(){
   const nombre=document.getElementById('npNombre').value.trim();
   const precio=parseFloat(document.getElementById('npPrecio').value);
   const categoria=document.getElementById('npCategoria').value.trim()||'Otros';
   if(!nombre||isNaN(precio)||precio<=0){toast('⚠ Nombre y precio requeridos');return;}
   catalogo.push({id:nextProdId++,nombre,precio,categoria});
   guardar();
-  document.getElementById('npNombre').value=''; document.getElementById('npPrecio').value=''; document.getElementById('npCategoria').value='';
-  document.getElementById('modalProducto').classList.remove('open'); toast(`✓ "${nombre}" agregado al catálogo`);
+  document.getElementById('npNombre').value='';document.getElementById('npPrecio').value='';document.getElementById('npCategoria').value='';
+  document.getElementById('modalProducto').classList.remove('open');toast(`✓ "${nombre}" agregado al catálogo`);
 }
 
 /* ═══ EVENTOS ═══ */
@@ -1258,17 +1652,25 @@ document.querySelectorAll('.propina-opt').forEach(b=>b.addEventListener('click',
 document.getElementById('buscarProducto').addEventListener('input',e=>{
   busqueda=e.target.value.trim();
   document.getElementById('btnClearSearch').classList.toggle('visible',busqueda.length>0);
-  renderPanelCats(); renderPanelProductos();
+  renderPanelCats();renderPanelProductos();
 });
 document.getElementById('btnClearSearch').addEventListener('click',()=>{
-  busqueda=''; document.getElementById('buscarProducto').value='';
+  busqueda='';document.getElementById('buscarProducto').value='';
   document.getElementById('btnClearSearch').classList.remove('visible');
-  renderPanelCats(); renderPanelProductos();
+  renderPanelCats();renderPanelProductos();
 });
 
-document.getElementById('btnModoEdicion').addEventListener('click', toggleModoEdicion);
+document.getElementById('btnModoEdicion').addEventListener('click',toggleModoEdicion);
 document.getElementById('btnContabilidad').addEventListener('click',mostrarContabilidad);
 document.getElementById('btnCerrarCont').addEventListener('click',()=>document.getElementById('contOverlay').classList.remove('open'));
+document.getElementById('btnExportarCSV').addEventListener('click',exportarCSV);
+
+// Tabs contabilidad
+document.querySelectorAll('.cont-tab').forEach(t=>t.addEventListener('click',()=>renderContTab(t.dataset.tab)));
+
+// Buscar en tab productos
+document.getElementById('buscarProdCont').addEventListener('input',e=>renderContProductos(e.target.value.trim()));
+
 document.getElementById('btnAgregarProducto').addEventListener('click',()=>document.getElementById('modalProducto').classList.add('open'));
 document.getElementById('btnCancelarProducto').addEventListener('click',()=>document.getElementById('modalProducto').classList.remove('open'));
 document.getElementById('btnGuardarProducto').addEventListener('click',agregarProductoCatalogo);
@@ -1276,33 +1678,46 @@ document.getElementById('btnAgregarSitio').addEventListener('click',()=>document
 document.getElementById('btnCancelarSitio').addEventListener('click',()=>document.getElementById('modalSitio').classList.remove('open'));
 document.getElementById('btnGuardarSitio').addEventListener('click',agregarSitio);
 
-/* Eliminar sitio */
-document.getElementById('btnConfirmarEliminar').addEventListener('click', confirmarEliminarSitio);
-document.getElementById('btnCancelarEliminar').addEventListener('click', ()=>{
+document.getElementById('btnConfirmarEliminar').addEventListener('click',confirmarEliminarSitio);
+document.getElementById('btnCancelarEliminar').addEventListener('click',()=>{
   sitioParaEliminarId=null;
   document.getElementById('modalEliminarSitio').classList.remove('open');
 });
 
 document.getElementById('btnReset').addEventListener('click',()=>{
   if(!confirm('¿Reiniciar todas las mesas? Los pedidos actuales se perderán.'))return;
-  sitios=SITIOS_DEFECTO(); nextSitioId=19; sitioActivoId=null;
+  sitios=SITIOS_DEFECTO();nextSitioId=19;sitioActivoId=null;
   if(modoEdicion) toggleModoEdicion();
-  guardar(); cerrarPanel(); renderMesas(); toast('✓ Mesas reiniciadas');
+  guardar();cerrarPanel();renderMesas();toast('✓ Mesas reiniciadas');
 });
+
 document.getElementById('fBtnImprimir').addEventListener('click',imprimirFactura);
 document.getElementById('fBtnEmail').addEventListener('click',()=>{document.getElementById('facturaOverlay').classList.remove('open');document.getElementById('modalEmail').classList.add('open');});
 document.getElementById('fBtnCerrar').addEventListener('click',()=>{document.getElementById('facturaOverlay').classList.remove('open');facturaTemp=null;});
 document.getElementById('btnEnviarEmail').addEventListener('click',()=>{
   const email=document.getElementById('emailInput').value.trim();
   if(!email||!email.includes('@')){toast('⚠ Correo inválido');return;}
-  enviarEmail(email); document.getElementById('modalEmail').classList.remove('open');
-  document.getElementById('emailInput').value=''; document.getElementById('facturaOverlay').classList.remove('open'); facturaTemp=null;
+  enviarEmail(email);document.getElementById('modalEmail').classList.remove('open');
+  document.getElementById('emailInput').value='';document.getElementById('facturaOverlay').classList.remove('open');facturaTemp=null;
 });
 document.getElementById('btnCancelarEmail').addEventListener('click',()=>{document.getElementById('modalEmail').classList.remove('open');document.getElementById('facturaOverlay').classList.add('open');});
+
+// Editar venta
+document.getElementById('btnGuardarEdicionVenta').addEventListener('click',guardarEdicionVenta);
+document.getElementById('btnCancelarEdicionVenta').addEventListener('click',()=>{
+  ventaEditandoId=null;ventaEditandoItems=[];
+  document.getElementById('modalEditarVenta').classList.remove('open');
+});
+document.getElementById('btnConfirmarAgregarItem').addEventListener('click',confirmarAgregarItemVenta);
+document.getElementById('btnCancelarAgregarItem').addEventListener('click',()=>{
+  document.getElementById('modalAgregarItemVenta').classList.remove('open');
+  document.getElementById('modalEditarVenta').classList.add('open');
+});
+
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
-    if(modoEdicion) { toggleModoEdicion(); return; }
-    ['contOverlay','facturaOverlay','modalProducto','modalSitio','modalEmail','modalEliminarSitio'].forEach(id=>{
+    if(modoEdicion){toggleModoEdicion();return;}
+    ['contOverlay','facturaOverlay','modalProducto','modalSitio','modalEmail','modalEliminarSitio','modalEditarVenta','modalAgregarItemVenta'].forEach(id=>{
       if(document.getElementById(id).classList.contains('open')) document.getElementById(id).classList.remove('open');
     });
     cerrarPanel();
