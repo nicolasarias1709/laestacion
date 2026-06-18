@@ -138,13 +138,18 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .panel-cuenta { flex-shrink:0; padding:12px 16px; border-top:2px solid var(--amarillo); background:var(--negro); max-height:52vh; overflow-y:auto; }
 .cuenta-titulo { font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--blanco3); margin-bottom:8px; display:flex; align-items:center; gap:5px; }
 .cuenta-lista { margin-bottom:8px; }
-.cuenta-item { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid var(--borde); font-size:12px; }
+.cuenta-item { display:flex; align-items:center; gap:6px; padding:6px 0; border-bottom:1px solid var(--borde); font-size:12px; }
 .cuenta-item-nombre { flex:1; min-width:0; }
 .cuenta-item-nombre strong { display:block; font-size:13px; }
 .cuenta-item-nombre span { font-size:10px; color:var(--blanco3); }
 .cuenta-item-precio { font-weight:700; white-space:nowrap; color:var(--blanco2); font-size:13px; }
 .btn-quitar { background:none; border:none; color:var(--blanco3); cursor:pointer; padding:3px 4px; font-size:12px; border-radius:5px; transition:.12s; flex-shrink:0; }
 .btn-quitar:hover { color:var(--rojo); background:var(--rojo-bg); }
+.cuenta-item-stepper { display:flex; align-items:center; gap:5px; flex-shrink:0; }
+.btn-stepper { width:20px; height:20px; border-radius:5px; border:1px solid var(--borde2); background:var(--negro4); color:var(--blanco2); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:9px; transition:.12s; flex-shrink:0; }
+.btn-stepper:hover { border-color:var(--amarillo); color:var(--amarillo); background:var(--amarillo-dim); }
+.btn-stepper.restar:hover { border-color:var(--rojo); color:var(--rojo); background:var(--rojo-bg); }
+.cuenta-item-cant { font-size:12px; font-weight:700; color:var(--blanco); min-width:14px; text-align:center; }
 .propina-wrap { background:var(--negro3); border:1px solid var(--borde); border-radius:var(--r-sm); padding:9px 11px; margin-bottom:9px; }
 .propina-label { font-size:10px; color:var(--blanco3); margin-bottom:6px; }
 .propina-btns { display:flex; gap:5px; flex-wrap:wrap; }
@@ -184,6 +189,7 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .fbi-print { background:#1e3a5f; color:#5ba3f5; }
 .fbi-email { background:#1e3d2a; color:#5bcc8f; }
 .fbi-close { background:var(--rojo-bg); color:var(--rojo); }
+.fbi-undo { background:#3a2e0a; color:var(--amarillo); }
 .factura-btn-text small { display:block; font-size:10px; color:var(--blanco3); margin-top:1px; }
 .factura-preview { flex:1; min-width:250px; text-align:center; }
 .factura-preview-label { font-size:9px; color:var(--blanco3); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; }
@@ -667,7 +673,11 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
         <div class="factura-btn-icon fbi-email"><i class="fas fa-envelope"></i></div>
         <div class="factura-btn-text">Enviar por correo <small>Ingresa el email del cliente</small></div>
       </button>
-      <button class="factura-btn" id="fBtnCerrar" style="margin-top:12px;">
+      <button class="factura-btn" id="fBtnDeshacer" style="margin-top:12px;">
+        <div class="factura-btn-icon fbi-undo"><i class="fas fa-undo"></i></div>
+        <div class="factura-btn-text">Deshacer / corregir <small>Reabre la mesa, se me olvidó algo</small></div>
+      </button>
+      <button class="factura-btn" id="fBtnCerrar">
         <div class="factura-btn-icon fbi-close"><i class="fas fa-times"></i></div>
         <div class="factura-btn-text">Cerrar <small>La cuenta ya fue registrada</small></div>
       </button>
@@ -1206,6 +1216,26 @@ function agregarProducto(nombre,precio){
   s.total=s.pedidos.reduce((a,i)=>a+i.subtotal,0);
   guardar();renderCuenta();renderMesas();toast(`✓ ${nombre}`);
 }
+function sumarUnidad(idx){
+  const s=sitioActivo();if(!s) return;
+  const item=s.pedidos[idx];if(!item) return;
+  item.cantidad++;item.subtotal=item.cantidad*item.precioUnitario;
+  s.total=s.pedidos.reduce((a,i)=>a+i.subtotal,0);
+  guardar();renderCuenta();renderMesas();
+}
+function restarUnidad(idx){
+  const s=sitioActivo();if(!s) return;
+  const item=s.pedidos[idx];if(!item) return;
+  item.cantidad--;
+  if(item.cantidad<=0){
+    s.pedidos.splice(idx,1);
+  } else {
+    item.subtotal=item.cantidad*item.precioUnitario;
+  }
+  s.total=s.pedidos.reduce((a,i)=>a+i.subtotal,0);
+  if(!s.pedidos.length){s.estado='libre';s.total=0;s.horaApertura=null;propinaPct=0;}
+  guardar();renderCuenta();renderMesas();
+}
 function quitarItem(idx){
   const s=sitioActivo();if(!s) return;
   s.pedidos.splice(idx,1);
@@ -1228,10 +1258,17 @@ function renderCuenta(){
     document.getElementById('rowPropina').style.display='none';return;
   }
   lista.innerHTML=s.pedidos.map((item,idx)=>`<div class="cuenta-item">
-    <div class="cuenta-item-nombre"><strong>${item.nombre}</strong><span>x${item.cantidad} · ${cop(item.precioUnitario)} c/u</span></div>
+    <div class="cuenta-item-nombre"><strong>${item.nombre}</strong><span>${cop(item.precioUnitario)} c/u</span></div>
+    <div class="cuenta-item-stepper">
+      <button class="btn-stepper restar" data-idx="${idx}" title="Quitar una unidad"><i class="fas fa-minus"></i></button>
+      <span class="cuenta-item-cant">${item.cantidad}</span>
+      <button class="btn-stepper sumar" data-idx="${idx}" title="Agregar una unidad"><i class="fas fa-plus"></i></button>
+    </div>
     <div class="cuenta-item-precio">${cop(item.subtotal)}</div>
-    <button class="btn-quitar" data-idx="${idx}"><i class="fas fa-minus-circle"></i></button>
+    <button class="btn-quitar" data-idx="${idx}" title="Quitar todo este producto"><i class="fas fa-trash"></i></button>
   </div>`).join('');
+  lista.querySelectorAll('.btn-stepper.restar').forEach(b=>b.addEventListener('click',()=>restarUnidad(parseInt(b.dataset.idx))));
+  lista.querySelectorAll('.btn-stepper.sumar').forEach(b=>b.addEventListener('click',()=>sumarUnidad(parseInt(b.dataset.idx))));
   lista.querySelectorAll('.btn-quitar').forEach(b=>b.addEventListener('click',()=>quitarItem(parseInt(b.dataset.idx))));
   pw.style.display='block';actualizarTotales();btnF.disabled=false;
 }
@@ -1257,21 +1294,48 @@ function facturar(){
   const s=sitioActivo();if(!s||!s.pedidos.length) return;
   const propinaMonto=Math.round(s.total*propinaPct/100);
   const ahora=new Date();
+  const sitioIdFacturado=s.id;
+  const ventaId=Date.now();
   ventas.push({
-    id:Date.now(),fecha:ahora.toISOString(),
+    id:ventaId,fecha:ahora.toISOString(),
     fechaDisplay:ahora.toLocaleDateString('es-CO'),
     hora:ahora.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}),
     mes:ahora.getMonth(),anio:ahora.getFullYear(),
     sitio:`${s.tipo} ${s.nombre}`,
+    sitioId:sitioIdFacturado,
     items:s.pedidos.map(i=>({nombre:i.nombre,cantidad:i.cantidad,subtotal:i.subtotal,precioUnitario:i.precioUnitario})),
     subtotal:s.total,propina:propinaMonto,total:s.total+propinaMonto
   });
-  facturaTemp={...JSON.parse(JSON.stringify(s)),_propinaMonto:propinaMonto,_propinaPct:propinaPct};
+  facturaTemp={...JSON.parse(JSON.stringify(s)),_propinaMonto:propinaMonto,_propinaPct:propinaPct,_ventaId:ventaId,_sitioId:sitioIdFacturado};
   s.pedidos=[];s.total=0;s.estado='libre';s.horaApertura=null;
   sitioActivoId=null;propinaPct=0;
   guardar();cerrarPanel();
   document.getElementById('ticketPrintArea').innerHTML=generarTicketHTML(facturaTemp);
   document.getElementById('facturaOverlay').classList.add('open');
+}
+function deshacerFactura(){
+  if(!facturaTemp){toast('⚠ Nada para deshacer');return;}
+  // Quitar la venta del registro de ventas
+  if(facturaTemp._ventaId) ventas=ventas.filter(v=>v.id!==facturaTemp._ventaId);
+  // Reabrir el sitio con sus pedidos originales
+  const s=sitios.find(x=>x.id===facturaTemp._sitioId);
+  if(s){
+    s.pedidos=JSON.parse(JSON.stringify(facturaTemp.pedidos));
+    s.total=facturaTemp.total;
+    s.estado='ocupada';
+    s.horaApertura=facturaTemp.horaApertura;
+  }
+  const sitioId=facturaTemp._sitioId;
+  const pctPrevia=facturaTemp._propinaPct||0;
+  facturaTemp=null;
+  document.getElementById('facturaOverlay').classList.remove('open');
+  guardar();renderMesas();
+  toast('↩ Cuenta reabierta, sigue editando');
+  if(sitioId){
+    propinaPct=pctPrevia;
+    abrirPanel(sitioId);
+    actualizarBotonesPropina();
+  }
 }
 function generarTicketHTML(f){
   const ahora=new Date();
@@ -1693,6 +1757,10 @@ document.getElementById('btnReset').addEventListener('click',()=>{
 
 document.getElementById('fBtnImprimir').addEventListener('click',imprimirFactura);
 document.getElementById('fBtnEmail').addEventListener('click',()=>{document.getElementById('facturaOverlay').classList.remove('open');document.getElementById('modalEmail').classList.add('open');});
+document.getElementById('fBtnDeshacer').addEventListener('click',()=>{
+  if(!confirm('¿Deshacer esta factura y reabrir la mesa para corregirla?'))return;
+  deshacerFactura();
+});
 document.getElementById('fBtnCerrar').addEventListener('click',()=>{document.getElementById('facturaOverlay').classList.remove('open');facturaTemp=null;});
 document.getElementById('btnEnviarEmail').addEventListener('click',()=>{
   const email=document.getElementById('emailInput').value.trim();
