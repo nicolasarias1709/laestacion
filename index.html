@@ -26,6 +26,8 @@
   --naranja-bg: #1f0f05;
   --rojo: #f87171;
   --rojo-bg: #200a0a;
+  --azul: #60a5fa;
+  --azul-bg: #0a1020;
   --r: 14px;
   --r-sm: 8px;
 }
@@ -135,7 +137,7 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .prod-item:hover .prod-item-add { background:var(--amarillo); color:var(--negro); }
 .cat-group-label { font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:2px; color:var(--blanco3); padding:10px 2px 4px; border-bottom:1px solid var(--borde); margin-bottom:4px; }
 .panel-empty { padding:40px 20px; text-align:center; color:var(--blanco3); font-size:13px; }
-.panel-cuenta { flex-shrink:0; padding:12px 16px; border-top:2px solid var(--amarillo); background:var(--negro); max-height:52vh; overflow-y:auto; }
+.panel-cuenta { flex-shrink:0; padding:12px 16px; border-top:2px solid var(--amarillo); background:var(--negro); max-height:58vh; overflow-y:auto; }
 .cuenta-titulo { font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--blanco3); margin-bottom:8px; display:flex; align-items:center; gap:5px; }
 .cuenta-lista { margin-bottom:8px; }
 .cuenta-item { display:flex; align-items:center; gap:6px; padding:6px 0; border-bottom:1px solid var(--borde); font-size:12px; }
@@ -150,6 +152,22 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .btn-stepper:hover { border-color:var(--amarillo); color:var(--amarillo); background:var(--amarillo-dim); }
 .btn-stepper.restar:hover { border-color:var(--rojo); color:var(--rojo); background:var(--rojo-bg); }
 .cuenta-item-cant { font-size:12px; font-weight:700; color:var(--blanco); min-width:14px; text-align:center; }
+
+/* ── MÉTODO DE PAGO ── */
+.pago-wrap { background:var(--negro3); border:1px solid var(--borde); border-radius:var(--r-sm); padding:9px 11px; margin-bottom:9px; }
+.pago-label { font-size:10px; color:var(--blanco3); margin-bottom:6px; }
+.pago-btns { display:flex; gap:6px; }
+.pago-opt {
+  flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+  padding:8px 10px; border-radius:8px; border:1px solid var(--borde2);
+  background:var(--negro4); color:var(--blanco3); font-size:11px; font-weight:700;
+  cursor:pointer; transition:.12s; font-family:'DM Sans',sans-serif;
+}
+.pago-opt i { font-size:12px; }
+.pago-opt.active.efectivo { border-color:#4ade80; color:#4ade80; background:rgba(74,222,128,0.1); }
+.pago-opt.active.bancolombia { border-color:#60a5fa; color:#60a5fa; background:rgba(96,165,250,0.1); }
+.pago-opt:hover:not(.active) { border-color:var(--amarillo); color:var(--blanco); }
+
 .propina-wrap { background:var(--negro3); border:1px solid var(--borde); border-radius:var(--r-sm); padding:9px 11px; margin-bottom:9px; }
 .propina-label { font-size:10px; color:var(--blanco3); margin-bottom:6px; }
 .propina-btns { display:flex; gap:5px; flex-wrap:wrap; }
@@ -220,7 +238,7 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .tk-footer .gracias { font-size:13px; font-weight:bold; color:#111; }
 
 /* ═══════════════════════════════════════════
-   CONTABILIDAD — DISEÑO PROFESIONAL NUEVO
+   CONTABILIDAD
    ═══════════════════════════════════════════ */
 .cont-overlay {
   display:none; position:fixed; inset:0;
@@ -229,7 +247,6 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 }
 .cont-overlay.open { display:block; }
 
-/* Header contabilidad */
 .cont-topbar {
   position:sticky; top:0; z-index:10;
   display:flex; align-items:center; justify-content:space-between;
@@ -239,192 +256,145 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   backdrop-filter:blur(12px);
   gap:12px; flex-wrap:wrap;
 }
-.cont-topbar-left h2 {
-  font-family:'Bebas Neue',sans-serif; font-size:22px;
-  color:var(--amarillo); letter-spacing:2px; line-height:1;
-}
+.cont-topbar-left h2 { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--amarillo); letter-spacing:2px; line-height:1; }
 .cont-topbar-left p { font-size:10px; color:var(--blanco3); margin-top:2px; letter-spacing:0.5px; }
 .cont-topbar-right { display:flex; align-items:center; gap:8px; }
 
-/* Tab nav */
-.cont-tabs {
-  display:flex; gap:2px; padding:0 24px;
-  border-bottom:1px solid var(--borde);
-  background:#080808;
-}
-.cont-tab {
-  padding:10px 18px; font-size:12px; font-weight:600;
-  color:var(--blanco3); cursor:pointer; border:none;
-  background:none; border-bottom:2px solid transparent;
-  transition:.15s; font-family:'DM Sans',sans-serif;
-  letter-spacing:0.3px; white-space:nowrap;
-}
+.cont-tabs { display:flex; gap:2px; padding:0 24px; border-bottom:1px solid var(--borde); background:#080808; overflow-x:auto; }
+.cont-tabs::-webkit-scrollbar { display:none; }
+.cont-tab { padding:10px 18px; font-size:12px; font-weight:600; color:var(--blanco3); cursor:pointer; border:none; background:none; border-bottom:2px solid transparent; transition:.15s; font-family:'DM Sans',sans-serif; letter-spacing:0.3px; white-space:nowrap; }
 .cont-tab.active { color:var(--amarillo); border-bottom-color:var(--amarillo); }
 .cont-tab:hover:not(.active) { color:var(--blanco2); }
 
-/* Tab content */
 .cont-tab-content { display:none; padding:20px 24px; max-width:1400px; margin:0 auto; }
 .cont-tab-content.active { display:block; }
 
-/* ── KPI row ── */
-.cont-kpis {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:10px; margin-bottom:24px;
-}
-.kpi-card {
-  background:var(--negro3);
-  border:1px solid var(--borde);
-  border-radius:12px; padding:16px 18px;
-  position:relative; overflow:hidden;
-  transition:.15s;
-}
-.kpi-card::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:2px;
-  background:var(--amarillo); opacity:0.5;
-}
+/* KPI row */
+.cont-kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:24px; }
+.kpi-card { background:var(--negro3); border:1px solid var(--borde); border-radius:12px; padding:16px 18px; position:relative; overflow:hidden; transition:.15s; }
+.kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--amarillo); opacity:0.5; }
 .kpi-card.accent::before { opacity:1; }
+.kpi-card.verde::before { background:var(--verde); opacity:1; }
+.kpi-card.azul::before { background:var(--azul); opacity:1; }
 .kpi-label { font-size:9px; text-transform:uppercase; letter-spacing:2px; color:var(--blanco3); margin-bottom:8px; }
 .kpi-value { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--amarillo); letter-spacing:1px; line-height:1; }
+.kpi-value.verde { color:var(--verde); }
+.kpi-value.azul { color:var(--azul); }
 .kpi-value.small { font-size:20px; }
 .kpi-sub { font-size:10px; color:var(--blanco3); margin-top:4px; }
-.kpi-trend { position:absolute; top:14px; right:14px; font-size:9px; font-weight:700; padding:2px 7px; border-radius:99px; }
-.kpi-trend.up { background:var(--verde-bg); color:var(--verde); }
-.kpi-trend.neutral { background:var(--negro4); color:var(--blanco3); }
 
-/* ── HOY: panel especial ── */
-.hoy-panel {
-  background:linear-gradient(135deg, #161200 0%, #1a1500 100%);
-  border:1px solid rgba(245,200,0,0.3);
-  border-radius:16px; padding:20px; margin-bottom:24px;
-}
-.hoy-header {
-  display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:16px; flex-wrap:wrap; gap:10px;
-}
-.hoy-title {
-  display:flex; align-items:center; gap:10px;
-}
-.hoy-dot {
-  width:8px; height:8px; border-radius:50%;
-  background:var(--verde); flex-shrink:0;
-  box-shadow:0 0 8px var(--verde);
-  animation: livepulse 2s ease-in-out infinite;
-}
+/* HOY panel */
+.hoy-panel { background:linear-gradient(135deg, #161200 0%, #1a1500 100%); border:1px solid rgba(245,200,0,0.3); border-radius:16px; padding:20px; margin-bottom:24px; }
+.hoy-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px; }
+.hoy-title { display:flex; align-items:center; gap:10px; }
+.hoy-dot { width:8px; height:8px; border-radius:50%; background:var(--verde); flex-shrink:0; box-shadow:0 0 8px var(--verde); animation: livepulse 2s ease-in-out infinite; }
 @keyframes livepulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
-.hoy-title h3 {
-  font-family:'Bebas Neue',sans-serif; font-size:18px;
-  color:var(--amarillo); letter-spacing:1.5px;
-}
+.hoy-title h3 { font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--amarillo); letter-spacing:1.5px; }
 .hoy-title span { font-size:10px; color:var(--blanco3); }
-.hoy-total-big {
-  font-family:'Bebas Neue',sans-serif; font-size:36px;
-  color:var(--amarillo); letter-spacing:2px; line-height:1;
-}
-.hoy-stats-row {
-  display:flex; gap:16px; margin-bottom:14px; flex-wrap:wrap;
-}
+.hoy-total-big { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--amarillo); letter-spacing:2px; line-height:1; }
+.hoy-stats-row { display:flex; gap:16px; margin-bottom:14px; flex-wrap:wrap; }
 .hoy-stat { background:rgba(0,0,0,0.3); border-radius:8px; padding:8px 14px; }
 .hoy-stat-label { font-size:8px; text-transform:uppercase; letter-spacing:1.5px; color:var(--blanco3); }
 .hoy-stat-val { font-size:16px; font-weight:700; color:var(--blanco); margin-top:2px; }
 .hoy-stat-val.am { color:var(--amarillo); }
+.hoy-stat-val.vd { color:var(--verde); }
+.hoy-stat-val.az { color:var(--azul); }
 
-/* Tabla de transacciones del día */
+/* Split efectivo/bancolombia */
+.pago-split { display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+.pago-split-card {
+  flex:1; min-width:120px; border-radius:10px; padding:12px 14px;
+  display:flex; align-items:center; gap:10px;
+}
+.pago-split-card.ef { background:rgba(74,222,128,0.08); border:1px solid rgba(74,222,128,0.25); }
+.pago-split-card.bc { background:rgba(96,165,250,0.08); border:1px solid rgba(96,165,250,0.25); }
+.pago-split-icon { font-size:18px; flex-shrink:0; }
+.pago-split-info {}
+.pago-split-label { font-size:8px; text-transform:uppercase; letter-spacing:1.5px; color:var(--blanco3); }
+.pago-split-val { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:1px; line-height:1.1; }
+.pago-split-val.ef { color:var(--verde); }
+.pago-split-val.bc { color:var(--azul); }
+.pago-split-count { font-size:9px; color:var(--blanco3); margin-top:2px; }
+
 .hoy-txs-wrap { overflow:hidden; }
-.hoy-txs-header {
-  display:grid; grid-template-columns:1fr 90px 80px 80px 60px;
-  gap:8px; padding:6px 10px;
-  font-size:9px; text-transform:uppercase; letter-spacing:1px;
-  color:var(--blanco3); border-bottom:1px solid var(--borde);
-}
-.hoy-tx-row {
-  display:grid; grid-template-columns:1fr 90px 80px 80px 60px;
-  gap:8px; padding:8px 10px;
-  border-bottom:1px solid rgba(42,42,42,0.5);
-  align-items:center; transition:.12s;
-}
+.hoy-txs-header { display:grid; grid-template-columns:1fr 80px 80px 80px 60px 50px; gap:8px; padding:6px 10px; font-size:9px; text-transform:uppercase; letter-spacing:1px; color:var(--blanco3); border-bottom:1px solid var(--borde); }
+.hoy-tx-row { display:grid; grid-template-columns:1fr 80px 80px 80px 60px 50px; gap:8px; padding:8px 10px; border-bottom:1px solid rgba(42,42,42,0.5); align-items:center; transition:.12s; }
 .hoy-tx-row:hover { background:rgba(245,200,0,0.04); }
 .hoy-tx-row:last-child { border-bottom:none; }
 .hoy-tx-sitio { font-size:12px; font-weight:600; color:var(--amarillo); }
 .hoy-tx-hora { font-size:11px; color:var(--blanco3); }
 .hoy-tx-items { font-size:11px; color:var(--blanco2); }
+.hoy-tx-pago { font-size:10px; font-weight:700; padding:2px 7px; border-radius:99px; display:inline-block; }
+.hoy-tx-pago.ef { background:rgba(74,222,128,0.12); color:var(--verde); }
+.hoy-tx-pago.bc { background:rgba(96,165,250,0.12); color:var(--azul); }
 .hoy-tx-total { font-size:13px; font-weight:700; color:var(--blanco); }
 .hoy-tx-actions { display:flex; gap:4px; justify-content:flex-end; }
-.btn-tx-edit, .btn-tx-del {
-  width:24px; height:24px; border-radius:6px; border:none;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; font-size:10px; transition:.12s;
-}
+.btn-tx-edit, .btn-tx-del { width:24px; height:24px; border-radius:6px; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:10px; transition:.12s; }
 .btn-tx-edit { background:rgba(245,200,0,0.1); color:var(--amarillo); }
 .btn-tx-edit:hover { background:var(--amarillo); color:var(--negro); }
 .btn-tx-del { background:var(--rojo-bg); color:var(--rojo); }
 .btn-tx-del:hover { background:var(--rojo); color:#fff; }
 .hoy-empty { padding:24px; text-align:center; color:var(--blanco3); font-size:12px; }
 
-/* ── MESES: grid limpio ── */
-.meses-year-grid {
-  display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:12px;
-}
-.mes-pro-card {
+/* Selector de fecha para días anteriores */
+.fecha-selector-wrap {
+  display:flex; align-items:center; gap:10px;
   background:var(--negro3); border:1px solid var(--borde);
-  border-radius:14px; overflow:hidden;
-  transition:border-color .2s;
-  cursor:pointer;
+  border-radius:10px; padding:10px 14px; margin-bottom:16px; flex-wrap:wrap;
 }
+.fecha-selector-wrap label { font-size:11px; color:var(--blanco3); white-space:nowrap; }
+.fecha-input {
+  padding:6px 10px; background:var(--negro4); border:1px solid var(--borde2);
+  border-radius:6px; color:var(--blanco); font-family:'DM Sans',sans-serif;
+  font-size:12px; outline:none; transition:.12s; cursor:pointer;
+}
+.fecha-input:focus { border-color:var(--amarillo); }
+.fecha-nav { display:flex; gap:4px; }
+.fecha-nav-btn {
+  width:28px; height:28px; border-radius:6px; border:1px solid var(--borde2);
+  background:var(--negro4); color:var(--blanco3); cursor:pointer;
+  display:flex; align-items:center; justify-content:center; font-size:11px;
+  transition:.12s;
+}
+.fecha-nav-btn:hover { border-color:var(--amarillo); color:var(--amarillo); }
+.fecha-hoy-btn {
+  padding:5px 12px; border-radius:6px; border:1px solid rgba(245,200,0,0.3);
+  background:var(--amarillo-dim); color:var(--amarillo); cursor:pointer;
+  font-family:'DM Sans',sans-serif; font-size:10px; font-weight:700;
+  transition:.12s; white-space:nowrap;
+}
+.fecha-hoy-btn:hover { background:var(--amarillo); color:var(--negro); }
+
+/* Meses grid */
+.meses-year-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+.mes-pro-card { background:var(--negro3); border:1px solid var(--borde); border-radius:14px; overflow:hidden; transition:border-color .2s; cursor:pointer; }
 .mes-pro-card:hover { border-color:var(--borde2); }
 .mes-pro-card.activo { border-color:rgba(245,200,0,0.25); }
-.mes-pro-head {
-  padding:14px 16px 10px;
-  display:flex; align-items:flex-start; justify-content:space-between;
-}
-.mes-pro-nombre {
-  font-family:'Bebas Neue',sans-serif; font-size:16px;
-  color:var(--blanco2); letter-spacing:1.5px;
-}
-.mes-pro-badge {
-  font-size:9px; padding:2px 9px; border-radius:99px; font-weight:700;
-}
+.mes-pro-head { padding:14px 16px 10px; display:flex; align-items:flex-start; justify-content:space-between; }
+.mes-pro-nombre { font-family:'Bebas Neue',sans-serif; font-size:16px; color:var(--blanco2); letter-spacing:1.5px; }
+.mes-pro-badge { font-size:9px; padding:2px 9px; border-radius:99px; font-weight:700; }
 .mes-pro-badge.ok { background:var(--verde-bg); color:var(--verde); }
 .mes-pro-badge.no { background:var(--negro4); color:var(--blanco3); }
-.mes-pro-total {
-  font-family:'Bebas Neue',sans-serif; font-size:24px;
-  color:var(--amarillo); letter-spacing:1px; padding:0 16px 4px;
-}
-.mes-pro-meta {
-  display:flex; gap:16px; padding:0 16px 12px;
-  font-size:10px; color:var(--blanco3);
-}
-.mes-pro-bar-wrap {
-  height:3px; background:var(--negro4);
-  margin:0 0 12px;
-}
+.mes-pro-total { font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--amarillo); letter-spacing:1px; padding:0 16px 4px; }
+.mes-pro-meta { display:flex; gap:16px; padding:0 16px 8px; font-size:10px; color:var(--blanco3); flex-wrap:wrap; }
+.mes-pago-mini { display:flex; gap:8px; padding:0 16px 10px; }
+.mes-pago-mini-item { display:flex; align-items:center; gap:4px; font-size:10px; }
+.mes-pago-mini-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.mes-pro-bar-wrap { height:3px; background:var(--negro4); margin:0 0 12px; }
 .mes-pro-bar { height:100%; background:var(--amarillo); border-radius:0; transition:width .6s; }
-
-/* Top 3 productos del mes — pequeño */
 .mes-top3 { padding:0 16px 14px; }
 .mes-top3-label { font-size:9px; text-transform:uppercase; letter-spacing:1.5px; color:var(--blanco3); margin-bottom:6px; }
-.mes-top3-item {
-  display:flex; align-items:center; gap:6px;
-  margin-bottom:4px; font-size:11px;
-}
+.mes-top3-item { display:flex; align-items:center; gap:6px; margin-bottom:4px; font-size:11px; }
 .mes-top3-rank { font-family:'Bebas Neue',sans-serif; font-size:11px; color:var(--borde2); width:14px; text-align:center; }
 .mes-top3-name { flex:1; color:var(--blanco2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .mes-top3-val { color:var(--amarillo); font-weight:700; white-space:nowrap; }
 
-/* ── TOP PRODUCTOS global ── */
+/* Top productos */
 .top-prods-section { margin-bottom:24px; }
-.section-title {
-  font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:2px;
-  color:var(--blanco3); margin-bottom:12px;
-  display:flex; align-items:center; gap:8px;
-}
+.section-title { font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:2px; color:var(--blanco3); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
 .section-title::after { content:''; flex:1; height:1px; background:var(--borde); }
 .top-prod-list { display:flex; flex-direction:column; gap:6px; }
-.tp-row {
-  display:flex; align-items:center; gap:10px;
-  background:var(--negro3); border:1px solid var(--borde);
-  border-radius:10px; padding:10px 14px;
-}
+.tp-row { display:flex; align-items:center; gap:10px; background:var(--negro3); border:1px solid var(--borde); border-radius:10px; padding:10px 14px; }
 .tp-rank { font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--borde2); width:24px; text-align:center; flex-shrink:0; }
 .tp-info { flex:1; min-width:0; }
 .tp-nombre { font-size:13px; font-weight:600; }
@@ -434,14 +404,10 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .tp-qty { font-size:10px; color:var(--blanco3); white-space:nowrap; }
 .tp-total { font-size:13px; font-weight:700; color:var(--amarillo); white-space:nowrap; }
 
-/* ── MODAL EDITAR VENTA ── */
+/* Modal editar venta */
 .modal-box.edit-venta { max-width:480px; border-color:var(--amarillo); }
 .ev-lista { max-height:260px; overflow-y:auto; margin-bottom:12px; }
-.ev-item {
-  display:flex; align-items:center; gap:8px;
-  padding:7px 0; border-bottom:1px solid var(--borde);
-  font-size:12px;
-}
+.ev-item { display:flex; align-items:center; gap:8px; padding:7px 0; border-bottom:1px solid var(--borde); font-size:12px; }
 .ev-item-nombre { flex:1; }
 .ev-item-nombre strong { display:block; font-size:13px; }
 .ev-item-nombre small { color:var(--blanco3); font-size:10px; }
@@ -453,20 +419,20 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .ev-total-row { display:flex; justify-content:space-between; padding:10px 0 0; font-size:14px; font-weight:700; border-top:1px solid var(--borde); }
 .ev-total-row span:last-child { color:var(--amarillo); }
 
-/* ── TOAST ── */
+/* TOAST */
 #toast { position:fixed; bottom:18px; left:50%; transform:translateX(-50%) translateY(70px); background:var(--amarillo); color:var(--negro); padding:8px 18px; border-radius:99px; font-size:12px; font-weight:700; z-index:9999; transition:transform .25s; white-space:nowrap; pointer-events:none; box-shadow:0 8px 24px rgba(0,0,0,0.5); }
 #toast.show { transform:translateX(-50%) translateY(0); }
 
-/* ── EMAIL BOX ── */
+/* Email box */
 .email-box { max-width:360px; }
 .email-box p { font-size:12px; color:var(--blanco3); margin-bottom:12px; line-height:1.5; }
 
-/* ── RESPONSIVE ── */
+/* RESPONSIVE */
 @media (max-width:600px) {
   .cont-tab-content { padding:14px 14px; }
   .cont-topbar { padding:12px 14px; }
   .cont-tabs { padding:0 14px; }
-  .hoy-txs-header, .hoy-tx-row { grid-template-columns:1fr 70px 70px 60px; }
+  .hoy-txs-header, .hoy-tx-row { grid-template-columns:1fr 70px 60px 60px 40px; }
   .hoy-txs-header .col-items, .hoy-tx-row .col-items { display:none; }
   .kpi-value { font-size:22px; }
   .hoy-total-big { font-size:28px; }
@@ -481,6 +447,9 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   .header-clock { font-size:9px; padding:2px 6px; }
   .btn-icon-hdr { width:28px; height:28px; font-size:12px; }
   .meses-year-grid { grid-template-columns:1fr; }
+  .hoy-txs-header, .hoy-tx-row { grid-template-columns:1fr 60px 55px 44px; }
+  .hoy-txs-header .col-items, .hoy-tx-row .col-items,
+  .hoy-txs-header .col-pago, .hoy-tx-row .col-pago { display:none; }
 }
 @media (max-width:380px) {
   .mesas-grid { grid-template-columns:repeat(3,1fr); gap:6px; }
@@ -549,6 +518,20 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   <div class="panel-cuenta" id="panelCuenta">
     <div class="cuenta-titulo"><i class="fas fa-receipt" style="color:var(--amarillo);"></i> Cuenta actual</div>
     <div class="cuenta-lista" id="cuentaLista"><div class="muted">Sin productos</div></div>
+
+    <!-- MÉTODO DE PAGO -->
+    <div class="pago-wrap" id="pagoWrap" style="display:none;">
+      <div class="pago-label"><i class="fas fa-credit-card" style="color:var(--amarillo);margin-right:4px;"></i> Método de pago</div>
+      <div class="pago-btns">
+        <button class="pago-opt efectivo active" data-pago="efectivo" id="pagoEfectivo">
+          <i class="fas fa-money-bill-wave"></i> Efectivo
+        </button>
+        <button class="pago-opt bancolombia" data-pago="bancolombia" id="pagoBancolombia">
+          <i class="fas fa-mobile-alt"></i> Bancolombia
+        </button>
+      </div>
+    </div>
+
     <div class="propina-wrap" id="propinaWrap" style="display:none;">
       <div class="propina-label"><i class="fas fa-hand-holding-heart" style="color:var(--amarillo);margin-right:4px;"></i> Propina voluntaria</div>
       <div class="propina-btns">
@@ -638,6 +621,18 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
       <span>Total de la venta</span>
       <span id="evTotalDisplay">$0</span>
     </div>
+    <!-- Método de pago en edición -->
+    <div style="margin-top:10px;">
+      <div style="font-size:10px;color:var(--blanco3);margin-bottom:6px;"><i class="fas fa-credit-card" style="color:var(--amarillo);margin-right:4px;"></i> Método de pago</div>
+      <div style="display:flex;gap:6px;">
+        <button class="pago-opt efectivo" id="evPagoEfectivo" data-pago="efectivo" style="flex:1;padding:6px;">
+          <i class="fas fa-money-bill-wave"></i> Efectivo
+        </button>
+        <button class="pago-opt bancolombia" id="evPagoBancolombia" data-pago="bancolombia" style="flex:1;padding:6px;">
+          <i class="fas fa-mobile-alt"></i> Bancolombia
+        </button>
+      </div>
+    </div>
     <div class="modal-btns" style="margin-top:14px;">
       <button class="pill-btn primary" id="btnGuardarEdicionVenta"><i class="fas fa-check"></i> Guardar cambios</button>
       <button class="pill-btn" id="btnCancelarEdicionVenta">Cancelar</button>
@@ -691,7 +686,6 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 
 <!-- ═══ CONTABILIDAD ═══ -->
 <div class="cont-overlay" id="contOverlay">
-  <!-- Top bar -->
   <div class="cont-topbar">
     <div class="cont-topbar-left">
       <h2><i class="fas fa-chart-bar" style="margin-right:8px;font-size:16px;"></i>CONTABILIDAD</h2>
@@ -703,9 +697,9 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
     </div>
   </div>
 
-  <!-- Tabs -->
   <div class="cont-tabs">
     <button class="cont-tab active" data-tab="hoy">Hoy</button>
+    <button class="cont-tab" data-tab="historial">Días anteriores</button>
     <button class="cont-tab" data-tab="resumen">Resumen anual</button>
     <button class="cont-tab" data-tab="meses">Por mes</button>
     <button class="cont-tab" data-tab="productos">Productos</button>
@@ -742,12 +736,31 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
           <div class="hoy-stat-val" id="hoyProductos">0</div>
         </div>
       </div>
-      <!-- Tabla transacciones -->
+      <!-- Split efectivo / bancolombia -->
+      <div class="pago-split">
+        <div class="pago-split-card ef">
+          <div class="pago-split-icon">💵</div>
+          <div class="pago-split-info">
+            <div class="pago-split-label">Efectivo</div>
+            <div class="pago-split-val ef" id="hoyEfectivo">$0</div>
+            <div class="pago-split-count" id="hoyEfectivoCount">0 transacciones</div>
+          </div>
+        </div>
+        <div class="pago-split-card bc">
+          <div class="pago-split-icon">📱</div>
+          <div class="pago-split-info">
+            <div class="pago-split-label">Bancolombia</div>
+            <div class="pago-split-val bc" id="hoyBancolombia">$0</div>
+            <div class="pago-split-count" id="hoyBancolombiaCount">0 transacciones</div>
+          </div>
+        </div>
+      </div>
       <div class="hoy-txs-wrap" id="hoyTxsWrap">
         <div class="hoy-txs-header">
           <span>Sitio</span>
           <span>Hora</span>
-          <span class="col-items">Productos</span>
+          <span class="col-items">Prods.</span>
+          <span class="col-pago">Pago</span>
           <span>Total</span>
           <span></span>
         </div>
@@ -756,9 +769,42 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
     </div>
   </div>
 
+  <!-- TAB: HISTORIAL (días anteriores) -->
+  <div class="cont-tab-content" id="tab-historial">
+    <div class="fecha-selector-wrap">
+      <label><i class="fas fa-calendar-alt" style="color:var(--amarillo);margin-right:5px;"></i> Ver ventas del día:</label>
+      <div class="fecha-nav">
+        <button class="fecha-nav-btn" id="fechaAnteriorBtn" title="Día anterior"><i class="fas fa-chevron-left"></i></button>
+        <button class="fecha-nav-btn" id="fechaSiguienteBtn" title="Día siguiente"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <input type="date" class="fecha-input" id="fechaHistorial">
+      <button class="fecha-hoy-btn" id="fechaHoyBtn"><i class="fas fa-circle" style="font-size:7px;margin-right:4px;"></i> Hoy</button>
+    </div>
+    <div id="historialContenido"></div>
+  </div>
+
   <!-- TAB: RESUMEN ANUAL -->
   <div class="cont-tab-content" id="tab-resumen">
     <div class="cont-kpis" id="contKpis"></div>
+    <!-- Split anual efectivo / bancolombia -->
+    <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;">
+      <div class="pago-split-card ef" style="flex:1;min-width:200px;">
+        <div class="pago-split-icon">💵</div>
+        <div class="pago-split-info">
+          <div class="pago-split-label">Total Efectivo en el año</div>
+          <div class="pago-split-val ef" id="anioEfectivo">$0</div>
+          <div class="pago-split-count" id="anioEfectivoCount">0 transacciones</div>
+        </div>
+      </div>
+      <div class="pago-split-card bc" style="flex:1;min-width:200px;">
+        <div class="pago-split-icon">📱</div>
+        <div class="pago-split-info">
+          <div class="pago-split-label">Total Bancolombia en el año</div>
+          <div class="pago-split-val bc" id="anioBancolombia">$0</div>
+          <div class="pago-split-count" id="anioBancolombiaCount">0 transacciones</div>
+        </div>
+      </div>
+    </div>
     <div class="top-prods-section">
       <div class="section-title"><i class="fas fa-trophy" style="color:var(--amarillo);font-size:11px;"></i> Top 10 productos del año</div>
       <div class="top-prod-list" id="topProdList"></div>
@@ -855,10 +901,13 @@ const CATALOGO_DEFECTO = [
   {id:42,nombre:"Tres Cordilleras",precio:8000,categoria:"Cervezas"},
   {id:43,nombre:"Sol",precio:3500,categoria:"Cervezas"},
   {id:44,nombre:"Andina",precio:4000,categoria:"Cervezas"},
+  {id:45,nombre:"Poker",precio:4500,categoria:"Cervezas"},
   {id:50,nombre:"Corona x 10",precio:90000,categoria:"Cubetazos"},
   {id:51,nombre:"Coronita x 10",precio:45000,categoria:"Cubetazos"},
   {id:52,nombre:"Heineken 330ml x 10",precio:45000,categoria:"Cubetazos"},
   {id:53,nombre:"Heineken 250ml x 10",precio:35000,categoria:"Cubetazos"},
+  {id:54,nombre:"Poker x 6",precio:22500,categoria:"Cubetazos"},
+  {id:55,nombre:"Aguila x 6",precio:22500,categoria:"Cubetazos"},
   {id:60,nombre:"Aguardiente Shot",precio:7000,categoria:"Shots"},
   {id:61,nombre:"Ron Shot",precio:10000,categoria:"Shots"},
   {id:62,nombre:"Ginebra Shot",precio:10000,categoria:"Shots"},
@@ -962,13 +1011,15 @@ const CATALOGO_DEFECTO = [
 let sitios=[], ventas=[], catalogo=[];
 let nextSitioId=19, nextProdId=300;
 let sitioActivoId=null, panelCatActiva='Todos';
-let propinaPct=0, facturaTemp=null;
+let propinaPct=0, metodoPago='efectivo', facturaTemp=null;
 let busqueda='';
 let syncTimer=null;
 let modoEdicion=false;
 let sitioParaEliminarId=null;
-let ventaEditandoId=null; // ID de la venta que se está editando
-let ventaEditandoItems=[]; // copia editable de items
+let ventaEditandoId=null;
+let ventaEditandoItems=[];
+let ventaEditandoPago='efectivo';
+let fechaHistorial = new Date();
 
 /* ═══ STORAGE LOCAL ═══ */
 function guardarLocal() {
@@ -1050,6 +1101,8 @@ function toast(msg,ms=1800){
 }
 function getCats(){return Array.from(new Set(catalogo.map(p=>p.categoria))).sort();}
 function sitioActivo(){return sitios.find(s=>s.id===sitioActivoId)||null;}
+// Devuelve string YYYY-MM-DD en hora local
+function fechaLocal(d){ const dd=d||new Date(); return dd.getFullYear()+'-'+String(dd.getMonth()+1).padStart(2,'0')+'-'+String(dd.getDate()).padStart(2,'0'); }
 
 /* ═══ RELOJ ═══ */
 function reloj(){document.getElementById('relojDisplay').textContent=new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});}
@@ -1136,10 +1189,10 @@ function confirmarEliminarSitio(){
 /* ═══ PANEL ═══ */
 function abrirPanel(id){
   if(modoEdicion) toggleModoEdicion();
-  sitioActivoId=id;propinaPct=0;panelCatActiva='Todos';busqueda='';
+  sitioActivoId=id;propinaPct=0;metodoPago='efectivo';panelCatActiva='Todos';busqueda='';
   document.getElementById('buscarProducto').value='';
   document.getElementById('btnClearSearch').classList.remove('visible');
-  actualizarBotonesPropina();renderPanel();
+  actualizarBotonesPago();actualizarBotonesPropina();renderPanel();
   document.getElementById('mesaPanel').classList.add('open');
   document.getElementById('panelOverlay').classList.add('open');
   document.body.style.overflow='hidden';
@@ -1227,11 +1280,8 @@ function restarUnidad(idx){
   const s=sitioActivo();if(!s) return;
   const item=s.pedidos[idx];if(!item) return;
   item.cantidad--;
-  if(item.cantidad<=0){
-    s.pedidos.splice(idx,1);
-  } else {
-    item.subtotal=item.cantidad*item.precioUnitario;
-  }
+  if(item.cantidad<=0){s.pedidos.splice(idx,1);}
+  else{item.subtotal=item.cantidad*item.precioUnitario;}
   s.total=s.pedidos.reduce((a,i)=>a+i.subtotal,0);
   if(!s.pedidos.length){s.estado='libre';s.total=0;s.horaApertura=null;propinaPct=0;}
   guardar();renderCuenta();renderMesas();
@@ -1244,15 +1294,24 @@ function quitarItem(idx){
   guardar();renderCuenta();renderMesas();
 }
 
+/* ═══ MÉTODO DE PAGO ═══ */
+function actualizarBotonesPago(){
+  document.querySelectorAll('.pago-opt').forEach(b=>{
+    const esActivo = b.dataset.pago === metodoPago;
+    b.classList.toggle('active', esActivo);
+  });
+}
+
 /* ═══ CUENTA ═══ */
 function renderCuenta(){
   const s=sitioActivo();
   const lista=document.getElementById('cuentaLista');
   const btnF=document.getElementById('btnFacturar');
   const pw=document.getElementById('propinaWrap');
+  const pagoW=document.getElementById('pagoWrap');
   if(!s||!s.pedidos.length){
     lista.innerHTML='<div class="muted">Sin productos aún</div>';
-    btnF.disabled=true;pw.style.display='none';
+    btnF.disabled=true;pw.style.display='none';pagoW.style.display='none';
     document.getElementById('valTotal').textContent='$0';
     document.getElementById('rowSubtotal').style.display='none';
     document.getElementById('rowPropina').style.display='none';return;
@@ -1270,7 +1329,7 @@ function renderCuenta(){
   lista.querySelectorAll('.btn-stepper.restar').forEach(b=>b.addEventListener('click',()=>restarUnidad(parseInt(b.dataset.idx))));
   lista.querySelectorAll('.btn-stepper.sumar').forEach(b=>b.addEventListener('click',()=>sumarUnidad(parseInt(b.dataset.idx))));
   lista.querySelectorAll('.btn-quitar').forEach(b=>b.addEventListener('click',()=>quitarItem(parseInt(b.dataset.idx))));
-  pw.style.display='block';actualizarTotales();btnF.disabled=false;
+  pagoW.style.display='block';pw.style.display='block';actualizarTotales();btnF.disabled=false;
 }
 function actualizarTotales(){
   const s=sitioActivo();const sub=s?s.total:0;
@@ -1298,43 +1357,42 @@ function facturar(){
   const ventaId=Date.now();
   ventas.push({
     id:ventaId,fecha:ahora.toISOString(),
+    fechaLocal:fechaLocal(ahora),
     fechaDisplay:ahora.toLocaleDateString('es-CO'),
     hora:ahora.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}),
     mes:ahora.getMonth(),anio:ahora.getFullYear(),
     sitio:`${s.tipo} ${s.nombre}`,
     sitioId:sitioIdFacturado,
+    metodoPago: metodoPago,
     items:s.pedidos.map(i=>({nombre:i.nombre,cantidad:i.cantidad,subtotal:i.subtotal,precioUnitario:i.precioUnitario})),
     subtotal:s.total,propina:propinaMonto,total:s.total+propinaMonto
   });
-  facturaTemp={...JSON.parse(JSON.stringify(s)),_propinaMonto:propinaMonto,_propinaPct:propinaPct,_ventaId:ventaId,_sitioId:sitioIdFacturado};
+  facturaTemp={...JSON.parse(JSON.stringify(s)),_propinaMonto:propinaMonto,_propinaPct:propinaPct,_ventaId:ventaId,_sitioId:sitioIdFacturado,_metodoPago:metodoPago};
   s.pedidos=[];s.total=0;s.estado='libre';s.horaApertura=null;
-  sitioActivoId=null;propinaPct=0;
+  sitioActivoId=null;propinaPct=0;metodoPago='efectivo';
   guardar();cerrarPanel();
   document.getElementById('ticketPrintArea').innerHTML=generarTicketHTML(facturaTemp);
   document.getElementById('facturaOverlay').classList.add('open');
 }
 function deshacerFactura(){
   if(!facturaTemp){toast('⚠ Nada para deshacer');return;}
-  // Quitar la venta del registro de ventas
   if(facturaTemp._ventaId) ventas=ventas.filter(v=>v.id!==facturaTemp._ventaId);
-  // Reabrir el sitio con sus pedidos originales
   const s=sitios.find(x=>x.id===facturaTemp._sitioId);
   if(s){
     s.pedidos=JSON.parse(JSON.stringify(facturaTemp.pedidos));
-    s.total=facturaTemp.total;
-    s.estado='ocupada';
-    s.horaApertura=facturaTemp.horaApertura;
+    s.total=facturaTemp.total;s.estado='ocupada';s.horaApertura=facturaTemp.horaApertura;
   }
   const sitioId=facturaTemp._sitioId;
   const pctPrevia=facturaTemp._propinaPct||0;
+  const pagoPrevia=facturaTemp._metodoPago||'efectivo';
   facturaTemp=null;
   document.getElementById('facturaOverlay').classList.remove('open');
   guardar();renderMesas();
   toast('↩ Cuenta reabierta, sigue editando');
   if(sitioId){
-    propinaPct=pctPrevia;
+    propinaPct=pctPrevia;metodoPago=pagoPrevia;
     abrirPanel(sitioId);
-    actualizarBotonesPropina();
+    actualizarBotonesPropina();actualizarBotonesPago();
   }
 }
 function generarTicketHTML(f){
@@ -1345,7 +1403,8 @@ function generarTicketHTML(f){
   const total=f.total+(f._propinaMonto||0);
   const items=f.pedidos.map(i=>`<div class="tk-item"><div class="tk-item-n">${i.nombre}<br><small>${i.cantidad} x $${i.precioUnitario.toLocaleString('es-CO')}</small></div><div class="tk-item-p">$${i.subtotal.toLocaleString('es-CO')}</div></div>`).join('');
   const propHTML=(f._propinaMonto>0)?`<div class="tk-row-p"><span>Propina (${f._propinaPct}%)</span><span>+$${f._propinaMonto.toLocaleString('es-CO')}</span></div>`:'';
-  return `<div class="ticket"><div class="tk-header"><div class="tk-logo">LA ESTACIÓN</div><div class="tk-sub">CAFÉ BAR</div><div class="tk-nit">NIT: 900.000.000-1 · Barichara, Santander</div><div class="tk-titulo">FACTURA DE VENTA</div><div class="tk-info">No. ${num}</div></div><div class="tk-info"><strong>Sitio:</strong> ${f.tipo} ${f.nombre}</div><div class="tk-info"><strong>Fecha:</strong> ${fecha} &nbsp; <strong>Hora:</strong> ${hora}</div><hr class="tk-div"><div class="tk-col-h"><span>Descripción</span><span>Total</span></div>${items}<div class="tk-subs"><div class="tk-row"><span>Subtotal</span><span>$${f.total.toLocaleString('es-CO')}</span></div><div class="tk-row"><span>IVA (incl.)</span><span>$0</span></div>${propHTML}<div class="tk-total"><span>TOTAL</span><span>$${total.toLocaleString('es-CO')}</span></div></div><div class="tk-footer"><p class="gracias">¡Gracias por su visita!</p><p>Vuelva pronto · La Estación Café Bar</p><p style="margin-top:4px;font-size:9px;">Conserve este comprobante · ${num}</p></div></div>`;
+  const pagoIcon = f._metodoPago==='bancolombia'?'📱 Bancolombia':'💵 Efectivo';
+  return `<div class="ticket"><div class="tk-header"><div class="tk-logo">LA ESTACIÓN</div><div class="tk-sub">CAFÉ BAR</div><div class="tk-nit">NIT: 900.000.000-1 · Barichara, Santander</div><div class="tk-titulo">FACTURA DE VENTA</div><div class="tk-info">No. ${num}</div></div><div class="tk-info"><strong>Sitio:</strong> ${f.tipo} ${f.nombre}</div><div class="tk-info"><strong>Fecha:</strong> ${fecha} &nbsp; <strong>Hora:</strong> ${hora}</div><div class="tk-info"><strong>Pago:</strong> ${pagoIcon}</div><hr class="tk-div"><div class="tk-col-h"><span>Descripción</span><span>Total</span></div>${items}<div class="tk-subs"><div class="tk-row"><span>Subtotal</span><span>$${f.total.toLocaleString('es-CO')}</span></div><div class="tk-row"><span>IVA (incl.)</span><span>$0</span></div>${propHTML}<div class="tk-total"><span>TOTAL</span><span>$${total.toLocaleString('es-CO')}</span></div></div><div class="tk-footer"><p class="gracias">¡Gracias por su visita!</p><p>Vuelva pronto · La Estación Café Bar</p><p style="margin-top:4px;font-size:9px;">Conserve este comprobante · ${num}</p></div></div>`;
 }
 function imprimirFactura(){
   const tk=document.getElementById('ticketPrintArea').querySelector('.ticket');if(!tk) return;
@@ -1360,54 +1419,150 @@ function enviarEmail(email){
   const num='FAC-'+String(Date.now()).slice(-6);
   const prop=facturaTemp._propinaMonto||0,pct=facturaTemp._propinaPct||0;
   const total=facturaTemp.total+prop;
+  const pago=facturaTemp._metodoPago==='bancolombia'?'📱 Bancolombia':'💵 Efectivo';
   const lineas=facturaTemp.pedidos.map(i=>`  ${i.nombre.padEnd(26)} x${i.cantidad}  $${i.subtotal.toLocaleString('es-CO')}`).join('\n');
   const propLinea=prop>0?`\n  Propina voluntaria (${pct}%)     +$${prop.toLocaleString('es-CO')}`:'';
-  const body=`LA ESTACIÓN CAFÉ BAR\nBarichara, Santander · NIT: 900.000.000-1\n${'═'.repeat(40)}\nFACTURA DE VENTA · ${num}\n${'═'.repeat(40)}\nSitio : ${facturaTemp.tipo} ${facturaTemp.nombre}\nFecha : ${fecha}\n${'─'.repeat(40)}\n${lineas}\n${'─'.repeat(40)}\n  Subtotal                   $${facturaTemp.total.toLocaleString('es-CO')}${propLinea}\n${'═'.repeat(40)}\n  TOTAL                      $${total.toLocaleString('es-CO')}\n${'═'.repeat(40)}\n\n¡Gracias por su visita!\nLa Estación Café Bar`;
+  const body=`LA ESTACIÓN CAFÉ BAR\nBarichara, Santander · NIT: 900.000.000-1\n${'═'.repeat(40)}\nFACTURA DE VENTA · ${num}\n${'═'.repeat(40)}\nSitio : ${facturaTemp.tipo} ${facturaTemp.nombre}\nFecha : ${fecha}\nPago  : ${pago}\n${'─'.repeat(40)}\n${lineas}\n${'─'.repeat(40)}\n  Subtotal                   $${facturaTemp.total.toLocaleString('es-CO')}${propLinea}\n${'═'.repeat(40)}\n  TOTAL                      $${total.toLocaleString('es-CO')}\n${'═'.repeat(40)}\n\n¡Gracias por su visita!\nLa Estación Café Bar`;
   window.location.href=`mailto:${email}?subject=${encodeURIComponent(`Factura La Estación · ${num} · ${fecha}`)}&body=${encodeURIComponent(body)}`;
 }
 
 /* ═══════════════════════════════════════
-   CONTABILIDAD — NUEVO SISTEMA
+   CONTABILIDAD
    ═══════════════════════════════════════ */
-
 let contTabActiva = 'hoy';
 
 function mostrarContabilidad() {
   const anio = new Date().getFullYear();
   document.getElementById('anioLabel').textContent = anio;
   document.getElementById('contOverlay').classList.add('open');
+  // Inicializar fecha historial a hoy
+  const hoy = fechaLocal();
+  fechaHistorial = new Date();
+  document.getElementById('fechaHistorial').value = hoy;
   renderContTab(contTabActiva);
 }
 
 function renderContTab(tab) {
   contTabActiva = tab;
-  // Actualizar tab buttons
   document.querySelectorAll('.cont-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
   document.querySelectorAll('.cont-tab-content').forEach(c => c.classList.toggle('active', c.id === `tab-${tab}`));
   if(tab==='hoy') renderContHoy();
+  else if(tab==='historial') renderContHistorial();
   else if(tab==='resumen') renderContResumen();
   else if(tab==='meses') renderContMeses();
   else if(tab==='productos') renderContProductos();
 }
 
+/* helper: renderizar panel de ventas de una fecha específica */
+function renderVentasDia(ventasDia, contenedor, esPasado) {
+  const totalDia = ventasDia.reduce((a,v)=>a+(v.total||0),0);
+  const propsDia = ventasDia.reduce((a,v)=>a+(v.propina||0),0);
+  const prodsDia = ventasDia.reduce((a,v)=>a+(v.items||[]).reduce((b,i)=>b+i.cantidad,0),0);
+  const promedio = ventasDia.length ? Math.round(totalDia/ventasDia.length) : 0;
+  const ef = ventasDia.filter(v=>(v.metodoPago||'efectivo')==='efectivo');
+  const bc = ventasDia.filter(v=>v.metodoPago==='bancolombia');
+  const totalEf = ef.reduce((a,v)=>a+(v.total||0),0);
+  const totalBc = bc.reduce((a,v)=>a+(v.total||0),0);
+
+  if(!ventasDia.length) {
+    contenedor.innerHTML = `<div style="padding:40px;text-align:center;color:var(--blanco3);font-size:13px;"><i class="fas fa-calendar-times" style="font-size:32px;display:block;margin-bottom:12px;opacity:0.3;"></i>Sin ventas registradas para este día</div>`;
+    return;
+  }
+
+  const txHtml = [...ventasDia].reverse().map(v => {
+    const totalV = v.total||((v.subtotal||0)+(v.propina||0));
+    const itemCount = (v.items||[]).reduce((a,i)=>a+i.cantidad,0);
+    const mp = v.metodoPago||'efectivo';
+    const accionesHtml = !esPasado ? `
+      <button class="btn-tx-edit" data-id="${v.id}"><i class="fas fa-pen"></i></button>
+      <button class="btn-tx-del" data-id="${v.id}"><i class="fas fa-trash"></i></button>` :
+      `<button class="btn-tx-del" data-id="${v.id}"><i class="fas fa-trash"></i></button>`;
+    return `<div class="hoy-tx-row">
+      <div class="hoy-tx-sitio">${v.sitio}</div>
+      <div class="hoy-tx-hora">${v.hora||'—'}</div>
+      <div class="hoy-tx-items col-items">${itemCount} prod.</div>
+      <div class="col-pago"><span class="hoy-tx-pago ${mp==='bancolombia'?'bc':'ef'}">${mp==='bancolombia'?'Banco':'Efect.'}</span></div>
+      <div class="hoy-tx-total">${cop(totalV)}</div>
+      <div class="hoy-tx-actions">${accionesHtml}</div>
+    </div>`;
+  }).join('');
+
+  contenedor.innerHTML = `
+    <div class="hoy-panel" style="margin-bottom:0;">
+      <div class="hoy-header">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--amarillo);letter-spacing:1.5px;">RESUMEN DEL DÍA</div>
+        </div>
+        <div class="hoy-total-big">${cop(totalDia)}</div>
+      </div>
+      <div class="hoy-stats-row">
+        <div class="hoy-stat"><div class="hoy-stat-label">Transacciones</div><div class="hoy-stat-val am">${ventasDia.length}</div></div>
+        <div class="hoy-stat"><div class="hoy-stat-label">Ticket promedio</div><div class="hoy-stat-val">${cop(promedio)}</div></div>
+        <div class="hoy-stat"><div class="hoy-stat-label">Propinas</div><div class="hoy-stat-val">${cop(propsDia)}</div></div>
+        <div class="hoy-stat"><div class="hoy-stat-label">Productos</div><div class="hoy-stat-val">${prodsDia}</div></div>
+      </div>
+      <div class="pago-split">
+        <div class="pago-split-card ef">
+          <div class="pago-split-icon">💵</div>
+          <div class="pago-split-info">
+            <div class="pago-split-label">Efectivo</div>
+            <div class="pago-split-val ef">${cop(totalEf)}</div>
+            <div class="pago-split-count">${ef.length} transacciones</div>
+          </div>
+        </div>
+        <div class="pago-split-card bc">
+          <div class="pago-split-icon">📱</div>
+          <div class="pago-split-info">
+            <div class="pago-split-label">Bancolombia</div>
+            <div class="pago-split-val bc">${cop(totalBc)}</div>
+            <div class="pago-split-count">${bc.length} transacciones</div>
+          </div>
+        </div>
+      </div>
+      <div class="hoy-txs-wrap">
+        <div class="hoy-txs-header">
+          <span>Sitio</span><span>Hora</span>
+          <span class="col-items">Prods.</span>
+          <span class="col-pago">Pago</span>
+          <span>Total</span><span></span>
+        </div>
+        <div id="txsListDia">${txHtml}</div>
+      </div>
+    </div>`;
+
+  contenedor.querySelectorAll('.btn-tx-edit').forEach(b =>
+    b.addEventListener('click', () => abrirEditarVenta(parseInt(b.dataset.id))));
+  contenedor.querySelectorAll('.btn-tx-del').forEach(b =>
+    b.addEventListener('click', () => { eliminarVenta(parseInt(b.dataset.id)); renderContHistorial(); }));
+}
+
 /* ── HOY ── */
 function renderContHoy() {
   const ahora = new Date();
-  const hoyStr = ahora.toDateString();
+  const hoyStr = fechaLocal(ahora);
   document.getElementById('hoyFechaLabel').textContent =
     ahora.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  const ventasHoy = ventas.filter(v => new Date(v.fecha).toDateString() === hoyStr);
+  const ventasHoy = ventas.filter(v => (v.fechaLocal||fechaLocal(new Date(v.fecha))) === hoyStr);
   const totalHoy = ventasHoy.reduce((a,v)=>a+(v.total||0),0);
   const propinasHoy = ventasHoy.reduce((a,v)=>a+(v.propina||0),0);
   const prodsHoy = ventasHoy.reduce((a,v)=>a+(v.items||[]).reduce((b,i)=>b+i.cantidad,0),0);
   const promedio = ventasHoy.length ? Math.round(totalHoy/ventasHoy.length) : 0;
+
+  const ef = ventasHoy.filter(v=>(v.metodoPago||'efectivo')==='efectivo');
+  const bc = ventasHoy.filter(v=>v.metodoPago==='bancolombia');
+  const totalEf = ef.reduce((a,v)=>a+(v.total||0),0);
+  const totalBc = bc.reduce((a,v)=>a+(v.total||0),0);
 
   document.getElementById('hoyTotalBig').textContent = cop(totalHoy);
   document.getElementById('hoyCount').textContent = ventasHoy.length;
   document.getElementById('hoyPromedio').textContent = cop(promedio);
   document.getElementById('hoyPropinas').textContent = cop(propinasHoy);
   document.getElementById('hoyProductos').textContent = prodsHoy;
+  document.getElementById('hoyEfectivo').textContent = cop(totalEf);
+  document.getElementById('hoyEfectivoCount').textContent = ef.length + ' transacciones';
+  document.getElementById('hoyBancolombia').textContent = cop(totalBc);
+  document.getElementById('hoyBancolombiaCount').textContent = bc.length + ' transacciones';
 
   const lista = document.getElementById('hoyTxsList');
   if(!ventasHoy.length) {
@@ -1415,16 +1570,18 @@ function renderContHoy() {
     return;
   }
   lista.innerHTML = [...ventasHoy].reverse().map(v => {
-    const totalV = v.total || ((v.subtotal||0)+(v.propina||0));
+    const totalV = v.total||((v.subtotal||0)+(v.propina||0));
     const itemCount = (v.items||[]).reduce((a,i)=>a+i.cantidad,0);
+    const mp = v.metodoPago||'efectivo';
     return `<div class="hoy-tx-row">
       <div class="hoy-tx-sitio">${v.sitio}</div>
       <div class="hoy-tx-hora">${v.hora||'—'}</div>
       <div class="hoy-tx-items col-items">${itemCount} prod.</div>
+      <div class="col-pago"><span class="hoy-tx-pago ${mp==='bancolombia'?'bc':'ef'}">${mp==='bancolombia'?'Banco':'Efect.'}</span></div>
       <div class="hoy-tx-total">${cop(totalV)}</div>
       <div class="hoy-tx-actions">
-        <button class="btn-tx-edit" data-id="${v.id}" title="Editar venta"><i class="fas fa-pen"></i></button>
-        <button class="btn-tx-del" data-id="${v.id}" title="Eliminar venta"><i class="fas fa-trash"></i></button>
+        <button class="btn-tx-edit" data-id="${v.id}"><i class="fas fa-pen"></i></button>
+        <button class="btn-tx-del" data-id="${v.id}"><i class="fas fa-trash"></i></button>
       </div>
     </div>`;
   }).join('');
@@ -1432,7 +1589,42 @@ function renderContHoy() {
   lista.querySelectorAll('.btn-tx-edit').forEach(b =>
     b.addEventListener('click', () => abrirEditarVenta(parseInt(b.dataset.id))));
   lista.querySelectorAll('.btn-tx-del').forEach(b =>
-    b.addEventListener('click', () => eliminarVenta(parseInt(b.dataset.id))));
+    b.addEventListener('click', () => { eliminarVenta(parseInt(b.dataset.id)); renderContHoy(); }));
+}
+
+/* ── HISTORIAL ── */
+function renderContHistorial() {
+  const fechaStr = document.getElementById('fechaHistorial').value || fechaLocal();
+  const ventasDia = ventas.filter(v => (v.fechaLocal||fechaLocal(new Date(v.fecha))) === fechaStr);
+  // Formatear fecha bonita
+  const [anio,mes,dia] = fechaStr.split('-');
+  const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const label = `${parseInt(dia)} de ${meses[parseInt(mes)-1]} de ${anio}`;
+  const hoyStr = fechaLocal();
+  const esPasado = fechaStr !== hoyStr;
+
+  // título encima del contenido
+  const contenedor = document.getElementById('historialContenido');
+  contenedor.innerHTML = '';
+  const tituloEl = document.createElement('div');
+  tituloEl.style.cssText = 'margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;';
+  tituloEl.innerHTML = `
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--blanco2);letter-spacing:1.5px;">
+      <i class="fas fa-calendar-day" style="color:var(--amarillo);margin-right:6px;font-size:12px;"></i>${label.toUpperCase()}
+    </div>`;
+  contenedor.appendChild(tituloEl);
+  const panelEl = document.createElement('div');
+  contenedor.appendChild(panelEl);
+  renderVentasDia(ventasDia, panelEl, esPasado);
+}
+
+function cambiarFechaHistorial(delta) {
+  const inp = document.getElementById('fechaHistorial');
+  const d = new Date(inp.value + 'T12:00:00');
+  d.setDate(d.getDate() + delta);
+  const nueva = fechaLocal(d);
+  inp.value = nueva;
+  renderContHistorial();
 }
 
 /* ── EDITAR VENTA ── */
@@ -1440,7 +1632,12 @@ function abrirEditarVenta(id) {
   const v = ventas.find(x=>x.id===id); if(!v) return;
   ventaEditandoId = id;
   ventaEditandoItems = v.items ? v.items.map(i=>({...i})) : [];
+  ventaEditandoPago = v.metodoPago || 'efectivo';
   document.getElementById('evInfoHeader').textContent = `${v.sitio} · ${v.fechaDisplay} ${v.hora}`;
+  // Actualizar botones de pago en edición
+  document.querySelectorAll('#modalEditarVenta .pago-opt').forEach(b=>{
+    b.classList.toggle('active', b.dataset.pago === ventaEditandoPago);
+  });
   renderEvLista();
   document.getElementById('modalEditarVenta').classList.add('open');
 }
@@ -1449,7 +1646,6 @@ function renderEvLista() {
   const lista = document.getElementById('evLista');
   const total = ventaEditandoItems.reduce((a,i)=>a+(i.subtotal||0),0);
   document.getElementById('evTotalDisplay').textContent = cop(total);
-
   if(!ventaEditandoItems.length) {
     lista.innerHTML = '<div style="padding:16px;text-align:center;color:var(--blanco3);font-size:12px;">Sin productos</div>';
     return;
@@ -1466,10 +1662,7 @@ function renderEvLista() {
     `<button class="ev-agregar" id="evAgregarBtn"><i class="fas fa-plus"></i> Agregar producto</button>`;
 
   lista.querySelectorAll('.ev-item-del').forEach(b =>
-    b.addEventListener('click', () => {
-      ventaEditandoItems.splice(parseInt(b.dataset.idx),1);
-      renderEvLista();
-    }));
+    b.addEventListener('click', () => { ventaEditandoItems.splice(parseInt(b.dataset.idx),1); renderEvLista(); }));
   document.getElementById('evAgregarBtn').addEventListener('click', () => {
     document.getElementById('modalEditarVenta').classList.remove('open');
     document.getElementById('modalAgregarItemVenta').classList.add('open');
@@ -1485,10 +1678,12 @@ function guardarEdicionVenta() {
   v.items = ventaEditandoItems.map(i=>({...i}));
   v.subtotal = ventaEditandoItems.reduce((a,i)=>a+(i.subtotal||0),0);
   v.total = v.subtotal + (v.propina||0);
+  v.metodoPago = ventaEditandoPago;
   ventaEditandoId = null; ventaEditandoItems = [];
   document.getElementById('modalEditarVenta').classList.remove('open');
   guardar();
-  renderContHoy();
+  if(contTabActiva==='hoy') renderContHoy();
+  else if(contTabActiva==='historial') renderContHistorial();
   toast('✓ Venta actualizada');
 }
 
@@ -1510,7 +1705,8 @@ function eliminarVenta(id) {
   if(!confirm('¿Eliminar esta venta del registro?')) return;
   ventas = ventas.filter(v=>v.id!==id);
   guardar();
-  renderContHoy();
+  if(contTabActiva==='hoy') renderContHoy();
+  else if(contTabActiva==='historial') renderContHistorial();
   toast('🗑 Venta eliminada');
 }
 
@@ -1525,6 +1721,10 @@ function renderContResumen() {
   const mesMax = Array(12).fill(0).map((_,i)=>vAnio.filter(v=>v.mes===i).reduce((a,v)=>a+(v.total||0),0));
   const mesMaxIdx = mesMax.indexOf(Math.max(...mesMax));
   const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const ef = vAnio.filter(v=>(v.metodoPago||'efectivo')==='efectivo');
+  const bc = vAnio.filter(v=>v.metodoPago==='bancolombia');
+  const totalEf = ef.reduce((a,v)=>a+(v.total||0),0);
+  const totalBc = bc.reduce((a,v)=>a+(v.total||0),0);
 
   document.getElementById('contKpis').innerHTML = `
     <div class="kpi-card accent">
@@ -1548,10 +1748,14 @@ function renderContResumen() {
       <div class="kpi-sub">Por transacción</div>
     </div>`;
 
-  // Top productos
+  document.getElementById('anioEfectivo').textContent = cop(totalEf);
+  document.getElementById('anioEfectivoCount').textContent = ef.length + ' transacciones';
+  document.getElementById('anioBancolombia').textContent = cop(totalBc);
+  document.getElementById('anioBancolombiaCount').textContent = bc.length + ' transacciones';
+
   const cProd = {};
   vAnio.forEach(v=>(v.items||[]).forEach(it=>{
-    if(!cProd[it.nombre]) cProd[it.nombre]={qty:0,total:0,cat:''};
+    if(!cProd[it.nombre]) cProd[it.nombre]={qty:0,total:0};
     cProd[it.nombre].qty+=it.cantidad;
     cProd[it.nombre].total+=it.subtotal;
   }));
@@ -1574,11 +1778,13 @@ function renderContResumen() {
 function renderContMeses() {
   const anio = new Date().getFullYear();
   const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  let vMes = Array(12).fill(null).map(()=>({total:0,count:0,items:{}}));
+  let vMes = Array(12).fill(null).map(()=>({total:0,count:0,ef:0,bc:0,items:{}}));
 
   ventas.filter(v=>v.anio===anio).forEach(v=>{
     const t=v.total||((v.subtotal||0)+(v.propina||0));
+    const mp=v.metodoPago||'efectivo';
     vMes[v.mes].total+=t; vMes[v.mes].count++;
+    if(mp==='bancolombia') vMes[v.mes].bc+=t; else vMes[v.mes].ef+=t;
     (v.items||[]).forEach(it=>{
       if(!vMes[v.mes].items[it.nombre]) vMes[v.mes].items[it.nombre]={qty:0,total:0};
       vMes[v.mes].items[it.nombre].qty+=it.cantidad;
@@ -1599,9 +1805,7 @@ function renderContMeses() {
       </div>`).join(''):'<div style="font-size:10px;color:var(--blanco3);padding:4px 0;">Sin ventas este mes</div>';
     return `<div class="mes-pro-card${m.count>0?' activo':''}">
       <div class="mes-pro-head">
-        <div>
-          <div class="mes-pro-nombre">${nombre}</div>
-        </div>
+        <div><div class="mes-pro-nombre">${nombre}</div></div>
         <div class="mes-pro-badge ${m.count>0?'ok':'no'}">${m.count>0?m.count+' ventas':'Sin ventas'}</div>
       </div>
       <div class="mes-pro-total">${cop(m.total)}</div>
@@ -1609,6 +1813,16 @@ function renderContMeses() {
         <span><i class="fas fa-receipt" style="margin-right:3px;"></i>${m.count} transacciones</span>
         <span><i class="fas fa-chart-bar" style="margin-right:3px;"></i>${pct}% del máximo</span>
       </div>
+      ${m.count>0?`<div class="mes-pago-mini">
+        <div class="mes-pago-mini-item">
+          <div class="mes-pago-mini-dot" style="background:var(--verde);"></div>
+          <span style="color:var(--verde);">${cop(m.ef)}</span>
+        </div>
+        <div class="mes-pago-mini-item" style="margin-left:4px;">
+          <div class="mes-pago-mini-dot" style="background:var(--azul);"></div>
+          <span style="color:var(--azul);">${cop(m.bc)}</span>
+        </div>
+      </div>`:''}
       <div class="mes-pro-bar-wrap"><div class="mes-pro-bar" style="width:${pct}%"></div></div>
       ${top3.length?`<div class="mes-top3"><div class="mes-top3-label">Top productos</div>${top3html}</div>`:''}
     </div>`;
@@ -1626,46 +1840,33 @@ function renderContProductos(q='') {
     cProd[it.nombre].total+=it.subtotal;
     cProd[it.nombre].ventas++;
   }));
-
   let entries = Object.entries(cProd).sort((a,b)=>b[1].total-a[1].total);
   if(q) entries = entries.filter(([n])=>n.toLowerCase().includes(q.toLowerCase()));
-
   const cont = document.getElementById('prodContTable');
   if(!entries.length){
     cont.innerHTML='<div style="padding:32px;text-align:center;color:var(--blanco3);font-size:13px;">Sin datos para mostrar</div>';
     return;
   }
   const maxT = entries[0][1].total;
-  cont.innerHTML = `
-    <div style="overflow-x:auto;">
-      <table style="width:100%;border-collapse:collapse;font-size:12px;">
-        <thead>
-          <tr style="border-bottom:2px solid var(--amarillo);">
-            <th style="text-align:left;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">#</th>
-            <th style="text-align:left;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Producto</th>
-            <th style="text-align:left;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Categoría</th>
-            <th style="text-align:right;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Unidades</th>
-            <th style="text-align:right;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Total</th>
-            <th style="padding:8px 10px;min-width:80px;"></th>
-          </tr>
-        </thead>
-        <tbody>
-          ${entries.map(([n,d],i)=>`
-            <tr style="border-bottom:1px solid var(--borde);transition:.12s;" onmouseover="this.style.background='rgba(245,200,0,0.03)'" onmouseout="this.style.background='none'">
-              <td style="padding:9px 10px;color:var(--blanco3);font-family:'Bebas Neue',sans-serif;font-size:14px;">${i+1}</td>
-              <td style="padding:9px 10px;font-weight:600;">${n}</td>
-              <td style="padding:9px 10px;color:var(--blanco3);font-size:10px;text-transform:uppercase;letter-spacing:0.5px;">${d.cat}</td>
-              <td style="padding:9px 10px;text-align:right;font-weight:700;">${d.qty}</td>
-              <td style="padding:9px 10px;text-align:right;font-weight:700;color:var(--amarillo);">${cop(d.total)}</td>
-              <td style="padding:9px 10px;">
-                <div style="background:var(--negro4);height:3px;border-radius:4px;overflow:hidden;">
-                  <div style="height:100%;background:var(--amarillo);width:${Math.round(d.total/maxT*100)}%;"></div>
-                </div>
-              </td>
-            </tr>`).join('')}
-        </tbody>
-      </table>
-    </div>`;
+  cont.innerHTML = `<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">
+    <thead><tr style="border-bottom:2px solid var(--amarillo);">
+      <th style="text-align:left;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">#</th>
+      <th style="text-align:left;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Producto</th>
+      <th style="text-align:left;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Categoría</th>
+      <th style="text-align:right;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Unidades</th>
+      <th style="text-align:right;padding:8px 10px;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blanco3);font-weight:600;">Total</th>
+      <th style="padding:8px 10px;min-width:80px;"></th>
+    </tr></thead>
+    <tbody>${entries.map(([n,d],i)=>`
+      <tr style="border-bottom:1px solid var(--borde);transition:.12s;" onmouseover="this.style.background='rgba(245,200,0,0.03)'" onmouseout="this.style.background='none'">
+        <td style="padding:9px 10px;color:var(--blanco3);font-family:'Bebas Neue',sans-serif;font-size:14px;">${i+1}</td>
+        <td style="padding:9px 10px;font-weight:600;">${n}</td>
+        <td style="padding:9px 10px;color:var(--blanco3);font-size:10px;text-transform:uppercase;letter-spacing:0.5px;">${d.cat}</td>
+        <td style="padding:9px 10px;text-align:right;font-weight:700;">${d.qty}</td>
+        <td style="padding:9px 10px;text-align:right;font-weight:700;color:var(--amarillo);">${cop(d.total)}</td>
+        <td style="padding:9px 10px;"><div style="background:var(--negro4);height:3px;border-radius:4px;overflow:hidden;"><div style="height:100%;background:var(--amarillo);width:${Math.round(d.total/maxT*100)}%;"></div></div></td>
+      </tr>`).join('')}
+    </tbody></table></div>`;
 }
 
 /* ── EXPORTAR CSV ── */
@@ -1673,10 +1874,11 @@ function exportarCSV() {
   const anio = new Date().getFullYear();
   const vAnio = ventas.filter(v=>v.anio===anio);
   if(!vAnio.length){toast('⚠ Sin ventas para exportar');return;}
-  const filas = [['ID','Sitio','Fecha','Hora','Subtotal','Propina','Total','Productos']];
+  const filas = [['ID','Sitio','Fecha','Hora','Método de Pago','Subtotal','Propina','Total','Productos']];
   vAnio.forEach(v=>{
     const prods=(v.items||[]).map(i=>`${i.nombre}(x${i.cantidad})`).join(' | ');
-    filas.push([v.id,v.sitio,v.fechaDisplay,v.hora||'',v.subtotal||0,v.propina||0,v.total||0,prods]);
+    const mp = v.metodoPago || 'efectivo';
+    filas.push([v.id,v.sitio,v.fechaDisplay||v.fechaLocal,v.hora||'',mp,v.subtotal||0,v.propina||0,v.total||0,prods]);
   });
   const csv = filas.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob = new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
@@ -1713,6 +1915,24 @@ document.getElementById('btnCerrarPanel').addEventListener('click',cerrarPanel);
 document.getElementById('btnFacturar').addEventListener('click',facturar);
 document.querySelectorAll('.propina-opt').forEach(b=>b.addEventListener('click',()=>{propinaPct=parseInt(b.dataset.pct);actualizarBotonesPropina();}));
 
+// Método de pago en panel de cobro
+document.querySelectorAll('#pagoEfectivo, #pagoBancolombia').forEach(b => {
+  b.addEventListener('click', () => {
+    metodoPago = b.dataset.pago;
+    actualizarBotonesPago();
+  });
+});
+
+// Método de pago en edición de venta
+document.querySelectorAll('#evPagoEfectivo, #evPagoBancolombia').forEach(b => {
+  b.addEventListener('click', () => {
+    ventaEditandoPago = b.dataset.pago;
+    document.querySelectorAll('#modalEditarVenta .pago-opt').forEach(x => {
+      x.classList.toggle('active', x.dataset.pago === ventaEditandoPago);
+    });
+  });
+});
+
 document.getElementById('buscarProducto').addEventListener('input',e=>{
   busqueda=e.target.value.trim();
   document.getElementById('btnClearSearch').classList.toggle('visible',busqueda.length>0);
@@ -1729,11 +1949,17 @@ document.getElementById('btnContabilidad').addEventListener('click',mostrarConta
 document.getElementById('btnCerrarCont').addEventListener('click',()=>document.getElementById('contOverlay').classList.remove('open'));
 document.getElementById('btnExportarCSV').addEventListener('click',exportarCSV);
 
-// Tabs contabilidad
 document.querySelectorAll('.cont-tab').forEach(t=>t.addEventListener('click',()=>renderContTab(t.dataset.tab)));
-
-// Buscar en tab productos
 document.getElementById('buscarProdCont').addEventListener('input',e=>renderContProductos(e.target.value.trim()));
+
+// Navegación de fecha historial
+document.getElementById('fechaAnteriorBtn').addEventListener('click', () => cambiarFechaHistorial(-1));
+document.getElementById('fechaSiguienteBtn').addEventListener('click', () => cambiarFechaHistorial(1));
+document.getElementById('fechaHistorial').addEventListener('change', renderContHistorial);
+document.getElementById('fechaHoyBtn').addEventListener('click', () => {
+  document.getElementById('fechaHistorial').value = fechaLocal();
+  renderContHistorial();
+});
 
 document.getElementById('btnAgregarProducto').addEventListener('click',()=>document.getElementById('modalProducto').classList.add('open'));
 document.getElementById('btnCancelarProducto').addEventListener('click',()=>document.getElementById('modalProducto').classList.remove('open'));
@@ -1770,7 +1996,6 @@ document.getElementById('btnEnviarEmail').addEventListener('click',()=>{
 });
 document.getElementById('btnCancelarEmail').addEventListener('click',()=>{document.getElementById('modalEmail').classList.remove('open');document.getElementById('facturaOverlay').classList.add('open');});
 
-// Editar venta
 document.getElementById('btnGuardarEdicionVenta').addEventListener('click',guardarEdicionVenta);
 document.getElementById('btnCancelarEdicionVenta').addEventListener('click',()=>{
   ventaEditandoId=null;ventaEditandoItems=[];
