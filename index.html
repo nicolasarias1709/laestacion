@@ -133,7 +133,7 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .prod-item-nombre { flex:1; font-size:13px; font-weight:500; color:var(--blanco); line-height:1.3; min-width:0; }
 .prod-item-cat { font-size:9px; color:var(--blanco3); text-transform:uppercase; letter-spacing:0.5px; }
 .prod-item-precio { font-size:13px; font-weight:700; color:var(--amarillo); white-space:nowrap; }
-.prod-item-add { width:24px; height:24px; border-radius:6px; background:var(--amarillo-dim); color:var(--amarillo); display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; transition:.12s; }
+.prod-item-add { width:24px; height:24px; border-radius:6px; background:var(--amarillo-dim); color:var(--amarillo); display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; transition:.12px; }
 .prod-item:hover .prod-item-add { background:var(--amarillo); color:var(--negro); }
 .cat-group-label { font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:2px; color:var(--blanco3); padding:10px 2px 4px; border-bottom:1px solid var(--borde); margin-bottom:4px; }
 .panel-empty { padding:40px 20px; text-align:center; color:var(--blanco3); font-size:13px; }
@@ -152,6 +152,28 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .btn-stepper:hover { border-color:var(--amarillo); color:var(--amarillo); background:var(--amarillo-dim); }
 .btn-stepper.restar:hover { border-color:var(--rojo); color:var(--rojo); background:var(--rojo-bg); }
 .cuenta-item-cant { font-size:12px; font-weight:700; color:var(--blanco); min-width:14px; text-align:center; }
+
+/* ── AGREGAR OTRO PRODUCTO ── */
+.btn-agregar-otro {
+  width:100%; padding:9px 12px; margin-bottom:8px;
+  background:var(--amarillo-dim); border:1px dashed rgba(245,200,0,0.5);
+  border-radius:var(--r-sm); color:var(--amarillo); font-size:12px;
+  font-family:'DM Sans',sans-serif; font-weight:600;
+  cursor:pointer; transition:.15s;
+  display:none; align-items:center; justify-content:center; gap:7px;
+}
+.btn-agregar-otro:hover { background:var(--amarillo); color:var(--negro); border-style:solid; }
+.btn-agregar-otro:active { transform:scale(0.98); }
+.form-otro {
+  display:none;
+  background:var(--negro3); border:1px solid rgba(245,200,0,0.3);
+  border-radius:var(--r-sm); padding:11px 12px; margin-bottom:9px;
+}
+.form-otro-label { font-size:10px; color:var(--blanco3); margin-bottom:8px; display:flex; align-items:center; gap:5px; }
+.form-otro-input { width:100%; padding:8px 11px; background:var(--negro4); border:1px solid var(--borde2); border-radius:var(--r-sm); color:var(--blanco); font-size:13px; font-family:'DM Sans',sans-serif; margin-bottom:7px; transition:.12s; outline:none; }
+.form-otro-input:focus { border-color:var(--amarillo); }
+.form-otro-btns { display:flex; gap:6px; }
+.form-otro-btns .pill-btn { flex:1; justify-content:center; font-size:11px; padding:7px 10px; }
 
 /* ── MÉTODO DE PAGO ── */
 .pago-wrap { background:var(--negro3); border:1px solid var(--borde); border-radius:var(--r-sm); padding:9px 11px; margin-bottom:9px; }
@@ -519,6 +541,22 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
     <div class="cuenta-titulo"><i class="fas fa-receipt" style="color:var(--amarillo);"></i> Cuenta actual</div>
     <div class="cuenta-lista" id="cuentaLista"><div class="muted">Sin productos</div></div>
 
+    <!-- ── AGREGAR OTRO PRODUCTO ── -->
+    <button class="btn-agregar-otro" id="btnAgregarOtro">
+      <i class="fas fa-plus-circle"></i> Agregar otro producto
+    </button>
+    <div class="form-otro" id="formOtro">
+      <div class="form-otro-label">
+        <i class="fas fa-tag" style="color:var(--amarillo);"></i> Producto adicional (nombre libre)
+      </div>
+      <input class="form-otro-input" type="text" id="otroNombre" placeholder="Ej: Pizza del lado, Empanadas…" autocomplete="off">
+      <input class="form-otro-input" type="number" id="otroPrecio" placeholder="Precio en COP" min="0">
+      <div class="form-otro-btns">
+        <button class="pill-btn primary" id="btnConfirmarOtro"><i class="fas fa-check"></i> Agregar</button>
+        <button class="pill-btn" id="btnCancelarOtro">Cancelar</button>
+      </div>
+    </div>
+
     <!-- MÉTODO DE PAGO -->
     <div class="pago-wrap" id="pagoWrap" style="display:none;">
       <div class="pago-label"><i class="fas fa-credit-card" style="color:var(--amarillo);margin-right:4px;"></i> Método de pago</div>
@@ -736,7 +774,6 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
           <div class="hoy-stat-val" id="hoyProductos">0</div>
         </div>
       </div>
-      <!-- Split efectivo / bancolombia -->
       <div class="pago-split">
         <div class="pago-split-card ef">
           <div class="pago-split-icon">💵</div>
@@ -769,7 +806,7 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
     </div>
   </div>
 
-  <!-- TAB: HISTORIAL (días anteriores) -->
+  <!-- TAB: HISTORIAL -->
   <div class="cont-tab-content" id="tab-historial">
     <div class="fecha-selector-wrap">
       <label><i class="fas fa-calendar-alt" style="color:var(--amarillo);margin-right:5px;"></i> Ver ventas del día:</label>
@@ -786,7 +823,6 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   <!-- TAB: RESUMEN ANUAL -->
   <div class="cont-tab-content" id="tab-resumen">
     <div class="cont-kpis" id="contKpis"></div>
-    <!-- Split anual efectivo / bancolombia -->
     <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;">
       <div class="pago-split-card ef" style="flex:1;min-width:200px;">
         <div class="pago-split-icon">💵</div>
@@ -1101,7 +1137,6 @@ function toast(msg,ms=1800){
 }
 function getCats(){return Array.from(new Set(catalogo.map(p=>p.categoria))).sort();}
 function sitioActivo(){return sitios.find(s=>s.id===sitioActivoId)||null;}
-// Devuelve string YYYY-MM-DD en hora local
 function fechaLocal(d){ const dd=d||new Date(); return dd.getFullYear()+'-'+String(dd.getMonth()+1).padStart(2,'0')+'-'+String(dd.getDate()).padStart(2,'0'); }
 
 /* ═══ RELOJ ═══ */
@@ -1192,6 +1227,9 @@ function abrirPanel(id){
   sitioActivoId=id;propinaPct=0;metodoPago='efectivo';panelCatActiva='Todos';busqueda='';
   document.getElementById('buscarProducto').value='';
   document.getElementById('btnClearSearch').classList.remove('visible');
+  // Ocultar form de otro producto al abrir panel
+  document.getElementById('formOtro').style.display='none';
+  document.getElementById('btnAgregarOtro').style.display='none';
   actualizarBotonesPago();actualizarBotonesPropina();renderPanel();
   document.getElementById('mesaPanel').classList.add('open');
   document.getElementById('panelOverlay').classList.add('open');
@@ -1309,13 +1347,22 @@ function renderCuenta(){
   const btnF=document.getElementById('btnFacturar');
   const pw=document.getElementById('propinaWrap');
   const pagoW=document.getElementById('pagoWrap');
+  const btnOtro=document.getElementById('btnAgregarOtro');
+  const formOtro=document.getElementById('formOtro');
+
   if(!s||!s.pedidos.length){
     lista.innerHTML='<div class="muted">Sin productos aún</div>';
-    btnF.disabled=true;pw.style.display='none';pagoW.style.display='none';
+    btnF.disabled=true;
+    pw.style.display='none';
+    pagoW.style.display='none';
+    btnOtro.style.display='none';
+    formOtro.style.display='none';
     document.getElementById('valTotal').textContent='$0';
     document.getElementById('rowSubtotal').style.display='none';
-    document.getElementById('rowPropina').style.display='none';return;
+    document.getElementById('rowPropina').style.display='none';
+    return;
   }
+
   lista.innerHTML=s.pedidos.map((item,idx)=>`<div class="cuenta-item">
     <div class="cuenta-item-nombre"><strong>${item.nombre}</strong><span>${cop(item.precioUnitario)} c/u</span></div>
     <div class="cuenta-item-stepper">
@@ -1326,11 +1373,21 @@ function renderCuenta(){
     <div class="cuenta-item-precio">${cop(item.subtotal)}</div>
     <button class="btn-quitar" data-idx="${idx}" title="Quitar todo este producto"><i class="fas fa-trash"></i></button>
   </div>`).join('');
+
   lista.querySelectorAll('.btn-stepper.restar').forEach(b=>b.addEventListener('click',()=>restarUnidad(parseInt(b.dataset.idx))));
   lista.querySelectorAll('.btn-stepper.sumar').forEach(b=>b.addEventListener('click',()=>sumarUnidad(parseInt(b.dataset.idx))));
   lista.querySelectorAll('.btn-quitar').forEach(b=>b.addEventListener('click',()=>quitarItem(parseInt(b.dataset.idx))));
-  pagoW.style.display='block';pw.style.display='block';actualizarTotales();btnF.disabled=false;
+
+  // Mostrar botón "Agregar otro" solo si el form no está visible
+  if(formOtro.style.display==='none'||formOtro.style.display===''){
+    btnOtro.style.display='flex';
+  }
+  pagoW.style.display='block';
+  pw.style.display='block';
+  actualizarTotales();
+  btnF.disabled=false;
 }
+
 function actualizarTotales(){
   const s=sitioActivo();const sub=s?s.total:0;
   const prop=Math.round(sub*propinaPct/100);const total=sub+prop;
@@ -1435,7 +1492,6 @@ function mostrarContabilidad() {
   const anio = new Date().getFullYear();
   document.getElementById('anioLabel').textContent = anio;
   document.getElementById('contOverlay').classList.add('open');
-  // Inicializar fecha historial a hoy
   const hoy = fechaLocal();
   fechaHistorial = new Date();
   document.getElementById('fechaHistorial').value = hoy;
@@ -1453,7 +1509,6 @@ function renderContTab(tab) {
   else if(tab==='productos') renderContProductos();
 }
 
-/* helper: renderizar panel de ventas de una fecha específica */
 function renderVentasDia(ventasDia, contenedor, esPasado) {
   const totalDia = ventasDia.reduce((a,v)=>a+(v.total||0),0);
   const propsDia = ventasDia.reduce((a,v)=>a+(v.propina||0),0);
@@ -1596,14 +1651,12 @@ function renderContHoy() {
 function renderContHistorial() {
   const fechaStr = document.getElementById('fechaHistorial').value || fechaLocal();
   const ventasDia = ventas.filter(v => (v.fechaLocal||fechaLocal(new Date(v.fecha))) === fechaStr);
-  // Formatear fecha bonita
   const [anio,mes,dia] = fechaStr.split('-');
   const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   const label = `${parseInt(dia)} de ${meses[parseInt(mes)-1]} de ${anio}`;
   const hoyStr = fechaLocal();
   const esPasado = fechaStr !== hoyStr;
 
-  // título encima del contenido
   const contenedor = document.getElementById('historialContenido');
   contenedor.innerHTML = '';
   const tituloEl = document.createElement('div');
@@ -1634,7 +1687,6 @@ function abrirEditarVenta(id) {
   ventaEditandoItems = v.items ? v.items.map(i=>({...i})) : [];
   ventaEditandoPago = v.metodoPago || 'efectivo';
   document.getElementById('evInfoHeader').textContent = `${v.sitio} · ${v.fechaDisplay} ${v.hora}`;
-  // Actualizar botones de pago en edición
   document.querySelectorAll('#modalEditarVenta .pago-opt').forEach(b=>{
     b.classList.toggle('active', b.dataset.pago === ventaEditandoPago);
   });
@@ -2007,8 +2059,48 @@ document.getElementById('btnCancelarAgregarItem').addEventListener('click',()=>{
   document.getElementById('modalEditarVenta').classList.add('open');
 });
 
+/* ── AGREGAR OTRO PRODUCTO (nuevo) ── */
+document.getElementById('btnAgregarOtro').addEventListener('click', () => {
+  document.getElementById('btnAgregarOtro').style.display = 'none';
+  document.getElementById('otroNombre').value = '';
+  document.getElementById('otroPrecio').value = '';
+  document.getElementById('formOtro').style.display = 'block';
+  setTimeout(() => document.getElementById('otroNombre').focus(), 80);
+});
+
+document.getElementById('btnCancelarOtro').addEventListener('click', () => {
+  document.getElementById('formOtro').style.display = 'none';
+  // Solo mostrar el botón si hay productos en la cuenta
+  const s = sitioActivo();
+  if(s && s.pedidos && s.pedidos.length > 0) {
+    document.getElementById('btnAgregarOtro').style.display = 'flex';
+  }
+});
+
+document.getElementById('btnConfirmarOtro').addEventListener('click', () => {
+  const nombre = document.getElementById('otroNombre').value.trim();
+  const precio = parseFloat(document.getElementById('otroPrecio').value);
+  if(!nombre) { toast('⚠ Escribe el nombre del producto'); return; }
+  if(isNaN(precio) || precio <= 0) { toast('⚠ Ingresa un precio válido'); return; }
+  document.getElementById('formOtro').style.display = 'none';
+  document.getElementById('btnAgregarOtro').style.display = 'flex';
+  agregarProducto(nombre, Math.round(precio));
+});
+
+// Enter en campos del form otro
+document.getElementById('otroNombre').addEventListener('keydown', e => {
+  if(e.key === 'Enter') { e.preventDefault(); document.getElementById('otroPrecio').focus(); }
+});
+document.getElementById('otroPrecio').addEventListener('keydown', e => {
+  if(e.key === 'Enter') { e.preventDefault(); document.getElementById('btnConfirmarOtro').click(); }
+});
+
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
+    // Si el form de "otro" está abierto, cerrarlo primero
+    if(document.getElementById('formOtro').style.display==='block'){
+      document.getElementById('btnCancelarOtro').click();return;
+    }
     if(modoEdicion){toggleModoEdicion();return;}
     ['contOverlay','facturaOverlay','modalProducto','modalSitio','modalEmail','modalEliminarSitio','modalEditarVenta','modalAgregarItemVenta'].forEach(id=>{
       if(document.getElementById(id).classList.contains('open')) document.getElementById(id).classList.remove('open');
