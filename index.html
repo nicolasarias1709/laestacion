@@ -304,6 +304,27 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 .kpi-value.azul { color:var(--azul); }
 .kpi-value.small { font-size:20px; }
 .kpi-sub { font-size:10px; color:var(--blanco3); margin-top:4px; }
+.kpi-card.rojo::before { background:var(--rojo); opacity:1; }
+.kpi-value.rojo { color:var(--rojo); }
+
+/* ── EGRESOS ── */
+.egreso-form-wrap { background:var(--negro3); border:1px solid var(--borde); border-radius:14px; padding:16px 18px; margin-bottom:18px; }
+.egreso-form-title { font-family:'Bebas Neue',sans-serif; font-size:15px; color:var(--rojo); letter-spacing:1.5px; margin-bottom:10px; display:flex; align-items:center; gap:7px; }
+.egreso-form-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:8px; margin-bottom:8px; }
+.egreso-form-grid .modal-input { margin-bottom:0; }
+@media (max-width:640px) { .egreso-form-grid { grid-template-columns:1fr; } }
+.btn-agregar-egreso { padding:9px 18px; border-radius:99px; border:none; background:var(--rojo); color:#1a0a0a; font-family:'DM Sans',sans-serif; font-weight:700; font-size:12px; cursor:pointer; transition:.15s; display:inline-flex; align-items:center; gap:7px; }
+.btn-agregar-egreso:hover { background:#ff9b9b; }
+.neto-card { border-radius:10px; padding:12px 14px; flex:1; min-width:150px; display:flex; align-items:center; gap:10px; }
+.neto-card.pos { background:rgba(74,222,128,0.08); border:1px solid rgba(74,222,128,0.25); }
+.neto-card.neg { background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.25); }
+.neto-card .pago-split-icon { font-size:18px; }
+.egreso-row { display:grid; grid-template-columns:1fr 110px 90px 100px 40px; gap:8px; padding:8px 10px; border-bottom:1px solid rgba(42,42,42,0.5); align-items:center; font-size:12px; }
+.egreso-row:hover { background:rgba(248,113,113,0.04); }
+.egreso-row-header { display:grid; grid-template-columns:1fr 110px 90px 100px 40px; gap:8px; padding:6px 10px; font-size:9px; text-transform:uppercase; letter-spacing:1px; color:var(--blanco3); border-bottom:1px solid var(--borde); }
+.egreso-cat-badge { font-size:9px; font-weight:700; padding:2px 8px; border-radius:99px; background:rgba(248,113,113,0.12); color:var(--rojo); display:inline-block; white-space:nowrap; }
+.egreso-monto { font-weight:700; color:var(--rojo); white-space:nowrap; }
+@media (max-width:600px) { .egreso-row, .egreso-row-header { grid-template-columns:1fr 80px 70px 34px; } .egreso-row .col-hora, .egreso-row-header .col-hora { display:none; } }
 
 /* HOY panel */
 .hoy-panel { background:linear-gradient(135deg, #161200 0%, #1a1500 100%); border:1px solid rgba(245,200,0,0.3); border-radius:16px; padding:20px; margin-bottom:24px; }
@@ -737,6 +758,7 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 
   <div class="cont-tabs">
     <button class="cont-tab active" data-tab="hoy">Hoy</button>
+    <button class="cont-tab" data-tab="egresos"><i class="fas fa-minus-circle" style="margin-right:4px;"></i>Egresos</button>
     <button class="cont-tab" data-tab="historial">Días anteriores</button>
     <button class="cont-tab" data-tab="resumen">Resumen anual</button>
     <button class="cont-tab" data-tab="meses">Por mes</button>
@@ -792,6 +814,23 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
           </div>
         </div>
       </div>
+      <div class="pago-split" style="margin-bottom:16px;">
+        <div class="pago-split-card" style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25);">
+          <div class="pago-split-icon">🧾</div>
+          <div class="pago-split-info">
+            <div class="pago-split-label">Egresos de hoy</div>
+            <div class="pago-split-val" style="color:var(--rojo);" id="hoyEgresosVal">$0</div>
+            <div class="pago-split-count" id="hoyEgresosCount">0 gastos</div>
+          </div>
+        </div>
+        <div class="neto-card" id="hoyNetoCard">
+          <div class="pago-split-icon">⚖️</div>
+          <div class="pago-split-info">
+            <div class="pago-split-label">Neto del día</div>
+            <div class="pago-split-val" id="hoyNetoVal">$0</div>
+          </div>
+        </div>
+      </div>
       <div class="hoy-txs-wrap" id="hoyTxsWrap">
         <div class="hoy-txs-header">
           <span>Sitio</span>
@@ -804,6 +843,41 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
         <div id="hoyTxsList"></div>
       </div>
     </div>
+  </div>
+
+  <!-- TAB: EGRESOS -->
+  <div class="cont-tab-content" id="tab-egresos">
+    <div class="egreso-form-wrap">
+      <div class="egreso-form-title"><i class="fas fa-minus-circle"></i> Registrar nuevo gasto</div>
+      <div class="egreso-form-grid">
+        <input class="modal-input" type="text" id="egConcepto" placeholder="Concepto (ej: Insumos, Arriendo…)" autocomplete="off">
+        <input class="modal-input" type="number" id="egMonto" placeholder="Monto (COP)" min="0">
+        <select class="modal-input" id="egCategoria">
+          <option value="Insumos">Insumos</option>
+          <option value="Nómina">Nómina</option>
+          <option value="Servicios">Servicios</option>
+          <option value="Arriendo">Arriendo</option>
+          <option value="Mantenimiento">Mantenimiento</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Impuestos">Impuestos</option>
+          <option value="Otros">Otros</option>
+        </select>
+      </div>
+      <button class="btn-agregar-egreso" id="btnAgregarEgreso"><i class="fas fa-plus"></i> Agregar gasto</button>
+    </div>
+
+    <div class="fecha-selector-wrap">
+      <label><i class="fas fa-calendar-alt" style="color:var(--rojo);margin-right:5px;"></i> Ver gastos del día:</label>
+      <div class="fecha-nav">
+        <button class="fecha-nav-btn" id="egFechaAnteriorBtn" title="Día anterior"><i class="fas fa-chevron-left"></i></button>
+        <button class="fecha-nav-btn" id="egFechaSiguienteBtn" title="Día siguiente"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <input type="date" class="fecha-input" id="fechaEgresos">
+      <button class="fecha-hoy-btn" id="egFechaHoyBtn"><i class="fas fa-circle" style="font-size:7px;margin-right:4px;"></i> Hoy</button>
+      <button class="pill-btn" id="btnExportarEgresosCSV" style="margin-left:auto;"><i class="fas fa-download"></i> Exportar egresos CSV</button>
+    </div>
+
+    <div id="egresosContenido"></div>
   </div>
 
   <!-- TAB: HISTORIAL -->
@@ -841,6 +915,23 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
         </div>
       </div>
     </div>
+    <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;">
+      <div class="pago-split-card" style="flex:1;min-width:200px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25);">
+        <div class="pago-split-icon">🧾</div>
+        <div class="pago-split-info">
+          <div class="pago-split-label">Total Egresos en el año</div>
+          <div class="pago-split-val" style="color:var(--rojo);" id="anioEgresos">$0</div>
+          <div class="pago-split-count" id="anioEgresosCount">0 gastos</div>
+        </div>
+      </div>
+      <div class="neto-card" id="anioNetoCard" style="min-width:200px;">
+        <div class="pago-split-icon">⚖️</div>
+        <div class="pago-split-info">
+          <div class="pago-split-label">Neto del año (Ingresos − Egresos)</div>
+          <div class="pago-split-val" id="anioNetoVal">$0</div>
+        </div>
+      </div>
+    </div>
     <div class="top-prods-section">
       <div class="section-title"><i class="fas fa-trophy" style="color:var(--amarillo);font-size:11px;"></i> Top 10 productos del año</div>
       <div class="top-prod-list" id="topProdList"></div>
@@ -866,14 +957,18 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 
 <div id="toast"></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database-compat.js"></script>
+
 <script>
 /* ═══ FIREBASE CONFIG ═══ */
-const FB_URL = 'https://la-estacion-pos-default-rtdb.firebaseio.com';
+const FB_URL = 'https://laestacion-6872a-default-rtdb.firebaseio.com';
 
 /* ═══ STORAGE KEYS ═══ */
 const SK_SITIOS = 'laEstacion_sitios_v4';
 const SK_VENTAS = 'laEstacion_ventas_v4';
 const SK_PRODS  = 'laEstacion_prods_v4';
+const SK_EGRESOS = 'laEstacion_egresos_v4';
 
 const SITIOS_DEFECTO = () => [
   {id:1,tipo:"Mesa",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
@@ -1044,7 +1139,7 @@ const CATALOGO_DEFECTO = [
 ];
 
 /* ═══ ESTADO ═══ */
-let sitios=[], ventas=[], catalogo=[];
+let sitios=[], ventas=[], catalogo=[], egresos=[];
 let nextSitioId=19, nextProdId=300;
 let sitioActivoId=null, panelCatActiva='Todos';
 let propinaPct=0, metodoPago='efectivo', facturaTemp=null;
@@ -1063,6 +1158,7 @@ function guardarLocal() {
     localStorage.setItem(SK_SITIOS, JSON.stringify({sitios, nextSitioId}));
     localStorage.setItem(SK_VENTAS, JSON.stringify(ventas));
     localStorage.setItem(SK_PRODS, JSON.stringify({catalogo, nextProdId}));
+    localStorage.setItem(SK_EGRESOS, JSON.stringify(egresos));
   } catch(e){}
 }
 function cargarLocal() {
@@ -1075,36 +1171,91 @@ function cargarLocal() {
     const pv=localStorage.getItem(SK_PRODS);
     if(pv){const d=JSON.parse(pv);catalogo=d.catalogo;nextProdId=d.nextProdId||300;}
     else catalogo=[...CATALOGO_DEFECTO];
-  } catch(e){sitios=SITIOS_DEFECTO();ventas=[];catalogo=[...CATALOGO_DEFECTO];}
+    const eg=localStorage.getItem(SK_EGRESOS);
+    egresos=eg?JSON.parse(eg):[];
+  } catch(e){sitios=SITIOS_DEFECTO();ventas=[];catalogo=[...CATALOGO_DEFECTO];egresos=[];}
 }
 
-/* ═══ SYNC ═══ */
+/* ═══ SYNC EN TIEMPO REAL ═══ */
+let dbRef = null;
+let modoRealtime = false;
+let lastLocalWriteTs = 0;
+
+function aplicarDatosRemotos(data){
+  sitios=data.sitios; nextSitioId=data.nextSitioId||19;
+  ventas=data.ventas||[];
+  catalogo=data.catalogo||[...CATALOGO_DEFECTO];
+  nextProdId=data.nextProdId||300;
+  egresos=data.egresos||[];
+  guardarLocal();
+  renderMesas();
+  if(sitioActivoId) renderPanel();
+  const cont=document.getElementById('contOverlay');
+  if(cont && cont.classList.contains('open')) renderContTab(contTabActiva);
+}
+
+function initFirebaseRealtime(){
+  try {
+    if(typeof firebase==='undefined') throw new Error('SDK de Firebase no disponible');
+    firebase.initializeApp({ databaseURL: FB_URL });
+    dbRef = firebase.database().ref('pos');
+    modoRealtime = true;
+    dbRef.on('value', snapshot=>{
+      const data = snapshot.val();
+      if(!data || !data.sitios){ indicarSync('ok'); return; }
+      // Si es el eco de nuestro propio guardado, lo ignoramos
+      if(data.ts && data.ts<=lastLocalWriteTs){ indicarSync('ok'); return; }
+      if(data.ts) lastLocalWriteTs = data.ts;
+      aplicarDatosRemotos(data);
+      indicarSync('ok');
+    }, err=>{
+      console.warn('Sync en tiempo real interrumpida, usando modo periódico.', err);
+      modoRealtime=false; indicarSync('local'); iniciarPollingFallback();
+    });
+  } catch(e){
+    console.warn('No se pudo iniciar sync en tiempo real, usando modo periódico.', e);
+    modoRealtime=false; iniciarPollingFallback();
+  }
+}
+
+let pollingFallbackActivo=false;
+function iniciarPollingFallback(){
+  if(pollingFallbackActivo) return;
+  pollingFallbackActivo=true;
+  syncCargarREST();
+  setInterval(async()=>{
+    if(!document.hidden && !modoRealtime){await syncCargarREST();renderMesas();if(sitioActivoId)renderPanel();}
+  },15000);
+}
+
 async function syncGuardar() {
   clearTimeout(syncTimer);
   syncTimer=setTimeout(async()=>{
     guardarLocal(); indicarSync('guardando');
-    try {
-      const data={sitios,nextSitioId,ventas,catalogo,nextProdId,ts:Date.now()};
-      const r=await fetch(`${FB_URL}/pos.json`,{method:'PUT',body:JSON.stringify(data),headers:{'Content-Type':'application/json'}});
-      if(r.ok) indicarSync('ok'); else indicarSync('error');
-    } catch(e){indicarSync('error');}
+    const ts=Date.now();
+    lastLocalWriteTs=ts;
+    const data={sitios,nextSitioId,ventas,catalogo,nextProdId,egresos,ts};
+    if(modoRealtime && dbRef){
+      dbRef.set(data).then(()=>indicarSync('ok')).catch(()=>indicarSync('error'));
+    } else {
+      try {
+        const r=await fetch(`${FB_URL}/pos.json`,{method:'PUT',body:JSON.stringify(data),headers:{'Content-Type':'application/json'}});
+        if(r.ok) indicarSync('ok'); else indicarSync('error');
+      } catch(e){indicarSync('error');}
+    }
   },600);
 }
-async function syncCargar() {
+async function syncCargarREST() {
   indicarSync('guardando');
   try {
     const r=await fetch(`${FB_URL}/pos.json`);
     if(!r.ok) throw new Error();
     const data=await r.json();
     if(data&&data.sitios){
-      const localTs=parseInt(localStorage.getItem('_ts')||'0');
-      if(!data.ts||data.ts>=localTs){
-        sitios=data.sitios; nextSitioId=data.nextSitioId||19;
-        ventas=data.ventas||[];
-        catalogo=data.catalogo||[...CATALOGO_DEFECTO];
-        nextProdId=data.nextProdId||300;
-        localStorage.setItem('_ts',data.ts||Date.now());
-        guardarLocal(); indicarSync('ok'); return true;
+      if(!data.ts||data.ts>=lastLocalWriteTs){
+        lastLocalWriteTs=data.ts||Date.now();
+        aplicarDatosRemotos(data);
+        indicarSync('ok'); return true;
       }
     }
     indicarSync('ok'); return false;
@@ -1113,21 +1264,18 @@ async function syncCargar() {
 function indicarSync(estado) {
   const dot=document.getElementById('syncDot'); const txt=document.getElementById('syncTxt');
   dot.className='sync-dot';
-  if(estado==='ok'){dot.classList.add('ok');txt.textContent='sync ✓';}
+  if(estado==='ok'){dot.classList.add('ok');txt.textContent=modoRealtime?'en vivo ✓':'sync ✓';}
   else if(estado==='guardando'){txt.textContent='sync…';}
   else{txt.textContent='local';}
 }
 function guardar(){syncGuardar();}
 
 window.addEventListener('storage',e=>{
-  if(e.key===SK_SITIOS||e.key===SK_VENTAS){
+  if(e.key===SK_SITIOS||e.key===SK_VENTAS||e.key===SK_EGRESOS){
     cargarLocal(); renderMesas();
     if(sitioActivoId) renderPanel();
   }
 });
-setInterval(async()=>{
-  if(!document.hidden){await syncCargar();renderMesas();if(sitioActivoId)renderPanel();}
-},15000);
 
 /* ═══ HELPERS ═══ */
 function cop(n){return '$'+Math.round(n).toLocaleString('es-CO');}
@@ -1484,6 +1632,98 @@ function enviarEmail(email){
 }
 
 /* ═══════════════════════════════════════
+   EGRESOS (GASTOS)
+   ═══════════════════════════════════════ */
+function agregarEgreso(){
+  const concepto=document.getElementById('egConcepto').value.trim();
+  const monto=parseFloat(document.getElementById('egMonto').value);
+  const categoria=document.getElementById('egCategoria').value;
+  if(!concepto){toast('⚠ Escribe el concepto del gasto');return;}
+  if(isNaN(monto)||monto<=0){toast('⚠ Ingresa un monto válido');return;}
+  const ahora=new Date();
+  egresos.push({
+    id:Date.now(),
+    concepto,categoria,monto:Math.round(monto),
+    fecha:ahora.toISOString(),
+    fechaLocal:fechaLocal(ahora),
+    fechaDisplay:ahora.toLocaleDateString('es-CO'),
+    hora:ahora.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}),
+    mes:ahora.getMonth(),anio:ahora.getFullYear()
+  });
+  document.getElementById('egConcepto').value='';
+  document.getElementById('egMonto').value='';
+  document.getElementById('egCategoria').value='Insumos';
+  guardar();
+  toast(`✓ Gasto registrado: ${concepto}`);
+  renderContEgresos();
+  if(contTabActiva==='hoy') renderContHoy();
+}
+function eliminarEgreso(id){
+  if(!confirm('¿Eliminar este gasto del registro?')) return;
+  egresos=egresos.filter(e=>e.id!==id);
+  guardar();
+  renderContEgresos();
+  if(contTabActiva==='hoy') renderContHoy();
+  toast('🗑 Gasto eliminado');
+}
+function renderEgresosDia(egresosDia, contenedor){
+  const totalDia = egresosDia.reduce((a,e)=>a+(e.monto||0),0);
+  if(!egresosDia.length){
+    contenedor.innerHTML = `<div style="padding:40px;text-align:center;color:var(--blanco3);font-size:13px;"><i class="fas fa-receipt" style="font-size:32px;display:block;margin-bottom:12px;opacity:0.3;"></i>Sin gastos registrados para este día</div>`;
+    return;
+  }
+  const rows = [...egresosDia].reverse().map(e => `
+    <div class="egreso-row">
+      <div>${e.concepto}</div>
+      <div class="col-hora"><span class="egreso-cat-badge">${e.categoria}</span></div>
+      <div class="col-hora" style="color:var(--blanco3);">${e.hora||'—'}</div>
+      <div class="egreso-monto">${cop(e.monto)}</div>
+      <button class="btn-tx-del" data-id="${e.id}" title="Eliminar gasto"><i class="fas fa-trash"></i></button>
+    </div>`).join('');
+  contenedor.innerHTML = `
+    <div class="hoy-panel" style="margin-bottom:0;border-color:rgba(248,113,113,0.3);background:linear-gradient(135deg,#160a0a 0%,#1a0a0a 100%);">
+      <div class="hoy-header">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--rojo);letter-spacing:1.5px;">TOTAL GASTOS DEL DÍA</div>
+        <div class="hoy-total-big" style="color:var(--rojo);">${cop(totalDia)}</div>
+      </div>
+      <div class="egreso-row-header">
+        <span>Concepto</span><span class="col-hora">Categoría</span><span class="col-hora">Hora</span><span>Monto</span><span></span>
+      </div>
+      <div>${rows}</div>
+    </div>`;
+  contenedor.querySelectorAll('.btn-tx-del').forEach(b=>
+    b.addEventListener('click',()=>eliminarEgreso(parseInt(b.dataset.id))));
+}
+function renderContEgresos(){
+  const fechaStr = document.getElementById('fechaEgresos').value || fechaLocal();
+  const egresosDia = egresos.filter(e => (e.fechaLocal||fechaLocal(new Date(e.fecha))) === fechaStr);
+  renderEgresosDia(egresosDia, document.getElementById('egresosContenido'));
+}
+function cambiarFechaEgreso(delta){
+  const inp = document.getElementById('fechaEgresos');
+  const d = new Date(inp.value + 'T12:00:00');
+  d.setDate(d.getDate() + delta);
+  inp.value = fechaLocal(d);
+  renderContEgresos();
+}
+function exportarEgresosCSV(){
+  const anio = new Date().getFullYear();
+  const eAnio = egresos.filter(e=>e.anio===anio);
+  if(!eAnio.length){toast('⚠ Sin egresos para exportar');return;}
+  const filas = [['ID','Concepto','Categoría','Fecha','Hora','Monto']];
+  eAnio.forEach(e=>{
+    filas.push([e.id,e.concepto,e.categoria,e.fechaDisplay||e.fechaLocal,e.hora||'',e.monto||0]);
+  });
+  const csv = filas.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url;
+  a.download=`laestacion_egresos_${anio}.csv`; a.click();
+  URL.revokeObjectURL(url);
+  toast('✓ CSV de egresos descargado');
+}
+
+/* ═══════════════════════════════════════
    CONTABILIDAD
    ═══════════════════════════════════════ */
 let contTabActiva = 'hoy';
@@ -1495,6 +1735,7 @@ function mostrarContabilidad() {
   const hoy = fechaLocal();
   fechaHistorial = new Date();
   document.getElementById('fechaHistorial').value = hoy;
+  document.getElementById('fechaEgresos').value = hoy;
   renderContTab(contTabActiva);
 }
 
@@ -1503,6 +1744,7 @@ function renderContTab(tab) {
   document.querySelectorAll('.cont-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
   document.querySelectorAll('.cont-tab-content').forEach(c => c.classList.toggle('active', c.id === `tab-${tab}`));
   if(tab==='hoy') renderContHoy();
+  else if(tab==='egresos') renderContEgresos();
   else if(tab==='historial') renderContHistorial();
   else if(tab==='resumen') renderContResumen();
   else if(tab==='meses') renderContMeses();
@@ -1618,6 +1860,17 @@ function renderContHoy() {
   document.getElementById('hoyEfectivoCount').textContent = ef.length + ' transacciones';
   document.getElementById('hoyBancolombia').textContent = cop(totalBc);
   document.getElementById('hoyBancolombiaCount').textContent = bc.length + ' transacciones';
+
+  const egresosHoy = egresos.filter(e => (e.fechaLocal||fechaLocal(new Date(e.fecha))) === hoyStr);
+  const totalEgresosHoy = egresosHoy.reduce((a,e)=>a+(e.monto||0),0);
+  const netoHoy = totalHoy - totalEgresosHoy;
+  document.getElementById('hoyEgresosVal').textContent = cop(totalEgresosHoy);
+  document.getElementById('hoyEgresosCount').textContent = egresosHoy.length + ' gastos';
+  document.getElementById('hoyNetoVal').textContent = (netoHoy<0?'-':'')+cop(Math.abs(netoHoy));
+  const netoCard = document.getElementById('hoyNetoCard');
+  netoCard.classList.remove('pos','neg');
+  netoCard.classList.add(netoHoy>=0?'pos':'neg');
+  document.getElementById('hoyNetoVal').style.color = netoHoy>=0?'var(--verde)':'var(--rojo)';
 
   const lista = document.getElementById('hoyTxsList');
   if(!ventasHoy.length) {
@@ -1805,6 +2058,17 @@ function renderContResumen() {
   document.getElementById('anioBancolombia').textContent = cop(totalBc);
   document.getElementById('anioBancolombiaCount').textContent = bc.length + ' transacciones';
 
+  const eAnio = egresos.filter(e=>e.anio===anio);
+  const totalEgresosAnio = eAnio.reduce((a,e)=>a+(e.monto||0),0);
+  const netoAnio = totalAnio - totalEgresosAnio;
+  document.getElementById('anioEgresos').textContent = cop(totalEgresosAnio);
+  document.getElementById('anioEgresosCount').textContent = eAnio.length + ' gastos';
+  document.getElementById('anioNetoVal').textContent = (netoAnio<0?'-':'')+cop(Math.abs(netoAnio));
+  const netoCardAnio = document.getElementById('anioNetoCard');
+  netoCardAnio.classList.remove('pos','neg');
+  netoCardAnio.classList.add(netoAnio>=0?'pos':'neg');
+  document.getElementById('anioNetoVal').style.color = netoAnio>=0?'var(--verde)':'var(--rojo)';
+
   const cProd = {};
   vAnio.forEach(v=>(v.items||[]).forEach(it=>{
     if(!cProd[it.nombre]) cProd[it.nombre]={qty:0,total:0};
@@ -1830,7 +2094,7 @@ function renderContResumen() {
 function renderContMeses() {
   const anio = new Date().getFullYear();
   const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  let vMes = Array(12).fill(null).map(()=>({total:0,count:0,ef:0,bc:0,items:{}}));
+  let vMes = Array(12).fill(null).map(()=>({total:0,count:0,ef:0,bc:0,items:{},egresos:0,egresosCount:0}));
 
   ventas.filter(v=>v.anio===anio).forEach(v=>{
     const t=v.total||((v.subtotal||0)+(v.propina||0));
@@ -1843,11 +2107,17 @@ function renderContMeses() {
       vMes[v.mes].items[it.nombre].total+=it.subtotal;
     });
   });
+  egresos.filter(e=>e.anio===anio).forEach(e=>{
+    vMes[e.mes].egresos+=(e.monto||0);
+    vMes[e.mes].egresosCount++;
+  });
   const maxMes = Math.max(...vMes.map(m=>m.total),1);
 
   document.getElementById('mesesGrid').innerHTML = meses.map((nombre,i)=>{
     const m=vMes[i];
     const pct=Math.round(m.total/maxMes*100);
+    const neto = m.total - m.egresos;
+    const tieneActividad = m.count>0 || m.egresosCount>0;
     const top3=Object.entries(m.items).sort((a,b)=>b[1].total-a[1].total).slice(0,3);
     const top3html=top3.length?top3.map(([n,d],j)=>`
       <div class="mes-top3-item">
@@ -1855,14 +2125,20 @@ function renderContMeses() {
         <span class="mes-top3-name">${n}</span>
         <span class="mes-top3-val">${cop(d.total)}</span>
       </div>`).join(''):'<div style="font-size:10px;color:var(--blanco3);padding:4px 0;">Sin ventas este mes</div>';
-    return `<div class="mes-pro-card${m.count>0?' activo':''}">
+    return `<div class="mes-pro-card${tieneActividad?' activo':''}">
       <div class="mes-pro-head">
         <div><div class="mes-pro-nombre">${nombre}</div></div>
-        <div class="mes-pro-badge ${m.count>0?'ok':'no'}">${m.count>0?m.count+' ventas':'Sin ventas'}</div>
+        <div class="mes-pro-badge ${tieneActividad?'ok':'no'}">${m.count>0?m.count+' ventas':'Sin ventas'}</div>
       </div>
-      <div class="mes-pro-total">${cop(m.total)}</div>
+      <div class="mes-pro-meta" style="padding-top:0;">
+        <span style="color:var(--verde);"><i class="fas fa-arrow-up" style="margin-right:3px;"></i>Ingresos: ${cop(m.total)}</span>
+      </div>
+      <div class="mes-pro-meta" style="padding-top:0;padding-bottom:2px;">
+        <span style="color:var(--rojo);"><i class="fas fa-arrow-down" style="margin-right:3px;"></i>Egresos: ${cop(m.egresos)}</span>
+      </div>
+      <div class="mes-pro-total" style="color:${neto>=0?'var(--amarillo)':'var(--rojo)'};padding-top:2px;">${neto<0?'-':''}${cop(Math.abs(neto))} <span style="font-family:'DM Sans',sans-serif;font-size:9px;color:var(--blanco3);letter-spacing:1px;">NETO</span></div>
       <div class="mes-pro-meta">
-        <span><i class="fas fa-receipt" style="margin-right:3px;"></i>${m.count} transacciones</span>
+        <span><i class="fas fa-receipt" style="margin-right:3px;"></i>${m.count} ventas · ${m.egresosCount} gastos</span>
         <span><i class="fas fa-chart-bar" style="margin-right:3px;"></i>${pct}% del máximo</span>
       </div>
       ${m.count>0?`<div class="mes-pago-mini">
@@ -2013,6 +2289,23 @@ document.getElementById('fechaHoyBtn').addEventListener('click', () => {
   renderContHistorial();
 });
 
+// Egresos
+document.getElementById('btnAgregarEgreso').addEventListener('click', agregarEgreso);
+document.getElementById('egMonto').addEventListener('keydown', e => {
+  if(e.key === 'Enter') { e.preventDefault(); agregarEgreso(); }
+});
+document.getElementById('egConcepto').addEventListener('keydown', e => {
+  if(e.key === 'Enter') { e.preventDefault(); document.getElementById('egMonto').focus(); }
+});
+document.getElementById('egFechaAnteriorBtn').addEventListener('click', () => cambiarFechaEgreso(-1));
+document.getElementById('egFechaSiguienteBtn').addEventListener('click', () => cambiarFechaEgreso(1));
+document.getElementById('fechaEgresos').addEventListener('change', renderContEgresos);
+document.getElementById('egFechaHoyBtn').addEventListener('click', () => {
+  document.getElementById('fechaEgresos').value = fechaLocal();
+  renderContEgresos();
+});
+document.getElementById('btnExportarEgresosCSV').addEventListener('click', exportarEgresosCSV);
+
 document.getElementById('btnAgregarProducto').addEventListener('click',()=>document.getElementById('modalProducto').classList.add('open'));
 document.getElementById('btnCancelarProducto').addEventListener('click',()=>document.getElementById('modalProducto').classList.remove('open'));
 document.getElementById('btnGuardarProducto').addEventListener('click',agregarProductoCatalogo);
@@ -2113,8 +2406,7 @@ document.addEventListener('keydown',e=>{
 (async()=>{
   cargarLocal();
   renderMesas();
-  await syncCargar();
-  renderMesas();
+  initFirebaseRealtime();
 })();
 </script>
 </body>
