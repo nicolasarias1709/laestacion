@@ -1228,6 +1228,34 @@ function iniciarPollingFallback(){
   },15000);
 }
 
+/* ═══ RECONEXIÓN AUTOMÁTICA ═══
+   iOS Safari (y algunos Android) suspenden la conexión en tiempo real
+   cuando la pestaña pasa a segundo plano (cambias de app, bloqueas
+   pantalla, etc). Al volver, forzamos reconexión y una lectura fresca
+   para no quedar mostrando datos viejos ni bloquear el guardado. */
+function forzarReconexion(){
+  if(modoRealtime && typeof firebase!=='undefined'){
+    try {
+      firebase.database().goOffline();
+      firebase.database().goOnline();
+    } catch(e){}
+  }
+  // Además, hacemos una lectura directa por REST como respaldo inmediato,
+  // por si el socket tarda unos segundos en reestablecerse.
+  syncCargarREST().then(()=>{ renderMesas(); if(sitioActivoId) renderPanel(); });
+}
+document.addEventListener('visibilitychange', ()=>{
+  if(!document.hidden) forzarReconexion();
+});
+window.addEventListener('pageshow', (e)=>{
+  if(e.persisted) forzarReconexion();
+});
+window.addEventListener('focus', forzarReconexion);
+window.addEventListener('online', forzarReconexion);
+// Red de seguridad extra: cada 30s, si la pestaña está visible, verificamos
+// silenciosamente que la conexión siga viva (útil para iOS Safari).
+setInterval(()=>{ if(!document.hidden) forzarReconexion(); }, 30000);
+
 async function syncGuardar() {
   clearTimeout(syncTimer);
   syncTimer=setTimeout(async()=>{
