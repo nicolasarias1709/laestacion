@@ -991,6 +991,27 @@ const SITIOS_DEFECTO = () => [
   {id:18,tipo:"Afuera",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null}
 ];
 
+/* ═══ SANEAMIENTO DE DATOS ═══
+   Repara automáticamente cualquier sitio con datos incompletos o
+   corruptos (por ejemplo, "pedidos" faltante), para que la app nunca
+   se rompa al abrir una mesa, sin importar de dónde vino el dato. */
+function sanearSitios(arr){
+  if(!Array.isArray(arr) || !arr.length) return SITIOS_DEFECTO();
+  return arr.map(s=>{
+    const pedidos = Array.isArray(s.pedidos) ? s.pedidos : [];
+    const totalCalc = pedidos.reduce((a,i)=>a+(i&&i.subtotal||0),0);
+    return {
+      id: s.id,
+      tipo: s.tipo || 'Mesa',
+      nombre: s.nombre!=null ? String(s.nombre) : '',
+      estado: pedidos.length ? (s.estado==='pendiente'?'pendiente':'ocupada') : 'libre',
+      total: pedidos.length ? totalCalc : 0,
+      pedidos: pedidos,
+      horaApertura: pedidos.length ? (s.horaApertura||null) : null
+    };
+  });
+}
+
 const CATALOGO_DEFECTO = [
   {id:1,nombre:"Tinto o Americano",precio:4000,categoria:"Bebidas Calientes"},
   {id:2,nombre:"Americano con Licor",precio:7000,categoria:"Bebidas Calientes"},
@@ -1164,12 +1185,12 @@ function guardarLocal() {
 function cargarLocal() {
   try {
     const sv=localStorage.getItem(SK_SITIOS);
-    if(sv){const d=JSON.parse(sv);sitios=d.sitios;nextSitioId=d.nextSitioId||19;}
+    if(sv){const d=JSON.parse(sv);sitios=sanearSitios(d.sitios);nextSitioId=d.nextSitioId||19;}
     else sitios=SITIOS_DEFECTO();
     const vv=localStorage.getItem(SK_VENTAS);
     ventas=vv?JSON.parse(vv):[];
     const pv=localStorage.getItem(SK_PRODS);
-    if(pv){const d=JSON.parse(pv);catalogo=d.catalogo;nextProdId=d.nextProdId||300;}
+    if(pv){const d=JSON.parse(pv);catalogo=(d.catalogo&&d.catalogo.length)?d.catalogo:[...CATALOGO_DEFECTO];nextProdId=d.nextProdId||300;}
     else catalogo=[...CATALOGO_DEFECTO];
     const eg=localStorage.getItem(SK_EGRESOS);
     egresos=eg?JSON.parse(eg):[];
@@ -1182,9 +1203,9 @@ let modoRealtime = false;
 let lastLocalWriteTs = 0;
 
 function aplicarDatosRemotos(data){
-  sitios=data.sitios; nextSitioId=data.nextSitioId||19;
+  sitios=sanearSitios(data.sitios); nextSitioId=data.nextSitioId||19;
   ventas=data.ventas||[];
-  catalogo=data.catalogo||[...CATALOGO_DEFECTO];
+  catalogo=(data.catalogo&&data.catalogo.length)?data.catalogo:[...CATALOGO_DEFECTO];
   nextProdId=data.nextProdId||300;
   egresos=data.egresos||[];
   guardarLocal();
@@ -1406,7 +1427,12 @@ function abrirPanel(id){
   // Ocultar form de otro producto al abrir panel
   document.getElementById('formOtro').style.display='none';
   document.getElementById('btnAgregarOtro').style.display='none';
-  actualizarBotonesPago();actualizarBotonesPropina();renderPanel();
+  try {
+    actualizarBotonesPago();actualizarBotonesPropina();renderPanel();
+  } catch(e){
+    console.error('Error al renderizar el panel de la mesa:', e);
+    toast('⚠ Hubo un problema mostrando esta mesa, se reparó automáticamente');
+  }
   document.getElementById('mesaPanel').classList.add('open');
   document.getElementById('panelOverlay').classList.add('open');
   document.body.style.overflow='hidden';
@@ -1471,6 +1497,7 @@ function renderPanelProductos(){
 /* ═══ AGREGAR / QUITAR PRODUCTOS ═══ */
 function agregarProducto(nombre,precio){
   const s=sitioActivo();if(!s) return;
+  if(!Array.isArray(s.pedidos)) s.pedidos=[];
   const ahora=new Date();
   if(s.estado==='libre'){
     s.estado='ocupada';s.horaApertura=ahora.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
@@ -1484,14 +1511,14 @@ function agregarProducto(nombre,precio){
   guardar();renderCuenta();renderMesas();toast(`✓ ${nombre}`);
 }
 function sumarUnidad(idx){
-  const s=sitioActivo();if(!s) return;
+  const s=sitioActivo();if(!s||!Array.isArray(s.pedidos)) return;
   const item=s.pedidos[idx];if(!item) return;
   item.cantidad++;item.subtotal=item.cantidad*item.precioUnitario;
   s.total=s.pedidos.reduce((a,i)=>a+i.subtotal,0);
   guardar();renderCuenta();renderMesas();
 }
 function restarUnidad(idx){
-  const s=sitioActivo();if(!s) return;
+  const s=sitioActivo();if(!s||!Array.isArray(s.pedidos)) return;
   const item=s.pedidos[idx];if(!item) return;
   item.cantidad--;
   if(item.cantidad<=0){s.pedidos.splice(idx,1);}
@@ -1501,7 +1528,7 @@ function restarUnidad(idx){
   guardar();renderCuenta();renderMesas();
 }
 function quitarItem(idx){
-  const s=sitioActivo();if(!s) return;
+  const s=sitioActivo();if(!s||!Array.isArray(s.pedidos)) return;
   s.pedidos.splice(idx,1);
   s.total=s.pedidos.reduce((a,i)=>a+i.subtotal,0);
   if(!s.pedidos.length){s.estado='libre';s.total=0;s.horaApertura=null;propinaPct=0;}
@@ -1526,7 +1553,7 @@ function renderCuenta(){
   const btnOtro=document.getElementById('btnAgregarOtro');
   const formOtro=document.getElementById('formOtro');
 
-  if(!s||!s.pedidos.length){
+  if(!s||!Array.isArray(s.pedidos)||!s.pedidos.length){
     lista.innerHTML='<div class="muted">Sin productos aún</div>';
     btnF.disabled=true;
     pw.style.display='none';
@@ -1583,7 +1610,7 @@ function actualizarBotonesPropina(){
 
 /* ═══ FACTURAR ═══ */
 function facturar(){
-  const s=sitioActivo();if(!s||!s.pedidos.length) return;
+  const s=sitioActivo();if(!s||!Array.isArray(s.pedidos)||!s.pedidos.length) return;
   const propinaMonto=Math.round(s.total*propinaPct/100);
   const ahora=new Date();
   const sitioIdFacturado=s.id;
