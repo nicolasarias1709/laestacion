@@ -164,6 +164,24 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
 }
 .btn-agregar-otro:hover { background:var(--amarillo); color:var(--negro); border-style:solid; }
 .btn-agregar-otro:active { transform:scale(0.98); }
+
+/* ── TRASLADAR CUENTA ── */
+.btn-trasladar {
+  width:100%; padding:9px 12px; margin-bottom:8px;
+  background:rgba(96,165,250,0.12); border:1px dashed rgba(96,165,250,0.5);
+  border-radius:var(--r-sm); color:var(--azul); font-size:12px;
+  font-family:'DM Sans',sans-serif; font-weight:600;
+  cursor:pointer; transition:.15s;
+  display:none; align-items:center; justify-content:center; gap:7px;
+}
+.btn-trasladar:hover { background:var(--azul); color:var(--negro); border-style:solid; }
+.btn-trasladar:active { transform:scale(0.98); }
+.traslado-item { display:flex; align-items:center; gap:10px; width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--borde2); background:var(--negro4); color:var(--blanco); font-size:13px; font-weight:500; cursor:pointer; margin-bottom:8px; transition:.15s; font-family:'DM Sans',sans-serif; text-align:left; }
+.traslado-item:hover { border-color:var(--azul); background:rgba(96,165,250,0.08); }
+.traslado-item-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+.traslado-item-text { flex:1; min-width:0; }
+.traslado-item-text small { display:block; font-size:10px; color:var(--blanco3); margin-top:1px; }
+
 .form-otro {
   display:none;
   background:var(--negro3); border:1px solid rgba(245,200,0,0.3);
@@ -578,6 +596,11 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
       </div>
     </div>
 
+    <!-- ── TRASLADAR CUENTA ── -->
+    <button class="btn-trasladar" id="btnTrasladar">
+      <i class="fas fa-exchange-alt"></i> Trasladar cuenta a otro sitio
+    </button>
+
     <!-- MÉTODO DE PAGO -->
     <div class="pago-wrap" id="pagoWrap" style="display:none;">
       <div class="pago-label"><i class="fas fa-credit-card" style="color:var(--amarillo);margin-right:4px;"></i> Método de pago</div>
@@ -628,6 +651,7 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
   <div class="modal-box">
     <h3><i class="fas fa-chair"></i> Agregar Sitio</h3>
     <select class="modal-input" id="nsTipo">
+      <option value="Barra">Barra</option>
       <option value="Mesa">Mesa</option>
       <option value="Tarima">Tarima</option>
       <option value="Afuera">Afuera</option>
@@ -709,6 +733,18 @@ body { background:var(--negro); font-family:'DM Sans',sans-serif; color:var(--bl
     <div class="modal-btns">
       <button class="pill-btn primary" id="btnConfirmarAgregarItem">Agregar</button>
       <button class="pill-btn" id="btnCancelarAgregarItem">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: TRASLADAR CUENTA -->
+<div class="modal-overlay" id="modalTrasladar">
+  <div class="modal-box" style="max-width:420px;">
+    <h3><i class="fas fa-exchange-alt"></i> Trasladar cuenta</h3>
+    <p style="font-size:11px;color:var(--blanco3);margin-bottom:12px;line-height:1.5;">Elige el sitio de destino. Si el destino ya tiene productos, se sumarán a los que ya tiene.</p>
+    <div id="trasladarLista" style="max-height:340px;overflow-y:auto;"></div>
+    <div class="modal-btns">
+      <button class="pill-btn" id="btnCancelarTrasladar">Cancelar</button>
     </div>
   </div>
 </div>
@@ -971,25 +1007,32 @@ const SK_PRODS  = 'laEstacion_prods_v4';
 const SK_EGRESOS = 'laEstacion_egresos_v4';
 
 const SITIOS_DEFECTO = () => [
-  {id:1,tipo:"Mesa",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:2,tipo:"Mesa",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:3,tipo:"Mesa",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:4,tipo:"Mesa",nombre:"4",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:5,tipo:"Mesa",nombre:"5",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:6,tipo:"Mesa",nombre:"6",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:7,tipo:"Mesa",nombre:"7",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:8,tipo:"Mesa",nombre:"8",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:9,tipo:"Mesa",nombre:"9",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:10,tipo:"Mesa",nombre:"10",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:11,tipo:"Mesa",nombre:"11",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:12,tipo:"Mesa",nombre:"12",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:13,tipo:"Tarima",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:14,tipo:"Tarima",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:15,tipo:"Tarima",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:16,tipo:"Afuera",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:17,tipo:"Afuera",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
-  {id:18,tipo:"Afuera",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null}
+  {id:1,tipo:"Barra",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:2,tipo:"Barra",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:3,tipo:"Barra",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:4,tipo:"Mesa",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:5,tipo:"Mesa",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:6,tipo:"Mesa",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:7,tipo:"Mesa",nombre:"4",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:8,tipo:"Mesa",nombre:"5",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:9,tipo:"Mesa",nombre:"6",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:10,tipo:"Mesa",nombre:"7",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:11,tipo:"Mesa",nombre:"8",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:12,tipo:"Mesa",nombre:"9",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:13,tipo:"Mesa",nombre:"10",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:14,tipo:"Mesa",nombre:"11",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:15,tipo:"Mesa",nombre:"12",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:16,tipo:"Tarima",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:17,tipo:"Tarima",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:18,tipo:"Tarima",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:19,tipo:"Afuera",nombre:"1",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:20,tipo:"Afuera",nombre:"2",estado:"libre",total:0,pedidos:[],horaApertura:null},
+  {id:21,tipo:"Afuera",nombre:"3",estado:"libre",total:0,pedidos:[],horaApertura:null}
 ];
+
+/* Orden en que se muestran los tipos de sitio en pantalla */
+const ORDEN_TIPOS = ['Barra','Mesa','Tarima','Afuera','Otro'];
+const ICONOS_TIPO = {Barra:'martini-glass-citrus',Mesa:'chair',Tarima:'music',Afuera:'tree',Otro:'map-marker-alt'};
 
 /* ═══ SANEAMIENTO DE DATOS ═══
    Repara automáticamente cualquier sitio con datos incompletos o
@@ -1010,6 +1053,19 @@ function sanearSitios(arr){
       horaApertura: pedidos.length ? (s.horaApertura||null) : null
     };
   });
+}
+
+/* Garantiza que siempre existan al menos 3 sitios tipo "Barra".
+   Se ejecuta tras cargar datos locales o remotos, para que instalaciones
+   ya existentes (con datos guardados previamente) también reciban las
+   barras nuevas sin perder ninguna otra información. */
+function asegurarBarras(){
+  const tieneBarras = sitios.some(s=>s.tipo==='Barra');
+  if(tieneBarras) return false;
+  for(let i=1;i<=3;i++){
+    sitios.unshift({id:nextSitioId++,tipo:'Barra',nombre:String(i),estado:'libre',total:0,pedidos:[],horaApertura:null});
+  }
+  return true;
 }
 
 const CATALOGO_DEFECTO = [
@@ -1161,7 +1217,7 @@ const CATALOGO_DEFECTO = [
 
 /* ═══ ESTADO ═══ */
 let sitios=[], ventas=[], catalogo=[], egresos=[];
-let nextSitioId=19, nextProdId=300;
+let nextSitioId=22, nextProdId=300;
 let sitioActivoId=null, panelCatActiva='Todos';
 let propinaPct=0, metodoPago='efectivo', facturaTemp=null;
 let busqueda='';
@@ -1185,7 +1241,7 @@ function guardarLocal() {
 function cargarLocal() {
   try {
     const sv=localStorage.getItem(SK_SITIOS);
-    if(sv){const d=JSON.parse(sv);sitios=sanearSitios(d.sitios);nextSitioId=d.nextSitioId||19;}
+    if(sv){const d=JSON.parse(sv);sitios=sanearSitios(d.sitios);nextSitioId=d.nextSitioId||22;}
     else sitios=SITIOS_DEFECTO();
     const vv=localStorage.getItem(SK_VENTAS);
     ventas=vv?JSON.parse(vv):[];
@@ -1203,12 +1259,14 @@ let modoRealtime = false;
 let lastLocalWriteTs = 0;
 
 function aplicarDatosRemotos(data){
-  sitios=sanearSitios(data.sitios); nextSitioId=data.nextSitioId||19;
+  sitios=sanearSitios(data.sitios); nextSitioId=data.nextSitioId||22;
   ventas=data.ventas||[];
   catalogo=(data.catalogo&&data.catalogo.length)?data.catalogo:[...CATALOGO_DEFECTO];
   nextProdId=data.nextProdId||300;
   egresos=data.egresos||[];
+  const seAgregaronBarras = asegurarBarras();
   guardarLocal();
+  if(seAgregaronBarras) guardar();
   renderMesas();
   if(sitioActivoId) renderPanel();
   const cont=document.getElementById('contOverlay');
@@ -1361,12 +1419,13 @@ function toggleModoEdicion(){
 /* ═══ RENDER MESAS ═══ */
 function renderMesas(){
   const screen=document.getElementById('mesasScreen');
-  const tipos=[...new Set(sitios.map(s=>s.tipo))];
-  const icons={Mesa:'chair',Tarima:'music',Afuera:'tree',Otro:'map-marker-alt'};
+  const tiposPresentes=[...new Set(sitios.map(s=>s.tipo))];
+  const tipos=ORDEN_TIPOS.filter(t=>tiposPresentes.includes(t)).concat(tiposPresentes.filter(t=>!ORDEN_TIPOS.includes(t)));
   let html='';
   tipos.forEach(tipo=>{
     const grupo=sitios.filter(s=>s.tipo===tipo);
-    html+=`<div class="mesas-section-label"><i class="fas fa-${icons[tipo]||'circle'}" style="color:var(--amarillo);font-size:10px;"></i> ${tipo}s</div><div class="mesas-grid">`;
+    const etiquetaGrupo = tipo==='Barra' ? 'Barras' : tipo+'s';
+    html+=`<div class="mesas-section-label"><i class="fas fa-${ICONOS_TIPO[tipo]||'circle'}" style="color:var(--amarillo);font-size:10px;"></i> ${etiquetaGrupo}</div><div class="mesas-grid">`;
     grupo.forEach(s=>{
       const bCls=s.estado==='libre'?'badge-libre':s.estado==='ocupada'?'badge-ocupada':'badge-pendiente';
       const etq=s.estado==='libre'?'LIBRE':s.estado==='ocupada'?'OCUPADA':'PENDIENTE';
@@ -1535,6 +1594,60 @@ function quitarItem(idx){
   guardar();renderCuenta();renderMesas();
 }
 
+/* ═══ TRASLADAR CUENTA A OTRO SITIO ═══ */
+function renderTrasladarLista(){
+  const s=sitioActivo();if(!s) return;
+  const lista=document.getElementById('trasladarLista');
+  const candidatos=sitios.filter(x=>x.id!==s.id);
+  if(!candidatos.length){
+    lista.innerHTML='<div style="padding:16px;text-align:center;color:var(--blanco3);font-size:12px;">No hay otros sitios disponibles</div>';
+    return;
+  }
+  const tiposPresentes=[...new Set(candidatos.map(c=>c.tipo))];
+  const tiposOrdenados=ORDEN_TIPOS.filter(t=>tiposPresentes.includes(t)).concat(tiposPresentes.filter(t=>!ORDEN_TIPOS.includes(t)));
+  let html='';
+  tiposOrdenados.forEach(tipo=>{
+    const grupo=candidatos.filter(c=>c.tipo===tipo);
+    html+=grupo.map(c=>{
+      const libre=c.estado==='libre';
+      return `<button class="traslado-item" data-id="${c.id}">
+        <div class="traslado-item-icon" style="background:${libre?'rgba(74,222,128,0.15)':'rgba(245,200,0,0.15)'};color:${libre?'var(--verde)':'var(--amarillo)'};">
+          <i class="fas fa-${libre?'check':'layer-group'}"></i>
+        </div>
+        <div class="traslado-item-text">${c.tipo} ${c.nombre}<small>${libre?'Libre':'Ocupada · '+cop(c.total)}</small></div>
+      </button>`;
+    }).join('');
+  });
+  lista.innerHTML=html;
+  lista.querySelectorAll('.traslado-item').forEach(b=>b.addEventListener('click',()=>trasladarCuenta(parseInt(b.dataset.id))));
+}
+function trasladarCuenta(destinoId){
+  const origen=sitioActivo();if(!origen) return;
+  const destino=sitios.find(x=>x.id===destinoId);if(!destino) return;
+  if(!origen.pedidos||!origen.pedidos.length){toast('⚠ No hay productos para trasladar');return;}
+  const nombreOrigen=`${origen.tipo} ${origen.nombre}`;
+  const nombreDestino=`${destino.tipo} ${destino.nombre}`;
+  if(!confirm(`¿Trasladar la cuenta de ${nombreOrigen} a ${nombreDestino}?`)) return;
+
+  if(!Array.isArray(destino.pedidos)) destino.pedidos=[];
+  origen.pedidos.forEach(item=>{
+    const ex=destino.pedidos.find(p=>p.nombre===item.nombre && p.precioUnitario===item.precioUnitario);
+    if(ex){ex.cantidad+=item.cantidad;ex.subtotal+=item.subtotal;}
+    else{destino.pedidos.push({...item});}
+  });
+  destino.total=destino.pedidos.reduce((a,i)=>a+i.subtotal,0);
+  destino.estado='ocupada';
+  if(!destino.horaApertura) destino.horaApertura=origen.horaApertura||new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+
+  origen.pedidos=[];origen.total=0;origen.estado='libre';origen.horaApertura=null;
+
+  document.getElementById('modalTrasladar').classList.remove('open');
+  guardar();
+  toast(`↪ Cuenta trasladada a ${nombreDestino}`);
+  cerrarPanel();
+  abrirPanel(destino.id);
+}
+
 /* ═══ MÉTODO DE PAGO ═══ */
 function actualizarBotonesPago(){
   document.querySelectorAll('.pago-opt').forEach(b=>{
@@ -1552,6 +1665,7 @@ function renderCuenta(){
   const pagoW=document.getElementById('pagoWrap');
   const btnOtro=document.getElementById('btnAgregarOtro');
   const formOtro=document.getElementById('formOtro');
+  const btnTrasladar=document.getElementById('btnTrasladar');
 
   if(!s||!Array.isArray(s.pedidos)||!s.pedidos.length){
     lista.innerHTML='<div class="muted">Sin productos aún</div>';
@@ -1560,6 +1674,7 @@ function renderCuenta(){
     pagoW.style.display='none';
     btnOtro.style.display='none';
     formOtro.style.display='none';
+    btnTrasladar.style.display='none';
     document.getElementById('valTotal').textContent='$0';
     document.getElementById('rowSubtotal').style.display='none';
     document.getElementById('rowPropina').style.display='none';
@@ -1585,6 +1700,7 @@ function renderCuenta(){
   if(formOtro.style.display==='none'||formOtro.style.display===''){
     btnOtro.style.display='flex';
   }
+  btnTrasladar.style.display='flex';
   pagoW.style.display='block';
   pw.style.display='block';
   actualizarTotales();
@@ -2376,7 +2492,7 @@ document.getElementById('btnCancelarEliminar').addEventListener('click',()=>{
 
 document.getElementById('btnReset').addEventListener('click',()=>{
   if(!confirm('¿Reiniciar todas las mesas? Los pedidos actuales se perderán.'))return;
-  sitios=SITIOS_DEFECTO();nextSitioId=19;sitioActivoId=null;
+  sitios=SITIOS_DEFECTO();nextSitioId=22;sitioActivoId=null;
   if(modoEdicion) toggleModoEdicion();
   guardar();cerrarPanel();renderMesas();toast('✓ Mesas reiniciadas');
 });
@@ -2443,6 +2559,15 @@ document.getElementById('otroPrecio').addEventListener('keydown', e => {
   if(e.key === 'Enter') { e.preventDefault(); document.getElementById('btnConfirmarOtro').click(); }
 });
 
+/* ── TRASLADAR CUENTA (nuevo) ── */
+document.getElementById('btnTrasladar').addEventListener('click', () => {
+  renderTrasladarLista();
+  document.getElementById('modalTrasladar').classList.add('open');
+});
+document.getElementById('btnCancelarTrasladar').addEventListener('click', () => {
+  document.getElementById('modalTrasladar').classList.remove('open');
+});
+
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
     // Si el form de "otro" está abierto, cerrarlo primero
@@ -2450,7 +2575,7 @@ document.addEventListener('keydown',e=>{
       document.getElementById('btnCancelarOtro').click();return;
     }
     if(modoEdicion){toggleModoEdicion();return;}
-    ['contOverlay','facturaOverlay','modalProducto','modalSitio','modalEmail','modalEliminarSitio','modalEditarVenta','modalAgregarItemVenta'].forEach(id=>{
+    ['contOverlay','facturaOverlay','modalProducto','modalSitio','modalEmail','modalEliminarSitio','modalEditarVenta','modalAgregarItemVenta','modalTrasladar'].forEach(id=>{
       if(document.getElementById(id).classList.contains('open')) document.getElementById(id).classList.remove('open');
     });
     cerrarPanel();
@@ -2460,6 +2585,7 @@ document.addEventListener('keydown',e=>{
 /* ═══ INICIO ═══ */
 (async()=>{
   cargarLocal();
+  if(asegurarBarras()) guardarLocal();
   renderMesas();
   initFirebaseRealtime();
 })();
