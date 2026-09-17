@@ -1062,9 +1062,11 @@ function sanearSitios(arr){
 function asegurarBarras(){
   const tieneBarras = sitios.some(s=>s.tipo==='Barra');
   if(tieneBarras) return false;
+  const nuevasBarras=[];
   for(let i=1;i<=3;i++){
-    sitios.unshift({id:nextSitioId++,tipo:'Barra',nombre:String(i),estado:'libre',total:0,pedidos:[],horaApertura:null});
+    nuevasBarras.push({id:nextSitioId++,tipo:'Barra',nombre:String(i),estado:'libre',total:0,pedidos:[],horaApertura:null});
   }
+  sitios = nuevasBarras.concat(sitios);
   return true;
 }
 
@@ -1610,7 +1612,7 @@ function renderTrasladarLista(){
     const grupo=candidatos.filter(c=>c.tipo===tipo);
     html+=grupo.map(c=>{
       const libre=c.estado==='libre';
-      return `<button class="traslado-item" data-id="${c.id}">
+      return `<button class="traslado-item" type="button" data-id="${c.id}">
         <div class="traslado-item-icon" style="background:${libre?'rgba(74,222,128,0.15)':'rgba(245,200,0,0.15)'};color:${libre?'var(--verde)':'var(--amarillo)'};">
           <i class="fas fa-${libre?'check':'layer-group'}"></i>
         </div>
@@ -1619,33 +1621,41 @@ function renderTrasladarLista(){
     }).join('');
   });
   lista.innerHTML=html;
-  lista.querySelectorAll('.traslado-item').forEach(b=>b.addEventListener('click',()=>trasladarCuenta(parseInt(b.dataset.id))));
 }
 function trasladarCuenta(destinoId){
-  const origen=sitioActivo();if(!origen) return;
-  const destino=sitios.find(x=>x.id===destinoId);if(!destino) return;
-  if(!origen.pedidos||!origen.pedidos.length){toast('⚠ No hay productos para trasladar');return;}
-  const nombreOrigen=`${origen.tipo} ${origen.nombre}`;
-  const nombreDestino=`${destino.tipo} ${destino.nombre}`;
-  if(!confirm(`¿Trasladar la cuenta de ${nombreOrigen} a ${nombreDestino}?`)) return;
+  try{
+    const origen=sitioActivo();
+    if(!origen){toast('⚠ No hay una mesa abierta');return;}
+    const destino=sitios.find(x=>x.id===destinoId);
+    if(!destino){toast('⚠ Sitio de destino no encontrado');return;}
+    if(destino.id===origen.id){toast('⚠ Elige un sitio distinto');return;}
+    if(!origen.pedidos||!origen.pedidos.length){toast('⚠ No hay productos para trasladar');return;}
+    const nombreOrigen=`${origen.tipo} ${origen.nombre}`;
+    const nombreDestino=`${destino.tipo} ${destino.nombre}`;
 
-  if(!Array.isArray(destino.pedidos)) destino.pedidos=[];
-  origen.pedidos.forEach(item=>{
-    const ex=destino.pedidos.find(p=>p.nombre===item.nombre && p.precioUnitario===item.precioUnitario);
-    if(ex){ex.cantidad+=item.cantidad;ex.subtotal+=item.subtotal;}
-    else{destino.pedidos.push({...item});}
-  });
-  destino.total=destino.pedidos.reduce((a,i)=>a+i.subtotal,0);
-  destino.estado='ocupada';
-  if(!destino.horaApertura) destino.horaApertura=origen.horaApertura||new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+    if(!Array.isArray(destino.pedidos)) destino.pedidos=[];
+    origen.pedidos.forEach(item=>{
+      const ex=destino.pedidos.find(p=>p.nombre===item.nombre && p.precioUnitario===item.precioUnitario);
+      if(ex){ex.cantidad+=item.cantidad;ex.subtotal+=item.subtotal;}
+      else{destino.pedidos.push({...item});}
+    });
+    destino.total=destino.pedidos.reduce((a,i)=>a+i.subtotal,0);
+    destino.estado='ocupada';
+    if(!destino.horaApertura) destino.horaApertura=origen.horaApertura||new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
 
-  origen.pedidos=[];origen.total=0;origen.estado='libre';origen.horaApertura=null;
+    origen.pedidos=[];origen.total=0;origen.estado='libre';origen.horaApertura=null;
 
-  document.getElementById('modalTrasladar').classList.remove('open');
-  guardar();
-  toast(`↪ Cuenta trasladada a ${nombreDestino}`);
-  cerrarPanel();
-  abrirPanel(destino.id);
+    const modalT=document.getElementById('modalTrasladar');
+    if(modalT) modalT.classList.remove('open');
+    guardar();
+    renderMesas();
+    toast(`↪ Cuenta trasladada de ${nombreOrigen} a ${nombreDestino}`);
+    cerrarPanel();
+    abrirPanel(destino.id);
+  } catch(err){
+    console.error('Error al trasladar cuenta:', err);
+    toast('⚠ No se pudo trasladar la cuenta, intenta de nuevo');
+  }
 }
 
 /* ═══ MÉTODO DE PAGO ═══ */
@@ -2566,6 +2576,11 @@ document.getElementById('btnTrasladar').addEventListener('click', () => {
 });
 document.getElementById('btnCancelarTrasladar').addEventListener('click', () => {
   document.getElementById('modalTrasladar').classList.remove('open');
+});
+document.getElementById('trasladarLista').addEventListener('click', (e) => {
+  const btn = e.target.closest('.traslado-item');
+  if(!btn) return;
+  trasladarCuenta(parseInt(btn.dataset.id));
 });
 
 document.addEventListener('keydown',e=>{
